@@ -1,0 +1,28 @@
+Package: poldis
+Type: Package
+Title: Data and Analysis for Political Discourses
+Version: 0.0.1
+Author: person(given = "Henrique",
+           family = "Sposito", 
+           role = c("cre", "aut", "ctb"),
+           email = "henrique.sposito@graduateinstitute.ch",
+           ORDCID = "0000-0003-3420-6085")
+Description: Larger, cleaner and more organized text data
+    on political discourses in Brazil and the US across time.
+License: CC BY 4.0
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat (>= 3.0.0),
+Config/testthat/edition: 3
+Imports: 
+    rvest,
+    dplyr,
+    usethis,
+    stringr, 
+    translateR,
+    cld2,
+    purrr
+RoxygenNote: 7.1.1
+Depends: 
+    R (>= 2.10)
