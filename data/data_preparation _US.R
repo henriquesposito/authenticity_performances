@@ -8,11 +8,11 @@ library(stringr)
 
 ### Oral Remarks
 
-# Loading oral communication datasets, miscelaneous and oral
-load("~/GitHub/Poldis/data-raw/US_Oral_Remarks.rda")
-remarks <- as.data.frame(US_Oral_Remarks)
-load("~/GitHub/Poldis/data-raw/US_M_Remarks.rda")
-mremarks <- as.data.frame(US_M_Remarks)
+# Loading oral communication datasets, miscelaneous and oral (with updated data)
+load("~/GitHub/authenticity_performances/data-raw/US_Oral_Remarks_21.rda")
+remarks <- as.data.frame(US_Oral_Remarks_21)
+load("~/GitHub/authenticity_performances/data-raw/US_M_Remarks_21.rda")
+mremarks <- as.data.frame(US_M_Remarks_21)
 
 # Joining both datasets
 oralc <- dplyr::full_join(mremarks, remarks)
