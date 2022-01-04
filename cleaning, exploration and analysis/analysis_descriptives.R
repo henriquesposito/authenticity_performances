@@ -58,10 +58,10 @@ US <- rbind (uoral, ucamp, udeb, uint)
 
 # Brazil
 # Speeches
-load("~/GitHub/authenticity_performances/data/BR_oral.rda")
-boral <- BR_oral %>% select(date, presid, text)
-boral$Speaker <- paste0(boral$presid, "_", boral$date) # get speaker year
-boral <- aggregate(boral$text, list(boral$Speaker), paste, collapse =" ")
+BR_oral <- readRDS("~/GitHub/authenticity_performances/data/BR_oral.Rds")
+boral <- BR_oral %>% select(year, president, text)
+boral$Speaker <- paste0(boral$president, "_", boral$year) # get speaker year
+boral <- aggregate(boral$text, list(boral$Speaker), paste, collapse = " ")
 boral <- rename(boral, doc_id = "Group.1", text = "x")
 boral$setting <- "speeches"
 
@@ -248,8 +248,8 @@ ggplot(aut_perf_set_long, aes(x = reorder(date2, as.numeric(date)), y = value , 
        title = "Authenticity Performances by Setting in the US in Time",
        subtitle = "Normalized by number of characters per year and setting in dataset") +
   theme_fivethirtyeight()
-US_setting_time <- ggplot(aut_perf_set_long, aes(x = reorder(date2, as.numeric(date)), y = value, fill = Setting)) +
-  geom_line(aes(group = Setting, color = Setting), size = 1.2) +
+US_setting_time <- ggplot(aut_perf_set_long, aes(x = reorder(date2, as.numeric(date)), y = value, fill = setting)) +
+  geom_line(aes(group = setting, color = setting), size = 1.2) +
   labs(x = "",
        y = "",
        title = "Authenticity Performances by Setting in the US in Time",
@@ -381,8 +381,8 @@ ggplot(aut_perf_set_long_BR, aes(x = reorder(date2, as.numeric(date)), y = value
        title = "Authenticity Performances by Setting in the Brazil in Time",
        subtitle = "Normalized by number of characters per year and setting in dataset") +
   theme_fivethirtyeight()
-BR_setting_time <- ggplot(aut_perf_set_long_BR, aes(x = reorder(date2, as.numeric(date)), y = value, fill = Setting)) +
-  geom_line(aes(group = Setting, color = Setting), size = 1.2) +
+BR_setting_time <- ggplot(aut_perf_set_long_BR, aes(x = reorder(date2, as.numeric(date)), y = value, fill = setting)) +
+  geom_line(aes(group = setting, color = setting), size = 1.2) +
   labs(x = "",
        y = "",
        title = "Authenticity Performances by Setting in Brazil in Time",
@@ -412,9 +412,13 @@ ggplot(all_setting_ap, aes(x = reorder(date2, as.numeric(date)), y = value, fill
   theme_fivethirtyeight()
 
 #Let's also add a few of these plotes together for comparison
+US_aut_perf <- US_aut_perf + theme(legend.position = "none")
 gridExtra::grid.arrange(US_aut_perf, BR_aut_perf)
-# ggpubr::ggarrange(US_aut_perf, BR_aut_perf, nrow = 2, common.legend = TRUE, legend="bottom")
+
+####### plot for time comparison in paper
+ggpubr::ggarrange(US_aut_perf, BR_aut_perf, nrow = 2, common.legend = TRUE, legend="bottom")
 # Interesting!!!
+
 gridExtra::grid.arrange(US_setting_time, BR_setting_time)
 
 # How about we create a stacked bar plot for both cases in time.
