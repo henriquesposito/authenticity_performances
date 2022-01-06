@@ -222,6 +222,14 @@ US_aut_perf <- ggplot(aut_perf_time_long, aes(x = reorder(date2, as.numeric(date
 US_aut_perf
 # Cool stuff!!!
 
+# Create a little summary table with values for the US
+US_aut_perf_time_table <- aut_perf_time_long %>% 
+  select(-c(Performance, date2, value2)) %>%
+  rename(Value_US = "value") %>% 
+  group_by(date) %>%
+  summarise(across(everything(), sum))
+
+# by setting
 aut_perf_setting <- US %>%
   select(-c(doc_id, text, settingc)) %>%
   group_by(date, setting) %>%
@@ -355,6 +363,29 @@ BR_aut_perf <- ggplot(aut_perf_time_long_BR, aes(x = reorder(date2, as.numeric(d
   theme_fivethirtyeight()
 BR_aut_perf
 
+# Create a table for BR
+BR_aut_perf_time_table <- aut_perf_time_long_BR %>% 
+  select(-c(Performance, date2, value2)) %>%
+  rename(Value_BR = "value") %>% 
+  group_by(date) %>%
+  summarise(across(everything(), sum))
+# Add a few more rows
+a <- data.frame(date = c(1980, 1981, 1982, 1983, 1984),
+                Value_BR = c(NA,NA,NA,NA,NA))
+BR_aut_perf_time_table <- rbind(a, BR_aut_perf_time_table)
+
+###### Create a comparison table between BR and the US
+US_aut_perf_time_table
+ap_time <- dplyr::full_join(US_aut_perf_time_table, BR_aut_perf_time_table, by = "date") %>%
+  rename(Year = "date")
+# Divide to fit better
+ap1 <- ap_time[1:21,] %>% mutate_if(is.numeric, round, digits=3)
+ap2 <- ap_time[22:42,] %>% mutate_if(is.numeric, round, digits=3)
+ap_time2 <- cbind(ap1, ap2)
+# write.table(ap_time2, file = "ap_time.txt", sep = ",", quote = FALSE, row.names = F)
+######
+
+# By setting
 aut_perf_setting_BR <- BR %>%
   select(-c(doc_id, text, settingc)) %>%
   group_by(date, setting) %>%
@@ -417,7 +448,38 @@ gridExtra::grid.arrange(US_aut_perf, BR_aut_perf)
 
 ####### plot for time comparison in paper
 ggpubr::ggarrange(US_aut_perf, BR_aut_perf, nrow = 2, common.legend = TRUE, legend="bottom")
-# Interesting!!!
+# Interesting!!! Let's plot the aggregation of performances
+BR_ap_total <- aut_perf_time_long_BR %>% 
+  select(-c(Performance, date2, value2)) %>%
+  group_by(date) %>% 
+  summarise(across(everything(), sum)) %>% 
+  mutate(country = "Brazil")
+US_ap_total <- aut_perf_time_long %>% 
+  select(-c(Performance, date2, value2)) %>%
+  group_by(date) %>% 
+  summarise(across(everything(), sum)) %>% 
+  mutate(country = "US")
+ap_total_time <- dplyr::full_join(US_ap_total, BR_ap_total) %>% 
+  mutate(date2 = stringr::str_extract(date, "[0-9]{2}$"))
+# Create labels for election years only
+ap_total_time$ey <- ifelse(ap_total_time$country == "US" & grepl("1980|1984|1988|1992|1996|2000|2004|2008|2012|2016|2020", ap_total_time$date),
+                           ap_total_time$date, "")
+ap_total_time$ey <- ifelse(ap_total_time$country == "Brazil" & grepl("1989|1994|1998|2002|2006|2010|2014|2018",
+                                                                     ap_total_time$date),
+                           ap_total_time$date, ap_total_time$ey)
+ap_total_time$ey <- ifelse(ap_total_time$ey != "", "EY", "")
+ggplot(ap_total_time, aes(x = reorder(date2, as.numeric(date)), y = value , fill = country, label = ey)) +
+  geom_line(aes(group = country)) +
+  geom_point(size = 4, shape = 21) +
+  geom_text(aes(label=ey, hjust = .5,vjust = -0.5)) +
+  labs(x = "",
+       y = "",
+       title = "Total Authenticity Performances in Brazil and the US in Time",
+       subtitle = "Normalized by number of characters per year in dataset",
+       caption = "Respective election years per country are labbeled EY") +
+  theme_fivethirtyeight()
+# Used in paper!
+#######
 
 gridExtra::grid.arrange(US_setting_time, BR_setting_time)
 
@@ -494,6 +556,85 @@ BR_ttt
 
 # See both plots at the same time
 ggpubr::ggarrange(US_ttt, BR_ttt, ncol=2, common.legend = TRUE, legend="bottom")
+
+
+######
+# Let's create a simple table for authenticity performances by speaker and year for both cases
+# First, let's fix some names
+BR$doc_id <- gsub("Dilma", "Rousseff", BR$doc_id)
+BR$doc_id <- gsub("Aecio", "Neves", BR$doc_id)
+BR$doc_id <- gsub("FHC", "Cardoso", BR$doc_id)
+US$doc_id <- stringr::str_trim(US$doc_id )
+US$doc_id <- gsub("Albert Gore, Jr.", "Gore", US$doc_id)
+US$doc_id <- gsub("Hillary Clinton", "H_Clinton", US$doc_id )
+US$doc_id <- gsub("George W. Bush", "W_Bush", US$doc_id )
+US$doc_id <- stringr::word(US$doc_id , -1)
+# BR
+table_ap_BR <- BR %>% 
+  select(-c(text, setting, settingc, date)) %>%
+  group_by(doc_id) %>%
+  summarise(across(everything(), sum)) %>%
+  mutate(truth_telling = (truth/length)*1000,
+         lie_accusations = (lies/length)*1000,
+         consistency = (consistency/length)*1000,
+         finger_pointing = (fpoint/length)*1000,
+         origins = (origins/length)*1000,
+         common_sense = (common_sense/length)*1000,
+         anti_pc = (anti_PC/length)*1000,
+         territory = (territory/length)*1000,
+         date = stringr::str_extract(doc_id, "[0-9]{4}$")) %>%
+  select(-c(truth, lies, fpoint, anti_PC, length)) %>% 
+  arrange(date) %>% 
+  mutate_if(is.numeric, round, 3) %>% 
+  select(-date) %>%
+  mutate(consistency = ifelse(consistency > quantile(consistency, 0.95), paste0(consistency, "*"), consistency),
+         origins = ifelse(origins > quantile(origins, 0.95), paste0(origins, "*"), origins),
+         truth_telling = ifelse(truth_telling > quantile(truth_telling, 0.95), paste0(truth_telling, "*"), truth_telling),
+         lie_accusations = ifelse(lie_accusations > quantile(lie_accusations, 0.95), paste0(lie_accusations, "*"), lie_accusations),
+         finger_pointing = ifelse(finger_pointing > quantile(finger_pointing, 0.95), paste0(finger_pointing, "*"), finger_pointing),
+         common_sense = ifelse(common_sense > quantile(common_sense, 0.95), paste0(common_sense, "*"), common_sense),
+         anti_pc = ifelse(anti_pc > quantile(anti_pc, 0.95), paste0(anti_pc, "*"), anti_pc),
+         territory = ifelse(territory > quantile(territory, 0.95), paste0(territory, "*"), territory))
+# write.table(table_ap_BR, file = "table_ap_BR.txt", sep = ",", quote = FALSE, row.names = F)
+# US
+table_ap_US <- US %>% 
+  select(-c(text, setting, settingc, date)) %>%
+  group_by(doc_id) %>%
+  summarise(across(everything(), sum)) %>%
+  mutate(truth_telling = (truth/length)*1000,
+         lie_accusations = (lies/length)*1000,
+         consistency = (consistency/length)*1000,
+         finger_pointing = (fpoint/length)*1000,
+         origins = (origins/length)*1000,
+         common_sense = (common_sense/length)*1000,
+         anti_pc = (anti_PC/length)*1000,
+         territory = (territory/length)*1000,
+         date = stringr::str_extract(doc_id, "[0-9]{4}$")) %>%
+  select(-c(truth, lies, fpoint, anti_PC, length)) %>% 
+  arrange(date) %>% 
+  mutate_if(is.numeric, round, 3) %>% 
+  select(-date) %>% 
+  mutate(consistency = ifelse(consistency > quantile(consistency, 0.95), paste0(consistency, "*"), consistency),
+         origins = ifelse(origins > quantile(origins, 0.95), paste0(origins, "*"), origins),
+         truth_telling = ifelse(truth_telling > quantile(truth_telling, 0.95), paste0(truth_telling, "*"), truth_telling),
+         lie_accusations = ifelse(lie_accusations > quantile(lie_accusations, 0.95), paste0(lie_accusations, "*"), lie_accusations),
+         finger_pointing = ifelse(finger_pointing > quantile(finger_pointing, 0.95), paste0(finger_pointing, "*"), finger_pointing),
+         common_sense = ifelse(common_sense > quantile(common_sense, 0.95), paste0(common_sense, "*"), common_sense),
+         anti_pc = ifelse(anti_pc > quantile(anti_pc, 0.95), paste0(anti_pc, "*"), anti_pc),
+         territory = ifelse(territory > quantile(territory, 0.95), paste0(territory, "*"), territory))
+# write.table(table_ap_US, file = "table_ap_US.txt", sep = ",", quote = FALSE, row.names = F)
+####
+
+#Let's see the 95th percentiles for variables and add asterix to the table
+quantile(table_ap_BR$consistency, 0.95)
+quantile(table_ap_BR$origins, 0.95)
+quantile(table_ap_BR$, 0.95)
+quantile(table_ap_BR$consistency, 0.95)
+quantile(table_ap_BR$consistency, 0.95)
+quantile(table_ap_BR$consistency, 0.95)
+quantile(table_ap_BR$consistency, 0.95)
+quantile(table_ap_BR$consistency, 0.95)
+quantile(table_ap_BR$consistency, 0.95)
 
 # How about we compare authenticity and sentiment visualy?
 # Sentiment Brazil
