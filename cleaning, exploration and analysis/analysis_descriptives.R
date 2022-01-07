@@ -560,6 +560,7 @@ ggpubr::ggarrange(US_ttt, BR_ttt, ncol=2, common.legend = TRUE, legend="bottom")
 
 ######
 # Let's create a simple table for authenticity performances by speaker and year for both cases
+# Let's get only obs above the 95th percentile
 # First, let's fix some names
 BR$doc_id <- gsub("Dilma", "Rousseff", BR$doc_id)
 BR$doc_id <- gsub("Aecio", "Neves", BR$doc_id)
@@ -581,21 +582,30 @@ table_ap_BR <- BR %>%
          origins = (origins/length)*1000,
          common_sense = (common_sense/length)*1000,
          anti_pc = (anti_PC/length)*1000,
-         territory = (territory/length)*1000,
-         date = stringr::str_extract(doc_id, "[0-9]{4}$")) %>%
-  select(-c(truth, lies, fpoint, anti_PC, length)) %>% 
-  arrange(date) %>% 
+         territory = (territory/length)*1000) %>%
+  select(-c(truth, lies, fpoint, anti_PC, length))
+total <- table_ap_BR %>% select(-doc_id) %>% mutate(total = rowSums(.)) %>% select(total)
+table_ap_BR <- cbind(table_ap_BR, total)
+table_ap_BR <- table_ap_BR %>% 
+  mutate(date = stringr::str_extract(doc_id, "[0-9]{4}$"),
+         politician = stringr::str_remove(doc_id, "_[0-9]{4}$")) %>%
+  arrange(date) %>%
   mutate_if(is.numeric, round, 3) %>% 
-  select(-date) %>%
-  mutate(consistency = ifelse(consistency > quantile(consistency, 0.95), paste0(consistency, "*"), consistency),
-         origins = ifelse(origins > quantile(origins, 0.95), paste0(origins, "*"), origins),
-         truth_telling = ifelse(truth_telling > quantile(truth_telling, 0.95), paste0(truth_telling, "*"), truth_telling),
-         lie_accusations = ifelse(lie_accusations > quantile(lie_accusations, 0.95), paste0(lie_accusations, "*"), lie_accusations),
-         finger_pointing = ifelse(finger_pointing > quantile(finger_pointing, 0.95), paste0(finger_pointing, "*"), finger_pointing),
-         common_sense = ifelse(common_sense > quantile(common_sense, 0.95), paste0(common_sense, "*"), common_sense),
-         anti_pc = ifelse(anti_pc > quantile(anti_pc, 0.95), paste0(anti_pc, "*"), anti_pc),
-         territory = ifelse(territory > quantile(territory, 0.95), paste0(territory, "*"), territory))
-# write.table(table_ap_BR, file = "table_ap_BR.txt", sep = ",", quote = FALSE, row.names = F)
+  mutate(consistency = ifelse(consistency > quantile(consistency, 0.95), paste0(consistency, "*"), NA),
+         origins = ifelse(origins > quantile(origins, 0.95), paste0(origins, "*"), NA),
+         truth_telling = ifelse(truth_telling > quantile(truth_telling, 0.95), paste0(truth_telling, "*"), NA),
+         lie_accusations = ifelse(lie_accusations > quantile(lie_accusations, 0.95), paste0(lie_accusations, "*"), NA),
+         finger_pointing = ifelse(finger_pointing > quantile(finger_pointing, 0.95), paste0(finger_pointing, "*"), NA),
+         common_sense = ifelse(common_sense > quantile(common_sense, 0.95), paste0(common_sense, "*"), NA),
+         anti_pc = ifelse(anti_pc > quantile(anti_pc, 0.95), paste0(anti_pc, "*"), NA),
+         territory = ifelse(territory > quantile(territory, 0.95), paste0(territory, "*"), NA),
+         total = ifelse(total > quantile(total, 0.95), paste0(total, "*"), NA)) %>%
+  relocate(politician, date, truth_telling, lie_accusations, consistency, finger_pointing, common_sense, origins, territory, anti_pc) %>% 
+  mutate(abc = paste0(truth_telling, lie_accusations, consistency, finger_pointing, common_sense, origins, territory, anti_pc, total)) %>% 
+  filter(abc != "NANANANANANANANANA") %>% 
+  select(-c(abc, doc_id)) %>% 
+  mutate_all(~replace(., is.na(.), "-"))
+write.table(table_ap_BR, file = "table_ap_BR.txt", sep = ",", quote = FALSE, row.names = F)
 # US
 table_ap_US <- US %>% 
   select(-c(text, setting, settingc, date)) %>%
@@ -608,33 +618,31 @@ table_ap_US <- US %>%
          origins = (origins/length)*1000,
          common_sense = (common_sense/length)*1000,
          anti_pc = (anti_PC/length)*1000,
-         territory = (territory/length)*1000,
-         date = stringr::str_extract(doc_id, "[0-9]{4}$")) %>%
-  select(-c(truth, lies, fpoint, anti_PC, length)) %>% 
-  arrange(date) %>% 
+         territory = (territory/length)*1000) %>%
+  select(-c(truth, lies, fpoint, anti_PC, length))
+total <- table_ap_US %>% select(-doc_id) %>% mutate(total = rowSums(.)) %>% select(total)
+table_ap_US <- cbind(table_ap_US, total)
+table_ap_US <- table_ap_US %>% 
+  mutate(date = stringr::str_extract(doc_id, "[0-9]{4}$"),
+         politician = stringr::str_remove(doc_id, "_[0-9]{4}$")) %>%
+  arrange(date) %>%
   mutate_if(is.numeric, round, 3) %>% 
-  select(-date) %>% 
-  mutate(consistency = ifelse(consistency > quantile(consistency, 0.95), paste0(consistency, "*"), consistency),
-         origins = ifelse(origins > quantile(origins, 0.95), paste0(origins, "*"), origins),
-         truth_telling = ifelse(truth_telling > quantile(truth_telling, 0.95), paste0(truth_telling, "*"), truth_telling),
-         lie_accusations = ifelse(lie_accusations > quantile(lie_accusations, 0.95), paste0(lie_accusations, "*"), lie_accusations),
-         finger_pointing = ifelse(finger_pointing > quantile(finger_pointing, 0.95), paste0(finger_pointing, "*"), finger_pointing),
-         common_sense = ifelse(common_sense > quantile(common_sense, 0.95), paste0(common_sense, "*"), common_sense),
-         anti_pc = ifelse(anti_pc > quantile(anti_pc, 0.95), paste0(anti_pc, "*"), anti_pc),
-         territory = ifelse(territory > quantile(territory, 0.95), paste0(territory, "*"), territory))
-# write.table(table_ap_US, file = "table_ap_US.txt", sep = ",", quote = FALSE, row.names = F)
-####
-
-#Let's see the 95th percentiles for variables and add asterix to the table
-quantile(table_ap_BR$consistency, 0.95)
-quantile(table_ap_BR$origins, 0.95)
-quantile(table_ap_BR$, 0.95)
-quantile(table_ap_BR$consistency, 0.95)
-quantile(table_ap_BR$consistency, 0.95)
-quantile(table_ap_BR$consistency, 0.95)
-quantile(table_ap_BR$consistency, 0.95)
-quantile(table_ap_BR$consistency, 0.95)
-quantile(table_ap_BR$consistency, 0.95)
+  mutate(consistency = ifelse(consistency > quantile(consistency, 0.95), paste0(consistency, "*"), NA),
+         origins = ifelse(origins > quantile(origins, 0.95), paste0(origins, "*"), NA),
+         truth_telling = ifelse(truth_telling > quantile(truth_telling, 0.95), paste0(truth_telling, "*"), NA),
+         lie_accusations = ifelse(lie_accusations > quantile(lie_accusations, 0.95), paste0(lie_accusations, "*"), NA),
+         finger_pointing = ifelse(finger_pointing > quantile(finger_pointing, 0.95), paste0(finger_pointing, "*"), NA),
+         common_sense = ifelse(common_sense > quantile(common_sense, 0.95), paste0(common_sense, "*"), NA),
+         anti_pc = ifelse(anti_pc > quantile(anti_pc, 0.95), paste0(anti_pc, "*"), NA),
+         territory = ifelse(territory > quantile(territory, 0.95), paste0(territory, "*"), NA),
+         total = ifelse(total > quantile(total, 0.95), paste0(total, "*"), NA)) %>%
+  relocate(politician, date, truth_telling, lie_accusations, consistency, finger_pointing, common_sense, origins, territory, anti_pc) %>% 
+  mutate(abc = paste0(truth_telling, lie_accusations, consistency, finger_pointing, common_sense, origins, territory, anti_pc, total)) %>% 
+  filter(abc != "NANANANANANANANANA") %>% 
+  select(-c(abc, doc_id)) %>% 
+  mutate_all(~replace(., is.na(.), "-"))
+#write.table(table_ap_US, file = "table_ap_US.txt", sep = ",", quote = FALSE, row.names = F)
+#####
 
 # How about we compare authenticity and sentiment visualy?
 # Sentiment Brazil
