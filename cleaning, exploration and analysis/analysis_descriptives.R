@@ -22,7 +22,7 @@ library(Hmisc)
 # US
 
 # Speeches
-load("~/GitHub/authenticity_performances/data/US_oral.rda")
+load("~/Documents/GitHub/authenticity_performances/data/US_oral.rda")
 uoral <- US_oral %>% select(speaker, date, text)
 uoral$speaker <- paste0(uoral$speaker, "_", stringr::str_extract_all(uoral$date, "^[0-9]{4}")) # speaker year
 uoral <- aggregate(uoral$text, list(uoral$speaker), paste, collapse = " ")
@@ -30,7 +30,7 @@ uoral <- rename(uoral, doc_id = "Group.1", text = "x")
 uoral$setting <- "speeches"
 
 # Campaign
-load("~/GitHub/authenticity_performances/data/US_campaign.rda")
+load("~/Documents/GitHub/authenticity_performances/data/US_campaign.rda")
 ucamp <- US_campaign %>% select(speaker, date, text)
 ucamp$speaker <- paste0(ucamp$speaker, "_", stringr::str_extract_all(ucamp$date, "^[0-9]{4}")) # speaker year
 ucamp <- aggregate(ucamp$text, list(ucamp$speaker), paste, collapse = " ")
@@ -38,7 +38,7 @@ ucamp <- rename(ucamp, doc_id = "Group.1", text = "x")
 ucamp$setting <- "campaign"
 
 # Debates
-load("~/GitHub/authenticity_performances/data/US_debates.rda")
+load("~/Documents/GitHub/authenticity_performances/data/US_debates.rda")
 udeb <- US_debates %>% select(Speakers, Date, Text)
 udeb$speaker <- paste0(udeb$Speakers, "_", stringr::str_extract_all(udeb$Date, "^[0-9]{4}")) # speaker year
 udeb <- aggregate(udeb$Text, list(udeb$speaker), paste, collapse = " ")
@@ -46,7 +46,7 @@ udeb <- rename(udeb, doc_id = "Group.1", text = "x")
 udeb$setting <- "debates"
 
 # Interview
-load("~/GitHub/authenticity_performances/data/US_interviews.rda")
+load("~/Documents/GitHub/authenticity_performances/data/US_interviews.rda")
 uint <- US_interviews %>% select(speaker, date, text)
 uint$speaker <- paste0(uint$speaker, "_", stringr::str_extract_all(uint$date, "^[0-9]{4}")) # speaker year
 uint <- aggregate(uint$text, list(uint$speaker), paste, collapse = " ")
@@ -58,7 +58,7 @@ US <- rbind (uoral, ucamp, udeb, uint)
 
 # Brazil
 # Speeches
-BR_oral <- readRDS("~/GitHub/authenticity_performances/data/BR_oral.Rds")
+BR_oral <- readRDS("~/Documents/GitHub/authenticity_performances/data/BR_oral.Rds")
 boral <- BR_oral %>% select(year, president, text)
 boral$Speaker <- paste0(boral$president, "_", boral$year) # get speaker year
 boral <- aggregate(boral$text, list(boral$Speaker), paste, collapse = " ")
@@ -66,7 +66,7 @@ boral <- rename(boral, doc_id = "Group.1", text = "x")
 boral$setting <- "speeches"
 
 # Campaign
-load("~/GitHub/authenticity_performances/data/BR_campaign.rda")
+load("~/Documents/GitHub/authenticity_performances/data/BR_campaign.rda")
 bcamp <- BR_Campaign %>% select(Speaker, Date, Text)
 bcamp$Speaker <- paste0(bcamp$Speaker, "_", bcamp$Date) # get speaker year
 bcamp <- aggregate(bcamp$Text, list(bcamp$Speaker), paste, collapse = " ")
@@ -74,7 +74,7 @@ bcamp <- rename(bcamp, doc_id = "Group.1", text = "x")
 bcamp$setting <- "campaign"
 
 # Debates
-load("~/GitHub/authenticity_performances/data/BR_debates.rda")
+load("~/Documents/GitHub/authenticity_performances/data/BR_debates.rda")
 bdeb <- BR_debates %>% select(Speaker, Date, Text)
 bdeb$Date <- stringr::str_extract(bdeb$Date, "[0-9]{4}")
 bdeb$Speaker <- paste0(bdeb$Speaker, "_", bdeb$Date) # get speaker year
@@ -83,7 +83,7 @@ bdeb <- rename(bdeb, doc_id = "Group.1", text = "x")
 bdeb$setting <- "debates"
 
 # Interviews
-load("~/GitHub/authenticity_performances/data/BR_interviews.rda")
+load("~/Documents/GitHub/authenticity_performances/data/BR_interviews.rda")
 bint <- BR_Interviews %>% select(Speaker, Date, Text)
 bint$Speaker <- paste0(bint$Speaker, "_", bint$Date) # get speaker year
 bint <- aggregate(bint$Text, list(bint$Speaker), paste, collapse = " ")
@@ -97,7 +97,7 @@ BR <- rbind(boral, bcamp, bdeb, bint)
 # remove all punctuations. Because this takes a while
 # Rds versions of this data can be found in the data folder.
 # They are called US.Rds and BR.Rds. You can load these if
-# you do not want to run the following lines (93-110).
+# you do not want to run the following lines (100-117).
 textus <- purrr::map(US$text, as.character)
 textus <- gsub("[[:punct:]]", "", textus, perl=TRUE)
 textus <- tolower(textus) # lower case
@@ -167,7 +167,7 @@ truth_time <- US %>%
   select(truth, date, setting, length) %>%
   mutate(n_truth = truth/length) %>%
   group_by(setting, date) %>%
-  summarize(value = sum(n_truth))
+  summarise(value = sum(n_truth))
 ggplot(truth_time, aes(x = date, y = value , fill = setting)) +
   geom_line(aes(group = setting)) +
   geom_point(size = 8, shape = 21)
@@ -177,7 +177,7 @@ lies_time <- US %>%
   select(lies, date, setting, length) %>%
   mutate(n_lies = lies/length) %>%
   group_by(setting, date) %>%
-  summarize(value = sum(n_lies))
+  summarise(value = sum(n_lies))
 ggplot(lies_time, aes(x = date, y = value , fill = setting)) +
   geom_line(aes(group = setting)) +
   geom_point(size = 8, shape = 21)
@@ -187,7 +187,7 @@ antipc_time <- US %>%
   select(anti_PC, date, setting, length) %>%
   mutate(n_PC = anti_PC/length) %>%
   group_by(setting, date) %>%
-  summarize(value = sum(n_PC))
+  summarise(value = sum(n_PC))
 ggplot(antipc_time, aes(x = date, y = value , fill = setting)) +
   geom_line(aes(group = setting)) +
   geom_point(size = 8, shape = 21)
@@ -265,6 +265,22 @@ US_setting_time <- ggplot(aut_perf_set_long, aes(x = reorder(date2, as.numeric(d
   theme_fivethirtyeight()
 US_setting_time
 # Not at all as expected... but interesting!!!
+# let's try to add a distinction between collective and individual performances
+aut_perf_set_long_type <- aut_perf_setting %>%
+  tidyr::pivot_longer(consistency:anti_pc) %>% 
+  mutate(type = ifelse(grepl("territory|anti_pc|origins|common_sense", name), "collective", "individual")) %>% 
+  group_by(type, setting, date) %>%
+  summarise(value = sum(value)) %>% 
+  mutate(setting_type = paste(setting, type, sep = "-"),
+         date2 = stringr::str_extract(date, "[0-9]{2}$"))
+US_setting_type_time <- ggplot(aut_perf_set_long_type, aes(x = reorder(date2, as.numeric(date)), y = value, fill = setting_type)) +
+  geom_line(aes(group = setting_type, color = setting_type), size = 0.7) +
+  labs(x = "",
+       y = "",
+       title = "Authenticity Performances by Setting and Type in the US in Time",
+       subtitle = "Normalized by number of characters per year and setting in dataset") +
+  theme_fivethirtyeight()
+US_setting_type_time
 
 # Brazil
 
@@ -309,7 +325,7 @@ consistency_time <- BR %>%
   select(consistency, date, setting, length) %>%
   mutate(n_consistency = consistency/length) %>%
   group_by(setting, date) %>%
-  summarize(value = sum(n_consistency))
+  summarise(value = sum(n_consistency))
 ggplot(consistency_time, aes(x = date, y = value , fill = setting)) +
   geom_line(aes(group = setting)) +
   geom_point(size = 8, shape = 21)
@@ -319,7 +335,7 @@ fpoint_time <- BR %>%
   select(fpoint, date, setting, length) %>%
   mutate(n_fpoint = fpoint/length) %>%
   group_by(setting, date) %>%
-  summarize(value = sum(n_fpoint))
+  summarise(value = sum(n_fpoint))
 ggplot(fpoint_time, aes(x = date, y = value , fill = setting)) +
   geom_line(aes(group = setting)) +
   geom_point(size = 8, shape = 21)
@@ -329,7 +345,7 @@ antipc_time_BR <- BR %>%
   select(anti_PC, date, setting, length) %>%
   mutate(n_PC = anti_PC/length) %>%
   group_by(setting, date) %>%
-  summarize(value = sum(n_PC))
+  summarise(value = sum(n_PC))
 ggplot(antipc_time_BR, aes(x = date, y = value , fill = setting)) +
   geom_line(aes(group = setting)) +
   geom_point(size = 8, shape = 21)
@@ -420,6 +436,22 @@ BR_setting_time <- ggplot(aut_perf_set_long_BR, aes(x = reorder(date2, as.numeri
        subtitle = "Normalized by number of characters per year and setting in dataset") +
   theme_fivethirtyeight()
 BR_setting_time
+# let's try to add a distinction between collective and individual performances
+aut_perf_set_long_BR_type <- aut_perf_setting_BR %>%
+  tidyr::pivot_longer(consistency:anti_pc) %>% 
+  mutate(type = ifelse(grepl("territory|anti_pc|origins|common_sense", name), "collective", "individual")) %>% 
+  group_by(type, setting, date) %>%
+  summarise(value = sum(value)) %>% 
+  mutate(setting_type = paste(setting, type, sep = "-"),
+         date2 = stringr::str_extract(date, "[0-9]{2}$"))
+BR_setting_type_time <- ggplot(aut_perf_set_long_BR_type, aes(x = reorder(date2, as.numeric(date)), y = value, fill = setting_type)) +
+  geom_line(aes(group = setting_type, color = setting_type), size = 0.7) +
+  labs(x = "",
+       y = "",
+       title = "Authenticity Performances by Setting and Type in Brazil in Time",
+       subtitle = "Normalized by number of characters per year and setting in dataset") +
+  theme_fivethirtyeight()
+BR_setting_type_time
 
 # Let's compare Brazil and the US for authenticity performances across settings
 aut_perf_set_long$Setting <- paste0(aut_perf_set_long$setting, "_US")
@@ -468,6 +500,16 @@ ap_total_time$ey <- ifelse(ap_total_time$country == "Brazil" & grepl("1989|1994|
                                                                      ap_total_time$date),
                            ap_total_time$date, ap_total_time$ey)
 ap_total_time$ey <- ifelse(ap_total_time$ey != "", "EY", "")
+# let just check that there is not a statistically significant correlation between EY and total AP
+check_ey <- lm(value ~ as.factor(ifelse(ey == "EY", 1, 0)) + as.factor(country), ap_total_time)
+stargazer::stargazer(check_ey, type = "text")
+# not statistically significant, not even a positive relationship for either case.
+# in comparison to Brazil, EY in the US shows to be negative statistically significant.
+# Let's also check if the increases per year in Brazil is statistically significant
+ap_total_time_br <- ap_total_time %>% dplyr::filter(country == "Brazil")
+check_year_br <- lm(value ~ as.factor(date), ap_total_time)
+stargazer::stargazer(check_year_br, type = "text")
+# some Dilma years are statistically significant
 ggplot(ap_total_time, aes(x = reorder(date2, as.numeric(date)), y = value , fill = country, label = ey)) +
   geom_line(aes(group = country)) +
   geom_point(size = 4, shape = 21) +
@@ -479,9 +521,12 @@ ggplot(ap_total_time, aes(x = reorder(date2, as.numeric(date)), y = value , fill
        caption = "Respective election years per country are labbeled EY") +
   theme_fivethirtyeight()
 # Used in paper!
-#######
-
+######## Get both settings cases
 gridExtra::grid.arrange(US_setting_time, BR_setting_time)
+# get collective vs indivual
+gridExtra::grid.arrange(US_setting_type_time, BR_setting_type_time)
+ggpubr::ggarrange(US_setting_type_time, BR_setting_type_time, nrow = 2, common.legend = TRUE, legend="bottom")
+#########
 
 # How about we create a stacked bar plot for both cases in time.
 US_time <- US %>%
@@ -656,7 +701,7 @@ sent_BR <- sent_BR %>%
 # Get Afinn
 sent_BR_af <- inner_join(sent_BR, Afinn_pt, by = "word") %>%
   group_by(id) %>%
-  summarize(sentiment = sum(n)) %>%
+  summarise(sentiment = sum(n)) %>%
   arrange(id)
 sent_BR_af$date <- stringr::str_extract(sent_BR_af$id, "[0-9]{4}")
 sent_BR_af <- sent_BR_af %>%
@@ -681,7 +726,7 @@ sent_US <- sent_US %>%
 # Get Afinn
 sent_US_af <- inner_join(sent_US, get_sentiments("afinn"), by = "word") %>%
   group_by(id) %>%
-  summarize(sentiment = sum(n)) %>%
+  summarise(sentiment = sum(n)) %>%
   arrange(id)
 sent_US_af$date <- stringr::str_extract(sent_US_af$id, "[0-9]{4}")
 sent_US_af <- sent_US_af %>%
