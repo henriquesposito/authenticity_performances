@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.6)  6 JUL 2022 19:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.6)  12 JUL 2022 19:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -633,19 +633,19 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 
 {/Users/henriquesposito/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 158.
+(Font)              <10> on input line 157.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 158.
+(Font)              <7> on input line 157.
 [2] [3] [4] [5] [6] [7]
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 663.
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 665.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <11> on input line 663.
+(Font)              <11> on input line 665.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7.69997> on input line 663.
+(Font)              <7.69997> on input line 665.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5.5> on input line 663.
+(Font)              <5.5> on input line 665.
 
-LaTeX Warning: Float too large for page by 22.92143pt on input line 664.
+LaTeX Warning: Float too large for page by 22.92143pt on input line 666.
 
 [8] [9
 
@@ -654,50 +654,50 @@ LaTeX Warning: Float too large for page by 22.92143pt on input line 664.
 <ap_sposito_files/figure-latex/Figure 1-1.pdf, id=200, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 1-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 1-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 1-1.pdf  used on input line 889.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 1-1.pdf  used on input line 890.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [11] [12 <./ap_sposito_files/figure-latex/Figure 1-1.pdf>]
 <ap_sposito_files/figure-latex/Figure 2-1.pdf, id=220, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 2-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 2-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 2-1.pdf  used on input line 951.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 2-1.pdf  used on input line 953.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [13 <./ap_sposito_files/figure-latex/Figure 2-1.pdf>]
 <ap_sposito_files/figure-latex/Figure 3-1.pdf, id=238, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 3-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 3-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 3-1.pdf  used on input line 986.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 3-1.pdf  used on input line 988.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [14 <./ap_sposito_files/figure-latex/Figure 3-1.pdf>]
 <ap_sposito_files/figure-latex/Figure 4-1.pdf, id=255, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 4-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 4-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 4-1.pdf  used on input line 1078.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 4-1.pdf  used on input line 1081.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [15] [16 <./ap_sposito_files/figure-latex/Figure 4-1.pdf>] [17] [18]
-Underfull \hbox (badness 1043) in paragraph at lines 1375--1378
+Underfull \hbox (badness 1043) in paragraph at lines 1407--1410
 []\T1/lmr/m/n/10 Sposito, Hen-rique. 2021. \T1/lmr/m/it/10 Poldis: Tools for An-a-lyz-ing Po-lit-i-cal Dis-course\T1/lmr/m/n/10 . []$https : / / github . com /
  []
 
-[19] [20
+[19] [20] [21
 
-] [21] [22] [23] [24] [25] (./ap_sposito.aux)
+] [22] [23] [24] [25] [26] (./ap_sposito.aux)
 Package rerunfilecheck Info: File `ap_sposito.out' has not changed.
 (rerunfilecheck)             Checksum: 10D7197167359F85ED87EC0470D94565;3786.
  ) 
 Here is how much of TeX's memory you used:
- 16502 strings out of 479996
- 306026 string characters out of 5886759
- 618653 words of memory out of 5000000
+ 16512 strings out of 479996
+ 306157 string characters out of 5886759
+ 618871 words of memory out of 5000000
  34282 multiletter control sequences out of 15000+600000
  559924 words of font info for 94 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  72i,16n,77p,2777b,1206s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}</Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx7.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb>
-Output written on ap_sposito.pdf (25 pages, 485162 bytes).
+Output written on ap_sposito.pdf (26 pages, 490535 bytes).
 PDF statistics:
- 489 PDF objects out of 1000 (max. 8388607)
- 416 compressed objects within 5 object streams
- 148 named destinations out of 1000 (max. 500000)
+ 505 PDF objects out of 1000 (max. 8388607)
+ 431 compressed objects within 5 object streams
+ 158 named destinations out of 1000 (max. 500000)
  173 words of extra memory for PDF output out of 10000 (max. 10000000)
 
