@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.6)  12 JUL 2022 19:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.6)  14 JUL 2022 09:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -522,31 +522,31 @@ File: l3backend-pdftex.def 2022-07-01 L3 backend support: PDF output (pdfTeX)
 ) (./ap_sposito.aux)
 \openout1 = `ap_sposito.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 117.
-LaTeX Font Info:    ... okay on input line 117.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 118.
+LaTeX Font Info:    ... okay on input line 118.
 (/Users/henriquesposito/Library/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
 (/Users/henriquesposito/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring OFF on input line 117.
+Package hyperref Info: Link coloring OFF on input line 118.
 (./ap_sposito.out) (./ap_sposito.out)
 \@outlinefile=\write3
 \openout3 = `ap_sposito.out'.
@@ -593,89 +593,89 @@ Package: fr-longtable 2007/11/28 v0.1b (beta) floatrow: additions for longtable
 \flrow@LT@prelastfoot=\box82
 \c@FBLTpage=\count327
 )
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 119.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 120.
 (/Users/henriquesposito/Library/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 119.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 120.
 (/Users/henriquesposito/Library/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 119.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 120.
 (/Users/henriquesposito/Library/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 119.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 120.
 (/Users/henriquesposito/Library/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 119.
+(Font)              <12> on input line 120.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 119.
+(Font)              <8> on input line 120.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 119.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 119.
+(Font)              <6> on input line 120.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 120.
 (/Users/henriquesposito/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 119.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 120.
 (/Users/henriquesposito/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 119.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 120.
 (/Users/henriquesposito/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 119.
+(Font)              <5> on input line 120.
 [1
 
 {/Users/henriquesposito/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 157.
+(Font)              <10> on input line 158.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 157.
+(Font)              <7> on input line 158.
 [2] [3] [4] [5] [6] [7]
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 665.
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 669.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <11> on input line 665.
+(Font)              <11> on input line 669.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7.69997> on input line 665.
+(Font)              <7.69997> on input line 669.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5.5> on input line 665.
+(Font)              <5.5> on input line 669.
 
-LaTeX Warning: Float too large for page by 22.92143pt on input line 666.
+LaTeX Warning: Float too large for page by 22.92143pt on input line 670.
 
 [8] [9
 
 
 ] [10]
-<ap_sposito_files/figure-latex/Figure 1-1.pdf, id=200, 469.755pt x 325.215pt>
+<ap_sposito_files/figure-latex/Figure 1-1.pdf, id=201, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 1-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 1-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 1-1.pdf  used on input line 890.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 1-1.pdf  used on input line 894.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [11] [12 <./ap_sposito_files/figure-latex/Figure 1-1.pdf>]
-<ap_sposito_files/figure-latex/Figure 2-1.pdf, id=220, 469.755pt x 325.215pt>
+<ap_sposito_files/figure-latex/Figure 2-1.pdf, id=221, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 2-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 2-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 2-1.pdf  used on input line 953.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 2-1.pdf  used on input line 957.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [13 <./ap_sposito_files/figure-latex/Figure 2-1.pdf>]
-<ap_sposito_files/figure-latex/Figure 3-1.pdf, id=238, 469.755pt x 325.215pt>
+<ap_sposito_files/figure-latex/Figure 3-1.pdf, id=239, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 3-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 3-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 3-1.pdf  used on input line 988.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 3-1.pdf  used on input line 992.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [14 <./ap_sposito_files/figure-latex/Figure 3-1.pdf>]
-<ap_sposito_files/figure-latex/Figure 4-1.pdf, id=255, 469.755pt x 325.215pt>
+<ap_sposito_files/figure-latex/Figure 4-1.pdf, id=256, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 4-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 4-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 4-1.pdf  used on input line 1081.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 4-1.pdf  used on input line 1084.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [15] [16 <./ap_sposito_files/figure-latex/Figure 4-1.pdf>] [17] [18]
-Underfull \hbox (badness 1043) in paragraph at lines 1407--1410
+Underfull \hbox (badness 1043) in paragraph at lines 1411--1414
 []\T1/lmr/m/n/10 Sposito, Hen-rique. 2021. \T1/lmr/m/it/10 Poldis: Tools for An-a-lyz-ing Po-lit-i-cal Dis-course\T1/lmr/m/n/10 . []$https : / / github . com /
  []
 
@@ -688,16 +688,16 @@ Package rerunfilecheck Info: File `ap_sposito.out' has not changed.
 Here is how much of TeX's memory you used:
  16512 strings out of 479996
  306157 string characters out of 5886759
- 618871 words of memory out of 5000000
+ 619370 words of memory out of 5000000
  34282 multiletter control sequences out of 15000+600000
  559924 words of font info for 94 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  72i,16n,77p,2777b,1206s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}</Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx7.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb>
-Output written on ap_sposito.pdf (26 pages, 490535 bytes).
+Output written on ap_sposito.pdf (26 pages, 492202 bytes).
 PDF statistics:
- 505 PDF objects out of 1000 (max. 8388607)
- 431 compressed objects within 5 object streams
+ 506 PDF objects out of 1000 (max. 8388607)
+ 432 compressed objects within 5 object streams
  158 named destinations out of 1000 (max. 500000)
  173 words of extra memory for PDF output out of 10000 (max. 10000000)
 
