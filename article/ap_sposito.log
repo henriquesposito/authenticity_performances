@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.6)  14 JUL 2022 09:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.6)  14 JUL 2022 17:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -637,15 +637,15 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 158.
 [2] [3] [4] [5] [6] [7]
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 669.
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 671.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <11> on input line 669.
+(Font)              <11> on input line 671.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7.69997> on input line 669.
+(Font)              <7.69997> on input line 671.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5.5> on input line 669.
+(Font)              <5.5> on input line 671.
 
-LaTeX Warning: Float too large for page by 22.92143pt on input line 670.
+LaTeX Warning: Float too large for page by 22.92143pt on input line 672.
 
 [8] [9
 
@@ -654,28 +654,28 @@ LaTeX Warning: Float too large for page by 22.92143pt on input line 670.
 <ap_sposito_files/figure-latex/Figure 1-1.pdf, id=201, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 1-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 1-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 1-1.pdf  used on input line 894.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 1-1.pdf  used on input line 896.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [11] [12 <./ap_sposito_files/figure-latex/Figure 1-1.pdf>]
 <ap_sposito_files/figure-latex/Figure 2-1.pdf, id=221, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 2-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 2-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 2-1.pdf  used on input line 957.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 2-1.pdf  used on input line 959.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [13 <./ap_sposito_files/figure-latex/Figure 2-1.pdf>]
 <ap_sposito_files/figure-latex/Figure 3-1.pdf, id=239, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 3-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 3-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 3-1.pdf  used on input line 992.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 3-1.pdf  used on input line 994.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [14 <./ap_sposito_files/figure-latex/Figure 3-1.pdf>]
 <ap_sposito_files/figure-latex/Figure 4-1.pdf, id=256, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 4-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 4-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 4-1.pdf  used on input line 1084.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 4-1.pdf  used on input line 1086.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [15] [16 <./ap_sposito_files/figure-latex/Figure 4-1.pdf>] [17] [18]
-Underfull \hbox (badness 1043) in paragraph at lines 1411--1414
+Underfull \hbox (badness 1043) in paragraph at lines 1412--1415
 []\T1/lmr/m/n/10 Sposito, Hen-rique. 2021. \T1/lmr/m/it/10 Poldis: Tools for An-a-lyz-ing Po-lit-i-cal Dis-course\T1/lmr/m/n/10 . []$https : / / github . com /
  []
 
@@ -694,7 +694,7 @@ Here is how much of TeX's memory you used:
  14 hyphenation exceptions out of 8191
  72i,16n,77p,2777b,1206s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}</Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx7.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb>
-Output written on ap_sposito.pdf (26 pages, 492202 bytes).
+Output written on ap_sposito.pdf (26 pages, 492317 bytes).
 PDF statistics:
  506 PDF objects out of 1000 (max. 8388607)
  432 compressed objects within 5 object streams
