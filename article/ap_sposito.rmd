@@ -1,25 +1,36 @@
 ---
-title: "&quot;Just saying what we are all thinking&quot; &#58; Anti-Political Correctness and Authenticity Performances in Politics in Brazil and the United States"
-author:
-- Henrique Sposito^[PhD Candidate in International Relations and Political Sciences at the Graduate Institute of International and Development Studies of Geneva and affiliated to the Centre for International Environmental Studies.]
-date: "11 July 2022"
+title: "Anti-Political Correctness and Authenticity Performances in Politics in Brazil and the United States"
+author: Henrique Sposito^[henrique.sposito@graduateinstitute.ch Graduate Institute of International and Development Studies, Geneva, Switzerland]
+date: "19 August 2022"
 output:
   pdf_document: default
+  latex_engine: xelatex
   fig_caption: yes
   html_document:
     df_print: paged
-  word_document:
-    reference_docx: template.docx
+fontsize: 12pt
+mainfont: Times New Roman
 header-includes:
    - \usepackage{floatrow}
    - \floatsetup[figure]{capposition=top}
    - \usepackage{float}
    - \floatplacement{figure}{H}
+   - \usepackage[T1]{fontenc}
+   - \usepackage[utf8]{inputenc}
+   - |
+    ```{=latex}
+    \providecommand{\keywords}[1]{\textbf{Keywords:} #1}
+    ```
 always_allow_html: TRUE
 bibliography: references.bib
 csl: chicago.csl
-abstract: Various politicians have publicly denounced "political correctness" (PC). While some scholars argue that anti-PC discourses in politics are populist tools to label elites [@mudde2004] or a form of cultural backlash against liberal changes [@norris2019], these explanations focus on specific manifestations of anti-PC by specific politicians that embody their arguments. This article argues that anti-PC discourses are performances of authenticity in politics. As authenticity performances, anti-PC discourses reduce the perceived link between thinking and saying for audiences [@conway2009]. A framework for identifying several discursive performances of authenticity in politics, beyond anti-PC, that focuses on displays (what), projections (who, when, and where), and mechanisms (how) is developed. A purpose-built dictionary of terms is designed to detect authenticity performances in text datasets of campaign rallies, debates, interviews, and official speeches gathered for presidents and presidential candidates in Brazil and the United States since the 1980s. The analysis indicates that authenticities are not performed more frequently in election years, politicians usually perform authenticities most when they are candidates or after having left office. However, in the case of Brazil, authenticity performances spiked from 2010 to 2016 while Dilma Rousseff was in office. Nonetheless, the types of authenticity performed over time changed in each case, indicating that contextual conditions make some types of performances more, or less, credible to audiences and that politicians adapt to perform what audiences “want to hear”. Lastly, debates have become the setting in which authenticity is performed most frequently, whereas interviews are the setting in which authenticity is performed least frequently, in both cases in recent years.
+abstract: Various politicians have publicly denounced "political correctness" (PC). While some scholars argue that anti-PC discourses in politics are populist tools to label elites [@mudde2004] or a form of cultural backlash against liberal changes [@norris2019], these explanations focus on specific manifestations of anti-PC by specific politicians. Instead, this article argues that anti-PC discourses are performances of authenticity in politics. As authenticity performances, anti-PC discourses reduce the perceived link between thinking and saying for audiences [see @conway2009]. A framework for identifying several discursive performances of authenticity in politics that focuses on displays (what), projections (who, when, and where), and mechanisms (how) is developed. A purpose-built dictionary of terms is designed to detect authenticity performances in text datasets of campaign rallies, debates, interviews, and official speeches gathered for presidents and presidential candidates in Brazil and the United States since the 1980s. The analysis indicates that authenticities are not performed more frequently in election years, politicians usually perform different authenticities most when they are candidates or after having left office. Although, in the case of Brazil, authenticity performances spiked from 2010 to 2016 while Dilma Rousseff was in office. The types of authenticity performed over time also changed in each case across time, indicating that contextual conditions make some types of performances more, or less, credible to audiences and that politicians adapt to perform what audiences “want to hear”. Lastly, debates have become the setting in which authenticity is performed most frequently, whereas interviews are the setting in which authenticity is performed least frequently, in both cases in recent years.
+keywords: [authenticity, political correctness, pollitically correct, performance, Brazil, United States]
 ---
+
+```{=latex}
+\keywords{ authenticity, political correctness, pollitically correct, performance, Brazil, United States}
+```
 
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(include = FALSE)
@@ -115,7 +126,7 @@ BR$territory <- stringr::str_count(BR$text, paste0("(?i)", territory))
 
 In the second sentence of his inaugural speech as president of Brazil, Jair Bolsonaro declared the day in which the people began to be free from political correctness ^[ Find the whole speech here. Besides denouncing PC, Bolsonaro has also frequently referred to indigenous peoples and LGBT community in politically incorrect ways.]. Bolsonaro is not unique in this sense, politicians as Trump, Chavez, Morales, Berlusconi, Bush, Sanders, and Lula, have openly denounced political correctness (PC) ^[ PC is used as an abbreviation for political correctness and politically correct throughout the paper, that is, as a noun and as an adjective.] and/or publicly employed politically incorrect language ^[ Trump denounces PC and employs politically incorrect language across several domains ranging from immigration to race and indigenous people. Trump’s 'war' on PC is frequently brought up in campaign [rallies](https://edition.cnn.com/2018/10/30/politics/donald-trump-hate-speech-anti-semitism-steve-king-kevin-mccarthy/index.html) and on [Twitter](https://www.thetrumparchive.com/?searchbox=%22politically+correct%22). Morales displays 'bad manners', favors plain speaking and is not PC often making sexist and homophobic [comments](https://www.bbc.com/news/world-latin-america-34851896). When it comes to Hugo Chavez, the leader making public sexual comments during his talk show aired on national television, towards George W. [Bush](https://www.youtube.com/watch?v=lOsABwCrn3E), among many others controversial [remarks](https://elpais.com/internacional/2013/03/06/actualidad/1362528053_830886.html). Berlusconi has numerous times made references to Barack Obama’s skin [color](https://www.theguardian.com/world/2009/sep/28/obama-tan-berlusconi) in incorrect ways, made similar comments about some football [players](https://www.si.com/soccer/2013/02/06/mario-balotelli-racism-ac-milan), and made several sexist and homophobic public [remarks](https://time.com/5179379/italy-silvio-berlusconi-sexist-remarks-women/). Lula quickly recalled the national guide on PC language as he constantly used several of the expressions listed in his speeches and campaign [rallies](https://www1.folha.uol.com.br/folha/brasil/ult96u68810.shtml). Bush, while president, famously denounced PC language on campuses during a commencement [speech](https://www.youtube.com/watch?v=4IORaF6fi_Y). Bernie Sanders stated several times how important PC was for Trump’s campaign and PC had gone too [far](https://qz.com/865263/bernie-sanders-and-political-correctness-democrats-are-learning-all-the-wrong-lessons-from-donald-trump-election-win/).]. Broad audiences appear to respond positively to these statements in multicultural countries, such as the United States (US) and Brazil, where large portions of the population fall under racial, ethnic, and other categories PC language attempts to safeguard ^[ Most Americans appear unsupportive of PC language with estimations that range from 52% of the population [@montanaro2018] to 80% of the population disliking PC [@mounk2018]. This change in percentages derives from the type of questions asked. For example, one poll asked if participants thought that PC was a big issue in the US, while another asked if they favored the process of the country becoming more politically correct. For Brazil, a recent national poll asked participants whether they agreed that the 'PC patrol is making the world too boring', 56% of participants agreed completely or partially with the statement [@goncalves2020].]. Populist scholars argue that contemporary populists' profit from breaking with PC language and use PC to identify modern elites [@mudde2004] ^[ To discuss whether, or the extent which, Bolsonaro and Trump are populists is not the objective of this paper, though there are many excellent discussions on this topic [see @tamaki2020; @hawkins2018].]. Cultural backlash scholars argue that anti-PC discourses speak to resentment caused by silent liberal changes [@norris2019]. However, both populism and cultural backlash focus on specific manifestations of these discourses by specific leaders that embody their arguments, leaving aside any systematic or empirical analysis of language usage or patterns across contexts. *How, then, do anti-PC discourses appear and change over time in politics?*
 
-This paper argues that anti-PC discourses in politics are performances of authenticity. Performances are the projections of definitions of a situation to others [@goffman1956]. Authenticity, as a perceived character trait that conveys ones’ convictions, is connected to higher levels of political trust from electorates [@stiers2021; @valgarosson2021] and is essential to a candidate’s political success [seem@alexander2010; @fordahl2018]. As an authenticity performance, anti-PC language reduces the perceived link between "thinking and saying" to audiences [@conway2009; @conway2017]. But anti-PC is not the only type of authenticity performance in politics. This article, therefore, develops a framework to identify various types of authenticity performances in political discourses. The framework focuses on the performative display (what), the projection (who, when, and where), and the mechanisms (how). Authenticity performances are divided into two types, individual and collective. Individual authenticity performances derive plausibility from audiences' expectations about a political performer. These performances include claims of truth telling, lie accusations, taking responsibility for actions, or pointing fingers at other politicians' mistakes. Collective authenticity performances derive plausibility from the shared cultural knowledge between politicians and audiences. These include references to origins, allusions to common sense, anti-PC discourses, or assertions of territorial knowledge.
+This paper argues that anti-PC discourses in politics are performances of authenticity. Performances are the projections of definitions of a situation to others [@goffman1956]. Authenticity, as a perceived character trait that conveys ones’ convictions, is connected to higher levels of political trust from electorates [@stiers2021; @valgarosson2021] and is essential to a candidate’s political success [see @alexander2010; @fordahl2018]. As an authenticity performance, anti-PC language reduces the perceived link between thinking and saying to audiences [@conway2009; @conway2017]. There are, though, other political performances that can generate an authenticity perception in audiences. This article, therefore, develops a framework to identify various types of authenticity performances in political discourses. The framework focuses on the performative display (what), the projection (who, when, and where), and the mechanisms (how). Authenticity performances are divided into two types, individual and collective. Individual authenticity performances derive plausibility from audiences' expectations about a political performer. These performances include claims of truth telling, lie accusations, taking responsibility for actions, or pointing fingers at other politicians' mistakes. Collective authenticity performances derive plausibility from the shared cultural knowledge between politicians and audiences. These include references to origins, allusions to common sense, anti-PC discourses, or assertions of territorial knowledge.
 
 Political discourses at the national level in Brazil and the US since the 1980s were gathered and explored to assess variations over time, by politicians, and across different settings. The 1980s were chosen as the starting point as they both mark the beginning of the university debates surrounding PC language in the US and the decade in which democracy was re-established in Brazil. Texts for campaign rallies, debates, interviews, and official speeches for presidents and presidential candidates in Brazil and the US until December 2021 were scraped to construct the datasets. A purpose-built dictionary of terms was created to capture various authenticity performances, as anti-PC, in discourses.
 
@@ -201,14 +212,13 @@ table2 <- tibble::tibble("Country" = c("US", "US", "US", "US",
                          "Source" = c("TAPP", "TAPP", "TAPP", "TAPP",
                                       "Cezar (2020)", "YouTube", "YouTube", "YouTube"))
 kbl(table2, booktabs = T, caption = "Text Data for Brazil and the US") %>%
-  kable_styling(latex_options = c("striped", "repeat_header", "scale_down"),
-                position= "center", font_size = 10) %>%
-  column_spec(1, width="3cm", bold=TRUE) %>%
-  column_spec(2, width="3cm") %>%
-  column_spec(3, width = "3cm") %>%
-  column_spec(4, width = "3cm") %>%
-  column_spec(5, width = "3cm") %>%
-  column_spec(6, width = "3cm")
+  kable_styling(latex_options = "HOLD_position", position = "center", font_size = 12) %>%
+  column_spec(1, width="2cm", bold=TRUE) %>%
+  column_spec(2, width="2cm") %>%
+  column_spec(3, width = "2cm") %>%
+  column_spec(4, width = "2cm") %>%
+  column_spec(5, width = "2cm") %>%
+  column_spec(6, width = "2cm")
 ```
 
 ## 4.3 Operationalization
@@ -270,7 +280,7 @@ table3 <- tibble::tibble("Authenticity Performance" = c("Truth Telling",
                                               0.009345240, 0.004811932))
 kbl(table3, booktabs = T,
     caption = "Average Authenticity Performances in Brazil and the US") %>%
-  kable_styling(latex_options = "HOLD_position", position = "center", font_size = 10) %>%
+  kable_styling(latex_options = "HOLD_position", position = "center", font_size = 12) %>%
   column_spec(1, bold=TRUE)
 ```
 
@@ -323,7 +333,7 @@ ggplot(ap_total_time, aes(x = as.Date(date, "%Y"),
        title = "Total Authenticity Performances\nin Brazil and the US over Time",
        subtitle = "Normalized by number of characters per year in dataset",
        caption = "Black dots mark election years in respective country") +
-  theme_fivethirtyeight()
+  theme_clean(base_size = 12, base_family = "Times")
 ```
 
 In the case of Brazil, we also see a large increase in frequencies of authenticities performed between 2010 and 2016, the Dilma Rousseff years ^[ A linear regression correlating the total of authenticity performances to years, as factors, in Brazil confirms statistically significant increases for the years of 2012 and 2015, non-election years and when Rousseff was president.]. This could indicate that there is a relationship between gender and the frequencies at which authenticity is performed in politics. While there only two women politicians in the sample (Dilma Rousseff and Hillary Clinton), making it challenging to extrapolate how gender and authenticity performances correlate, there is a vast literature that investigates different communication styles by gender in politics [@wood1994; @christine2005; @blankenship1995; @franceschet2016]. Rousseff, arguably, needed to justify herself and her public policies with further concrete reasoning and perform certain authenticities to connect with audiences more frequently than the men in the sample. Nevertheless, authenticity has generally been performed with greater frequency in politics in Brazil since the mid-1990s in comparison to the US, which could be related to the differences in the number of parties in the political system. Brazil features many parties and, thus, politicians are less susceptible to broad party pressure to conform and represent interests of heterogenous groups within it, in comparison the US with two major parties.
@@ -356,7 +366,7 @@ ggplot(ap_aut_perf_type, aes(x = as.Date(date, "%Y"),
        title = "Collective versus Individual Authenticity\nPerformances in Brazil and the US in Time",
        subtitle = "Normalized by number of characters per year in dataset",
        caption = "Curves in the plot are smoothed using loess method.") +
-  theme_fivethirtyeight()
+  theme_clean(base_size = 12, base_family = "Times")
 ```
 
 ## 5.2 Authenticity Performances by Politicians in Brazil and the US
@@ -474,12 +484,12 @@ ggplot(table_95_ap, aes(x = as.Date(date, "%Y"),
        y = "Normalized Values",
        title = "Authenticity Performances above the 95th\nPercentile by Politicians in Brazil and the US",
        subtitle = "Normalized by number of characters per year in dataset") +
-  theme_fivethirtyeight()
+  theme_clean(base_size = 12, base_family = "Times")
 ```
 
 Rousseff is the only politician in the whole sample to have performed the total of authenticities above the 95th percentile while in office. In the US, Mondale, Clinton, Gore, Obama, and H. Clinton perform the total of authenticity performances above the 95th percentile at a certain year, but none of these politicians were in the oval office when they did so. In the case of Brazil, Lula, Collor, Neves, and Rousseff performed the total of authenticities above the 95th percentile at a certain year, but only Roussef did so while president. In the case of Rousseff, @wood1994 (p. 137-148) argues that women’s speech style in politics include personal disclosures of details, using of anecdotes, and concrete reasoning, which are consistent with common sense, consistency, and origins performances that were performed above the 95th percentile during her years in office. The fact that Rousseff performed various authenticities in the 95th percentile while in office further indicates that women in politics have a distinct style and that they likely feel the need perform authenticity at a higher rate to connect to audiences and justify policy choices than their male counterparts.
 
-Associated and opposing politicians often perform the same authenticities in similar years. In the case of the US, truth telling was performed above the 95th percentile by politicians as Kerry and McCain around the year 2000 and by Obama and Sanders around the year 2020. Consistency was performed above the 95th percentile in the 2000s by W. Bush, Clinton, McCain; while origins was performed above the 95th percentile by Mondale and Bush in the mid-1980s and by Gore and Clinton in the mid-1990s. However, in the case of anti-PC, Mondale in the 1980s and Trump from the mid-2010s onwards perform anti-PC. Though these politicians belonged to different parties and had divergent political stands, both often employed a “telling like it is” communication style ^[ For more on Modale’s “truth” telling style see his [1984](https://www.nytimes.com/1984/07/20/us/transcript-of-mondale-address-accepting-party-nomination.html) Democratic Convention acceptance speech. Some of Mondale’s mentions of truth telling regarding raising taxes, for example, is similar to numerous accounts of Trump’s denouncing PC in terms of wasting peoples time by not “telling how it is” what they might “not” want to hear.]. Comparably, in the case of Brazil, truth telling, origins, consistency, and anti-PC were performed above the 95th percentile by Lula and Collor from the late-1980s and through the 1990s. Anti-PC was also performed by Sarney and Franco in the early-1990s. Mainly this indicates similar authenticity performances above the 95th percentile occur for associated and opposing politicians in similar years. This could be due to politicians responding to, or imitating, each other on specific authenticity performances at a certain election cycle or connected to a contextual condition that make certain authenticity performance more credible around certain times. This is especially pertinent as the same politicians usually perform different authenticities above the 95th percentile over time.
+Associated and opposing politicians often perform the same authenticities in similar years. Take for example the case of anti-PC in Brazil which was performed by diverse politicians above the 95th percentile from the early to mid-1990s. Anti-PC in the US, however, was performed by Mondale in the 1980s and Trump from 2015 onwards ^[Though these politicians belonged to different parties and had divergent political stands, both often employed a “telling like it is” communication style. For more on Modale’s “truth” telling style see his [1984](https://www.nytimes.com/1984/07/20/us/transcript-of-mondale-address-accepting-party-nomination.html) Democratic Convention acceptance speech. Some of Mondale’s mentions of truth telling regarding raising taxes, for example, is similar to numerous accounts of Trump’s denouncing PC in terms of wasting peoples time by not “telling how it is” what they might “not” want to hear.].  Nonetheless, in the case of the US, we also see that truth telling was performed above the 95th percentile by politicians as Kerry and McCain around the year 2000; consistency was performed above the 95th percentile in the 2000s by W. Bush, Clinton, McCain; while origins was performed above the 95th percentile by Mondale and Bush in the mid-1980s and by Gore and Clinton in the mid-1990s. Comparably, in the case of Brazil, truth telling, origins, and consistency were performed above the 95th percentile by Lula and Collor from the late-1980s to the late-1990s. Similar authenticity performances above the 95th percentile for associated and opposing politicians in similar years could be due to politicians responding to, or imitating, each other on specific authenticity performances at a certain election cycle or connected to a contextual condition that make certain authenticity performance more credible at certain times. This is especially pertinent as the same politicians often perform different authenticities above the 95th percentile over time.
 
 ## 5.3 Authenticity Performances across settings in Brazil and the US
 
@@ -539,7 +549,7 @@ ggplot(aut_perf_set_long_ap, aes(x = as.Date(date, "%Y"),
        title = "Authenticity Performances by Setting\nin Brazil and the US in Time",
        subtitle = "Normalized by number of characters per year in dataset",
        caption = "Curves in the plot are smoothed using loess method.") +
-  theme_fivethirtyeight()
+  theme_clean(base_size = 12, base_family = "Times")
 ```
 
 In Brazil and the US debates have become the setting in which authenticity is performed most frequently, whereas interviews are the setting in which authenticity is performed least frequently, from the early-2010s onwards. In the case of interviews, the spread of social media gave politicians alternative outlets to interact directly with audiences, bypassing journalists, while performing authenticity to a wide variety of people. Conversely, authenticity performances in debates increased in both cases over time. In the case of the US debates went from being the setting in which authenticity was least performed in the US in the early-1980s to the setting in which it was most performed by the late-2010s. Debates also became the setting in which authenticity is most performed in the mid-2010s in Brazil. In terms of authenticity performances, debates’ format requires candidates to answer quick to sometimes unpredictable questions and, as large-scale media events, become sources of “sticky” sound, text, and video bites charged with imagery, rather than meaning, that circulate to mark and represent political cycles in democracies [@foley2012,; @coleman2000] ^[Though why and the extent to which they might matter for election outcomes is contentious [see @mckinney2013].]. As political bites become shorter but more widespread, debates become ever important settings for a wide variety of authenticity performances.
