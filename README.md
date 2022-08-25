@@ -1,12 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# authenticity\_performances
+# authenticity_performances
 
-<!-- badges: start -->
-
-<!-- badges: end -->
-
-The goal of authenticity\_performances is to include data, cleaning, and
-analysis, for a transparent reserach process of authenticity
+The goal of authenticity_performances repo is to include data, cleaning,
+and analysis, for a transparent research process of authenticity
 performances in political discourses Brazil and the US.

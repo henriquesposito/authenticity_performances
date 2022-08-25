@@ -13,7 +13,4 @@ knitr::opts_chunk$set(
 
 # authenticity_performances
 
-<!-- badges: start -->
-<!-- badges: end -->
-
-The goal of authenticity_performances is to include data, cleaning, and analysis, for a transparent reserach process of authenticity performances in political discourses Brazil and the US.
+The goal of authenticity_performances repo is to include data, cleaning, and analysis, for a transparent research process of authenticity performances in political discourses Brazil and the US.
