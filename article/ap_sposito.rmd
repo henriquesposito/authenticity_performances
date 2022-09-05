@@ -32,7 +32,7 @@ header-includes:
     ```
    - |
     ```{=latex}
-    \providecommand{\declaration}[1]{\text{} #1}
+    \providecommand{\declaration}[1]{\text{}#1}
     ```
 always_allow_html: TRUE
 bibliography: references.bib
