@@ -6,7 +6,7 @@ author: |
         | Graduate Institute of International and Development Studies
         | Geneva, Switzerland
         | henrique.sposito@graduateinstitute.ch
-date: "8 September 2022"
+date: "22 September 2022"
 output:
   pdf_document: default
   latex_engine: xelatex
@@ -86,8 +86,8 @@ options(stringsAsFactors = FALSE, scipen = 999)
 BR <- readRDS("~/Documents/GitHub/authenticity_performances/article/BR.Rds") # Brazil data
 US <- readRDS("~/Documents/GitHub/authenticity_performances/article/US.Rds") # US data
 # Let's create a length column based on number of words and characters for later
-BR$length <- str_count(BR$text, '\\w+')
-US$length <- str_count(US$text, '\\w+')
+BR$length <- str_count(BR$text, "\\w+")
+US$length <- str_count(US$text, "\\w+")
 BR$char <- nchar(BR$text)
 US$char <- nchar(US$text)
 # Let's also create a date (year) column for later on
@@ -344,7 +344,7 @@ ggplot(ap_total_time, aes(x = as.Date(date, "%Y"),
   theme_clean(base_family = "Times")
 ```
 
-Authenticity has generally been performed with greater frequency in politics in Brazil since the mid-1990s in comparison to the US, which could be related to the differences in the number of parties in the political system. Brazil features many parties and, thus, politicians are less susceptible to broad party pressure to conform and represent interests of heterogenous groups within it, in comparison the US with two major parties. We also see a large increase in frequencies of authenticities performed in Brazil between 2011 and 2016, the Rousseff years^[ A linear regression correlating the total of authenticity performances to years, as factors, in Brazil confirms statistically significant increases for the years of 2012 and 2015, non-election years and when Rousseff was president, see table 6 in Appendix.]. This might indicate a relationship between gender and the frequencies at which authenticity is performed in politics. However, there are only two women politicians in the sample (Rousseff and H. Clinton) which makes it challenging to extrapolate how gender and authenticity performances correlate, even if women in politics have a distinct communication style [see @wood1994; @christine2005; @blankenship1995; @franceschet2016]. Additionally, Rousseff is the only non-professional politician elected president of Brazil. Having held several techno-bureaucratic positions, Rousseff ran for office for the first time in 2010 being elected president. Rousseff, arguably, needed to justify herself and her public policies performing authenticities to connect with audiences more frequently than others in th sample.
+Authenticity has generally been performed with greater frequency in politics in Brazil since the mid-1990s in comparison to the US, which could be related to the differences in the number of parties in the political system. Brazil features extreme party fragmentation and weak partisanship [@baker2020], thus, politicians are less susceptible to broad ideological pressure to conform and represent interests of heterogenous groups within it, in comparison the US with two major parties. We also see a large increase in frequencies of authenticities performed in Brazil between 2011 and 2016, the Rousseff years^[ A linear regression correlating the total of authenticity performances to years, as factors, in Brazil confirms statistically significant increases for the years of 2012 and 2015, non-election years and when Rousseff was president, see table 6 in Appendix.]. This might indicate a relationship between gender and the frequencies at which authenticity is performed in politics. However, there are only two women politicians in the sample (Rousseff and H. Clinton) which makes it challenging to extrapolate how gender and authenticity performances correlate, even if women in politics have a distinct communication style [see @wood1994; @christine2005; @blankenship1995; @franceschet2016]. Additionally, Rousseff is the only non-professional politician elected president of Brazil. Having held several techno-bureaucratic positions, Rousseff ran for office for the first time in 2010 being elected president. Rousseff, arguably, needed to justify herself and her public policies performing authenticities to connect with audiences more frequently than others in th sample.
 
 The types of authenticity performed in politics also change over time. Figure 2, below, illustrates how collective and individual authenticity performances have changed in time for Brazil and the US. In the figure, the x-axis represents the years and the y-axis represents the normalized values of individual and collective authenticity performances. In Brazil, collective authenticity performances were performed considerably more frequently than individual performances from the 1980s until the early-2010s. This trend began to change at that point and, by 2019, we see a reversal of this pattern whereas individual authenticity performances surpass collective performances. Conversely, in the case of the US, individual authenticity performances were performed more frequently throughout the 1980s. From the early-1990s until the early-2010s, both performances appear at very similar rates in the US. This pattern changed in the mid-2010s with collective authenticity performances surpassing individual. In both cases, this indicates that background representations make some authenticity performances more, or less, compelling to audiences at certain juctures. Audiences in Brazil, for instance, could have became tired of the common collective authenticity performances that focused on share cultural links with the politico-economic crisis of the mid-2010s and, in turn, became more interested in simpler individual performances that were credible based on expectations about political performers. In the US, instead, audiences arguably grew tired of balanced individual and collective performances in favor performers and/or performances that focused on shared cultural connections in the mid-2010s. In both cases, these patterns began to change before most recent elections (2016 for the US and 2018 for Brazil) and continue after even as politicians at the top might have changed. This indicates that timing could favor certain candidates who already perform certain authenticities and that politicians adapt to perform authenticities that audiences "want to hear".
 
@@ -567,13 +567,11 @@ The analysis of the findings reveal that authenticity performances that promote 
 
 @alexander2011[p.85] argues that the "challenge for social performance is to make its component parts invisible". For social scientists, the challenge has long been to understand when, why, and how political discourses matter in democracies. Looking at politics as performances emphasizes the performer's role, the script, the stage, and the audience, rather than only focusing on the content (or an specific interpretation of discursive content), and places agency with both audiences and performers. Authenticity performances, as a framework, offers a less contentious alternative to understand what discourses, as anti-PC, are, how they change over time, and why they might matter for political outcomes. Engaging just with meanings in political discourses can misplace the logic of why electorates and politicians behave as they do, while contributing to further polarization by passing on the blame for "undesirable" political outcomes to a lumped together group of "old, uneducated, or poor" electorates. Even more worrisome, a misplaced engagement with political discourses might reveal biased answers to contemporary political issues moving from discourse to policy, as in migration. As such, alternative approaches, as authenticity performances, might be an useful extra tool in our Swiss knife for engaging with political discourses.
 
-\newpage
-
-**References**
+# References
 
 <div id="refs"></div>
 
-**Appendix**
+# Appendix
 
 ````{=tex}
 \begin{landscape}
@@ -613,20 +611,27 @@ kbl(codebook, booktabs = T, longtable = TRUE,
 \end{landscape}
 ````
 
-```{r table 4, fig.cap="Table 3 - Authenticity Performances and Election Years in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
+```{r table 4, fig.cap="Table 4 - Authenticity Performances and Election Years in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
 # let just check that there is not a statistically significant correlation between EY and total AP
 check_ey <- lm(value ~ as.factor(ifelse(ey == "EY", 1, 0)) + as.factor(Country), ap_total_time)
-check_ey_table <- stargazer::stargazer(check_ey)
-# # Not statistically significant.. not even a positive relationship for either case.
-# # In comparison to Brazil, EY in the US shows to be negative and statistically significant.
+modelsummary::modelsummary(check_ey,
+                           coef_rename = c("(Intercept)" = "Constant",
+                                           'as.factor(ifelse(ey == "EY", 1, 0))1' =  "Election Year",
+                                           "as.factor(Country)US" = "United States"),
+                           stars = TRUE,
+                           title = "Authenticity Performances and Election Years in Brazil and the US")
+# Not statistically significant.. not even a positive relationship for either case.
+# In comparison to Brazil, EY in the US shows to be negative and statistically significant.
 ```
 
-```{r table 5, fig.cap="Table 5 - Authenticity Performances by years in Brazil", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
-# Let's also check if the increases per year in Brazil are statistically significant
-ap_total_time_br <- ap_total_time %>% dplyr::filter(Country == "Brazil")
-check_year_br <- lm(value ~ as.factor(date), ap_total_time_br)
-check_year_br <- stargazer::stargazer(check_year_br)
-# some Dilma years are statistically significant
+```{r table 5, fig.cap="Table 5 - Authenticity Performances by year in Brazil", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
+# # # Let's also check if the increases per year in Brazil are statistically significant
+# ap_total_time_br <- ap_total_time %>% dplyr::filter(Country == "Brazil")
+# check_year_br <- lm(value ~ as.factor(date), ap_total_time_br)
+# eybr <- modelsummary::modelsummary(list("Brazil" = check_year_br),
+#                                    stars = TRUE, title = "Authenticity Performances by year in Brazil")
+# eybr %>% kable_styling(bootstrap_options = "striped", font_size = 8)
+# # some Dilma years are statistically significant
 ```
 
 ```{r table 6, fig.cap="Table 6 - Authenticity Performances by Setting in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
