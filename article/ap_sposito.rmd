@@ -1,12 +1,12 @@
 ---
-title: "Performing Authenticity: Anti-Political Correctness as an Authenticity Performances in Politics in Brazil and the United States"
+title: "Tell me like it is: Authenticity performances in politics in Brazil and the United States"
 author: |
         | Henrique Sposito
         |
         | Graduate Institute of International and Development Studies
         | Geneva, Switzerland
         | henrique.sposito@graduateinstitute.ch
-date: "22 September 2022"
+date: "5 July 2023"
 output:
   pdf_document: default
   latex_engine: xelatex
@@ -30,14 +30,10 @@ header-includes:
     ```{=latex}
     \providecommand{\wordcount}[1]{\text{Word Count:} #1}
     ```
-   - |
-    ```{=latex}
-    \providecommand{\declaration}[1]{\text{}#1}
-    ```
 always_allow_html: TRUE
 bibliography: references.bib
 csl: chicago.csl
-abstract: Various politicians have publicly denounced "political correctness" (PC). While some scholars argue that anti-PC discourses in politics are populist tools to label elites or a form of cultural backlash against liberal changes, these explanations focus on specific manifestations of anti-PC by specific politicians. Instead, this article argues that anti-PC discourses are performances of authenticity in politics. As authenticity performances, anti-PC discourses reduce the perceived link between thinking and saying for audiences. A framework for identifying several discursive performances of authenticity in politics that focuses on displays (what), projections (who, when, and where), and mechanisms (how) is developed. A purpose-built dictionary of terms is designed to detect authenticity performances in text datasets of campaign rallies, debates, interviews, and official speeches gathered for presidents and presidential candidates in Brazil and the United States since the 1980s. The analysis indicates that authenticities are not performed more frequently in election years, politicians usually perform different authenticities most when they are candidates or after having left office. Although, in the case of Brazil, authenticity performances spiked from 2011 to 2016 while Dilma Rousseff was in office. The types of authenticity performed over time also changed in each case across time, indicating that politicians adapt to perform what audiences “want to hear”. Lastly, debates have become the setting in which authenticity is performed most frequently, whereas interviews are the setting in which authenticity is performed least frequently, in both cases in recent years.
+abstract: Electorates are drawn to politicians who they perceive as “authentic”. Political authenticity, as the perceived degree to which politicians appear to remain true to themselves, is connected to higher levels of political trust from electorates and is shown to affects political outcomes. Yet, for being a slippery and vague concept, authenticity is frequently overlooked as a determinant factor for electoral behavior and, when considered, discussions of how, when, and where authenticity appears and changes in political discourses usually remain at the theoretical level and are rarely comparative. This article, instead, develops a framework to identify and compare how authenticity has been performed in political discourses over time, across settings, and by politicians. To investigate these performances, 24.170 political texts from campaign rallies, debates, interviews, and official speeches gathered for presidents and presidential candidates in Brazil and the United States since the 1980s. The analysis of the findings indicates that authenticity is generally not performed more frequently in election years. Politicians typically perform different types of authenticity before being elected or after having left office. Although, in the case of Brazil, authenticity performances peaked from 2011 to 2016 while Dilma Rousseff was in office. The changes in the types of authenticity performed in both cases across time indicate that politicians often adapt to perform what audiences “want to hear”.
 ---
 
 ```{=latex}
@@ -45,11 +41,7 @@ abstract: Various politicians have publicly denounced "political correctness" (P
 ```
 
 ```{=latex}
-\wordcount{10000 (including references, footnotes and tables)}
-```
-
-```{=latex}
-\declaration{The author declares no competing interests.}
+\wordcount{9399 (includes the main body of text, notes, references, tables, and figures)}
 ```
 
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
@@ -57,8 +49,6 @@ knitr::opts_chunk$set(include = FALSE)
 library(dplyr)
 library(tidyr)
 library(scales)
-library(RColorBrewer)
-library(stargazer)
 library(kableExtra)
 library(tibble)
 library(readxl)
@@ -74,6 +64,7 @@ library(Hmisc)
 library(ggpubr)
 library(plm)
 library(modelsummary)
+library(stargazer)
 Sys.setlocale("LC_ALL", "C")
 options(stringsAsFactors = FALSE, scipen = 999)
 ```
@@ -103,7 +94,7 @@ consistency <- stringr::str_squish("we delivered|I delivered|check and see|I kee
 finger_pointing <- stringr::str_squish("are inconsistent|is inconsistent|being inconsistent|are irresponsible|is irresponsible|being irresponsible|their fault|not my fault|not our fault|they left us with|they are responsible|are not responsible|aren’t responsible|is not responsible|isn’t responsible|costed us|false promises|lack accountability|lacking accountability|not kept their word|not kept his word|not kept her word|not kept promises|not kept the|not kept his|not kept her|not kept their|not keep their word|not keep his word|not keep her word|not keep the|didn’t keep the|didn’t keep her|didn’t keep his|hasn’t kept his|hasn’t kept her|not recognize|he made mistakes|she made mistakes|they made mistakes|not our mistake|not my mistake|not take responsibility|not my responsibility|not accountable|him accountable|them accountable|her accountable|blame them|blame him|blame his|blame her|their blame|break promises|broken promises|has betrayed|they betrayed|betraying|will betray|has tricked|has lied|not deliver|didn’t deliver|hasn’t deliver|failed your obligations|failed in your obligations|failed his obligations|failed her obligations|failed in his dut|failed in her dut|failed his dut|failed her dut|failed your dut|stabbed in the back")
 origins <- stringr::str_squish("I was born|I come from|we come from|I grew up|growing up in|my parents|my mom|my mother|my father|my dad|my family|raised me|I was raised|we were raised|we grew up|my background|being surrounded by|being exposed to|my siblings|going to school in|our local church|Sunday mass|Saturday mass|family tradition|tradition in my house|in our house|growing up|back in the day|my grandparents|in my town|in my state|in my region|our community|in my community|our town|our state|my hometown|our hometown|my home state|our home state|back home|our house|my house|our neighbourhood|in my district|I lived in|we lived in|we used to play|I used to play|I was thought")
 common_sense <- stringr::str_squish("is common sense|are common sense|everyone knows|it is undeniable|stating the obvious|say the obvious|everyone agrees|we all know|common wisdom|the people know|popular knowledge|from experience|it is my experience|sound judgment|practical solution|practical choice|practical answer|pragmatic solution|pragmatic answer|pragmatic choice|realistic answer|let me tell you about|is obvious|are obvious|obvious answer|obvious solution|as we all learned|we have all learned that|do not need to tell you that|the reality is|there is no logic|it does not make sense|it doesn’t make sense|we know it does not work|no one disagrees that|no person disagrees|there is not a person|there is not a human being|there is not a family|there is not an American|there is no single citizen|there is not one single person|there is not one single human being|there is not one single family|there is not one single American|there is not one single citizen|there is not one single person|there is not one human being|there is not one family|there is not one American")
-anti_pc<- stringr::str_squish("politically correct|political correctness|PC|plain speaking|speaking my mind|speak my mind|say what I think|saying what I think|not going to pretend|not pretend|speak what you think|not what you want to hear|not butter up|not beat around the bush|cut to the chase|just being real|saying what everyone thinks|say what everyone is thinking|speaking plainly|coloured people|negro|retarded|nigger|third world|oriental people|crippled people|is crippled|culturally deprived|drug addict|junkie|drunk|fat people|fat person|fat population|handicapped|homosexual|faggot|deviant|perverted|illegals|illegal immigrants|illegal alien|^jew$|^jews$|non-white|prostitutes|promiscuous|stupid|tribe|underdeveloped")
+anti_pc<- stringr::str_squish("politically correct|political correctness|PC|plain speaking|speaking my mind|speak my mind|say what I think|saying what I think|not going to pretend|not pretend|speak what you think|not what you want to hear|not butter up|not beat around the bush|cut to the chase|just being real|saying what everyone thinks|say what everyone is thinking|speaking plainly|colored people|negro|retarded|nigger|third world|oriental people|crippled people|is crippled|culturally deprived|drug addict|junkie|drunk|fat people|fat person|fat population|handicapped|homosexual|faggot|deviant|perverted|illegals|illegal immigrants|illegal alien|^jew$|^jews$|non-white|prostitutes|promiscuous|stupid|tribe|underdeveloped")
 territory <- stringr::str_squish("have been to|have visited|came all the way to|back from|will visit|saw first-hand|see first-hand|we visited|I visited|we visited|travelled to|traveling to|spend a few days in|spent some time in|spent time in|met great people in|we were hosted|I was hosted|our time in|my time in|our visit|spent a lot of time in|were many times in|got to know the whole country|got to know all the states")
 # Get each performance as frequencies per row, the (?i) makes it case insensitive
 US$truth <- stringr::str_count(US$text, paste0("(?i)", truth_telling))
@@ -144,51 +135,11 @@ BR$territory <- stringr::str_count(BR$text, paste0("(?i)", territory))
 
 # 1 Introduction
 
-In the second sentence of his inaugural speech as president of Brazil, Jair Bolsonaro declared the day in which the people began to be free from political correctness^[ Find the whole speech [here](https://www.youtube.com/watch?v=5iPVlE_9kFw).]. Bolsonaro is not unique in this sense, politicians as Trump, Sanders, Bush, and Lula, have openly denounced political correctness (PC)^[ PC is used as an abbreviation for political correctness and politically correct throughout the article, that is, as a noun and as an adjective.] and/or publicly employed politically incorrect language. Broad audiences appear to respond positively to these statements in multicultural countries, such as the United States (US) and Brazil, where large portions of the population fall under racial, ethnic, and other categories PC language attempts to safeguard^[ Most Americans appear unsupportive of PC language with estimations that range from 52% of the population [@montanaro2018] to 80% of the population disliking PC [@mounk2018]. In Brazil, 56 % of participants in a national poll agreed completely or partially that the 'PC patrol is making the world too boring' [@goncalves2020].]. Populist scholars argue that contemporary populists' profit from breaking with PC language and use PC to identify modern elites [see @mudde2004]. Cultural backlash scholars argue that anti-PC discourses speak to resentment caused by silent liberal changes [see @norris2019]. However, both populism and cultural backlash focus on specific manifestations of these discourses by specific leaders that embody their arguments, leaving aside any systematic or empirical analysis of language usage or patterns across contexts. This article argues that anti-PC discourses in politics are one performances of authenticity. As an authenticity performance, anti-PC language reduces the perceived link between thinking and saying to audiences [see @conway2009; @conway2017]. But there are also other political performances that can generate an authenticity perception in audiences. *How, then, authenticity has been performed in politics over time?*
+# 2 Theory
 
-This article develops a framework to identify various types of authenticity performances in political discourses. Performances are the projections of definitions of a situation to others [see @goffman1956; @alexander2006]. Performance allows to theorize that audience’s interpretation hinges on factors beyond discursive content or meaning, such as how things are said. Authenticity, as a perceived character trait that conveys ones’ convictions, is connected to higher levels of political trust from electorates [@stiers2021; @valgarosson2021] and can be essential to a candidate’s political success [see @alexander2010; @fordahl2018]. The framework focuses on the performative display (what), the projection (who, when, and where), and the mechanisms (how). Authenticity performances are divided into two types, individual and collective. Individual authenticity performances derive plausibility from audiences' expectations about a political performer. These performances include claims of truth telling, lie accusations, taking responsibility for actions, or pointing fingers at other politicians' mistakes. Collective authenticity performances derive plausibility from the shared cultural knowledge between politicians and audiences. These include references to origins, allusions to common sense, anti-PC discourses, or assertions of territorial knowledge.
+## 2.1 Performance and authenticity in politics
 
-Political discourses at the national level in Brazil and the US since the 1980s are gathered and explored to assess variation in authenticity performances over time, by politicians, and across different settings. The 1980s were chosen as the starting point as they mark the beginning of the debates surrounding PC language in the US and the decade in which democracy was re-established in Brazil. Texts for campaign rallies, debates, interviews, and official speeches for presidents and presidential candidates in Brazil and the US were scraped to construct the datasets. A purpose-built dictionary of terms was created to capture various authenticity performances, as anti-PC, in discourses.
-
-The findings indicate that the frequencies of authenticity performances are not systematically greater in election years. Usually, politicians perform authenticities above the 95th percentile when they are candidates, before being elected a first time, or after having left office. However, in the case of Brazil, we see a spike in the frequency authenticity is performed in politics from 2011 to 2016, the Rousseff years in office. Rousseff, arguably, performed authenticity to justify herself and her public policy choices more frequently than others in the sample. Moreover, the variation in types of authenticity performed over time and across cases indicates that background representations might make different performances more, or less, compelling at certain junctures. Indeed, many authenticity performances appear in high frequencies for opposing, and associated, candidates in similar years as is the case of anti-PC performances in Brazil in the mid-1990s. Politicians, thus, adapt to perform authenticities audiences “want to hear”. Finally, debates are the setting in which authenticity is performed most frequently, whereas interviews are the setting in which authenticity was performed the least frequently, in both cases in recent years. Debates are large-scale media events that produce “sticky” political bites charged with imagery that circulate to mark election cycles in these democracies. Whereas social media platforms give politicians diverse outlets to interact directly with audiences, bypassing journalists in interviews.
-
-# 2 Review: anti-PC politics?
-
-## 2.1 PC and anti-PC overview and effects
-
-Definitions of PC range from an "idealistic intervention" to "liberal fascism" [@hughes2011; @feldstein1997]. In practice, PC language avoids judgmental terms, preferring euphemistic substitutions and it presupposes that lexicon changes mediate discrimination in positive ways [@hughes2011, p.13]^[ For a good discussion of lexicalization and language change in linguistics, refer to @brinton2005. For a discussion on the complexities involved in why language changes, and not, as well as how meaning might be affected by such changes refer to @bybee2015]. Anti-PC discourses, instead, represent a *dismissal of PC substitutions and/or the denouncing of PC language and users*. In order to understand what anti-PC language entails, we must first briefly overview PC’s history and effects. The modern conception of PC originated in Mao Tsé-Tung's depiction of the 'correct' socialist party line in the 1930s, used to describe doing the right things and thinking the right thoughts [@hughes2011]. The term was picked up by leftist circles in the US during the 1960s and used to describe more orthodox followers of socialism or as a critique of excessive orthodoxy [@feldstein1997; @weigel2016; @hughes2011]. It was not until the 1980s that right-leaning conservative elites in the US, including many academics, started denouncing PC language substitutions as a strategy to restrict freedoms of speech [@feldstein1997; @weigel2016]. These conservative elites were able to swiftly recycle the meaning of PC by disconnecting it from historical context, and conflating it with enemy building narratives and imagery [@feldstein1997].
-
-The so-called "university debates" of the 1980s and 1990s across American universities brought widespread attention to PC, multiculturalism, and affirmative action [@berman2011]. On these debates, @d1991 argues that the apparent duplicity between a liberal educational system and multicultural claims makes PC language further victimize minorities on campuses, while affirmative action policies undermine their merits and can generate more racist backlash. As a response, Gutmann and Habermas highlighted how misplaced PC debates politicized and polarized important societal dialogues [@gutmann1994]. Yet, most multiculturalism scholars at the time dealt with PC as a matter of public or party disagreement and lamented their popularity with certain communities while leaving unaddressed the nature of PC language, the relation between the speaker's identity to the information provided, and why diverse communities related or contested semantic changes [@loury1994]. The university debates helped disseminate and connect matters of PC, affirmative action policies, and multiculturalism to left leaning (progressive) political ideologies and anti-PC to right-wing (conservative) ideologies across the world [@feldstein1997; @bush1995]. By the mid-1990s, PC debates in the US had become as much about rhetorical strategies to forward ideological political agendas as about the diverse cultural movements' efforts to re-label [@feldstein1997; @hall1994].
-
-The spreading of issues covered by PC language and the complex political forces supporting, and opposing, it required that the cultural and individual effects of PC in society be theorized. @hall1994, for example, describes the ambiguous truth and contested cultural authority of the PC phenomenon to argue that individuals may disapprove of PC language because these are relatively new demands for cultural transformation. Similarly, @fairclough2003[p.24] argues that PC is a socially constructed cultural and political label for which effects depend on the resistance of structure and practices. Even though euphemistic substitutions are not a modern manifestation, as changing orthodoxies under moral imperatives exist since the invention of printing, PC language has expanded the number of substitutions [@hughes2011]. This expansion of PC language generates more abstract and imprecise replacements that can feel unnatural, create confusion, patronize subjects, and further socioeconomic inequalities via linguistic processes [@hughes2011]. This contributed to the evolution of PC from a noun used to describe language substitution to an adjective used to describe excess politeness or evasion of truths in society or for individuals [@weigel2016; @chait2015].
-
-## 2.2 Anti-PC, populism(s), and cultural backlash
-
-In *The Populist Zeitgeist*, on the rise of populist parties in liberal democracies, @mudde2004[p.543] defines populism as a thin centered ideology^[ To discuss whether, or the extent which, Bolsonaro or Trump are populists is beyond the scope of this article, for some discussions on this see @tamaki2020 and @hawkins2018.]. The article peripherally discusses how contemporary populists profit from breaking with politically correct language, because citizens' increased emancipation made issues surrounding PC more widespread, alongside how PC has been used to identify a modern elite [@mudde2004, p.594-602]. Since then, populists have routinely been associated with anti-PC discourses. Still, Mudde's analysis leaves undertheorized which elites are characterized as PC by various populist leaders with a variety of ideological commitments. This is puzzling since diverse political, economic, and intellectual elites are often the drivers of both pro, and anti, PC discourses in societies. Moreover, if populism is not a standalone ideology [see @mudde2007], it is hard to pinpoint if anti-PC discourses are a portion or manifestation of the populist (thin)ideology, an adjacent ideology, or a contextual feature of a specific society^[ See @aslanidis2016 for a good discussion on whether populism is an ideology.]. Besides, the account leaves unclear when, and why, anti-PC discourses are a politically profitable strategy for populists but not for other political actors. Other influential theories of populism do not mention anti-PC discourses [see @weyland2001; @laclau2005; @hawkins2009] and, when mentioned, anti-PC discourses fulfill a peripheral role to help identify exclusionary right-wing populist parties in Europe [@betz2001]. In such, there appears to be a leap associating populism with anti-PC discourses without systematically or empirically analyzing its usage in time and patterns across contexts.
-
-At the intersection between populism, authoritarianism, and multiculturalism, *Cultural Backlash* argues that social conservative individuals with authoritarian orientations react to some trends with feelings of resentment for the erosion of respect for their core values and that "is the essence of the backlash against 'political correctness', in which sexist language, anti-foreigner sentiments, or the expression of racist attitudes are condemned by the liberal consensus and silenced in mainstream political debate" [@norris2019, p. 123]. Rather than developing further the mechanisms of how anti-PC discourses work, deliberate on which types of anti-PC discourses connect to resentment, the authors take for granted that anti-PC discourses are connected to resentment, and that is why they resonate with "old, rural, or uneducated" electorates^[ @norris2019 appear to 'passively' pass on the blame to 'old, rural, and uneducate' voters for 'undesirable' political outcomes with broad causal explanations extrapolated from thin linear correlations that illustrate little of the complex relationships theorized. Others, as @mishra2017, sometimes rely on a misplaced engagement with history that focus on a few instances that exemplify arguments as if these were the rule.]. Even so, anti-PC discourses appear to resonate more broadly within societies for various reasons, many unrelated to resentment (e.g. humor)^[ There are countless examples of PC and anti-PC language being explored in humoristic ways for entertainment as, for example, notoriously, TV shows as 'South Park', 'The Office', and 'It’s Always Sunny in Philadelphia'.]. How Bolsonaro, for example, employs anti-PC in quick, direct, and short comments that focus on culturally salient themes without being necessarily internally coherent is, arguably, more decisive to his following than the content itself [@carlo2018]. Or how Trump is characterized as 'authentic', as a character trait, appears more decisive to voters than his recognizable inconsistencies or the negative meanings associated to what he says [@fordahl2018, p. 308]
-
-Recent efforts to rethink populism as a political performance or a repertoire focus on patterns of communication. @moffitt2014[p.387] argue that we must rethink populism as "the repertoires of performance that are used to create political relations". More specifically, we must think about how populists perform "the people", threats, breakdowns and crisis, and bad manners [@moffitt2014; @moffitt2016]. Concerning bad manners, the authors argue that "much of populists' appeal comes from their disregard for 'appropriate' ways of acting in the political realm" [@moffitt2014, p. 392]. Bad manners often performed with swearing, slang words, and political incorrectness [@moffitt2014, p.392]. Likewise, arguing against a pure definition of populism, @brubaker2020[p.60] contends that populism is a discourse and stylistic repertoire that includes "a communication style that claims to favor plain-speaking, common sense and authenticity against intellectualism and political correctness". In this sense, certain anti-PC discourses might be a portion of a broad populist repertoire, although favoring plain speaking, displaying bad manners, or being anti-PC are not exclusive to populists or connected to populist discourses by ideology^[ @brubaker2017 view of anti-PC discourses is not inconsistent with @mudde2004 point about PC and elites [see @brubaker2020; @mudde2007]. Rather it implies that certain intellectual elites might be tagged as PC, not any "modern" elite, and this is connected to anti-intellectualism. This is also consistent with @hughes2011 argument about PC language expansion that leaves some people feeling patronized and confused by PC language.]. Both the cultural backlash and populism accounts of anti-PC in politics focus on a few specific manifestations of these discourses by particular leaders that embody their respective arguments. Consequently, these literatures only partially explain what certain discourses as anti-PC discourses are, how they function, or why they might matter for political outcomes.
-
-# 3 Theory: performing authenticity
-
-## 3.1 Performance, authenticity, and anti-PC in politics
-
-Performances are the projections of a situation when one appears before others, "however passive their role may seem to be, will themselves effectively project a definition of the situation by virtue of their response to the individual" [@goffman1956, p.3]. But why should we understand discursive politics through performance or, rather, why do politicians say the things they do? Conventionally, there are two answers to this question. On the one hand, politicians might say the things they do according to what is more profitable to them (i.e. rational choice). On the other hand, politicians might say the things they do because of their beliefs (i.e. ideology). Though, neither may hold in practice as politicians can, at different times, say what is more profitable, say what they believe in, or say things without intentionally thinking about it. Normally, whether a politician is saying what they believe in, or what is more profitable, depends on the audiences’ interpretation. Understanding politics through performance offers a more flexible answer to why politicians say the things they do: to project their understandings. Performance allows to theorize that audience’s interpretation hinges on factors beyond discursive content or an interpretation of message meaning, such as how things are said [see @alexander2006; @alexander2011]. Seeing discursive politics through performance provides more realistic assumptions to theorizing how politicians “do politics” [see @dijk1997].
-
-Capturing audience’s perception and other discursive elements beyond text is challenging. There are, however, several capturable discursive displays connected to the how, the where, and the when of political performances that allow to identify patterns and variation in political performances as the performer's role, the script, the stage, and the audience, rather than the meanings associated with the content of a political discourse. By facilitating comparison, a focus on perormative patterns provides more complete picture of how discursive politics change, and not, in time and by politicians. There are also important implications of thinking discursive politics through performances. Performance places agency both with audiences, watching and evaluating politicians "doing" politics, and with political performers [see @alexander2006, p. 35]. This means script changes can be theorized to be intentional individual innovations or unintentional chattering by performers, while political accomplishments reflect positive evaluations from audiences. This does not mean factors such as social media, economic crisis, and cultural changes, among others, are irrelevant. Instead, these become collective background representations to be explored in political scripts and provide context for audiences' interpretation [see @alexander2006, p.46; @alexander2011].
-
-Authenticity has long been discursively performed in politics with self-references to origins, remarkable stories, allusions to civic tradition, and displays of 'vulgarism' [@fordahl2018, p.309; @alexander2010]. Authenticity is an individualistic performance that aims at radiating truthfulness outwards [@taylor1992; @fordahl2018]. Authenticity in politics does not concern being truthful to oneself but appearing coherent with individual or societal values to audiences [@valgarosson2021; @fordahl2018]. @stiers2021 refer to authenticity in politics as an essential character trait that conveys candidates' convictions and that has positively affected electoral preferences across several European democracies. As a political tool, authenticity helps build political trust for candidates by demonstrating to electorates that politicians are in touch with ordinary people and their struggles [@valgarosson2021]. Authenticity perceptions were, for example, essential for Obama's success in 2008 [@alexander2010] and, arguably, defined the 2016 American election in Trump's favor [@fordahl2018]. Authenticity, in politics, is an unstable and malleable label that requires social validation while demanding contortion, modification, and active individual effort [@fordahl2018]^[ Authenticity is central to @alexander2006 approach to social performance [see @alexander2011]. Authenticity for the author is both an attribution and the measure of performative success [@alexander2006, p. 55]. Authenticity here is a performance that attempts to radiate truthulness, even if for some it does and others not.].
-
-As a communication norm, PC language attempts to remove negative language by means of self and group censorship [@conway2009; @conway2017]. This communication norm can backfire due to contamination of individual information processes by authority or legitimacy effects [@conway2009; @conway2017]. Authority effects surrounding PC language occur when language is believed to be insincere if it is commanded by an authority [@conway2009]. Legitimacy effects are caused by individuals' own self-censorship, which leads to increased awareness that language interactions may not be genuine [@conway2009]. Building on these findings, @rosenblum2020 use several survey experiments to illustrate how politically incorrect language makes political communicators appear more authentic, have stronger convictions, and be less strategic, in comparison to PC politicians. In fact, the denouncing of a "PC politician" or a "PC ideology" engrains an allusion to inauthenticity, to someone or something that expresses its views in calculated ways to avoid judgment [@hughes2011; @weigel2016]. Anti-PC discourses are connected to authenticity in politics by reducing the perceived link between thinking and saying for audiences [see @conway2017]^[ The argument also considers the insights of bad manners as a repertoire [@moffitt2016; @moffitt2014] of plain speaking as communication style [@brubaker2020; @brubaker2017] in populism. Though the conceptualization here is broader and intends to theorize anti-PC outside of populism, it is somewhat consistent with how these theorists understand what these repertoires/styles are, how they work in politics, and why they might matter.]. Anti-PC performances signal to audiences’ precisely that politicians might be coherent to an inner self. Though, authenticity in politics can be performed in politics in several other ways.
-
-## 3.2 Authenticity performances
-
-@stiers2021 associate authenticity in politics to a sense of “realness” that, in recent times, has repeatedly turned to anti-politics to connect politicians with ordinary people. The authentic politician is an abstract individual trait or group perception, with broad political implications. How does authenticity come about in politics? Looking at authenticity in politics, as a performance, requires identifying displays, projections, and mechanisms. Display concerns detecting a certain performance (what) and is constrained by projection and mechanism. Projection relates to the level at which it is convincing that a performance is authentic. Projection encapsulates the role (who), the setting (where), and the structure (when) for certain display(s). The role relates to the part a performer takes in politics. Roles can generate different expectations and ranges of possibilities for authenticity performances (e.g. candidates versus elected officials). Setting refers to where a performance takes place (e.g. debate or official speech). Structure indicates the timing in which performance is inserted (e.g. before/after an election). Mechanisms refer to the theorized pathways (how) by which a projected display might work to produce authenticity. Diverse answers to each of these performative aspects generate different expectations about performances of authenticity in politics.
-
-Although what could be an authenticity performance is not always straight forward or capturable discursively as the ability of politicians to "fuse" displays, projection, and mechanisms to radiate truthfulness is bounded by audience's interpretation [see @alexander2006], there are several indications of how authenticity has concretely been performed discursively in politics. @alexander2010, for example, discusses how allusions to origins, territory, and civic traditions were employed by Obama to connect with audiences and generate a sense of authenticity. These performances focus on the cultural connections shared by politicians and audiences and are essential to legitimize a candidate’s knowledge about the “real” issues people in the country face. @fordahl2018 argues that Trump’s authenticity was built upon iconic, often vulgar, representations of American traditions and reality performed consistently from his “straight shooter dealmaker” role. These noticeable types of performances in discursive politics can be understood as authenticity performances.
-
-Authenticity performances can be divided in two types: *individual* and *collective*. The types refer to the mechanism that might give plausibility to a certain performance. Individual authenticity performances derive plausibility for performance based on audiences' expectations about a political performer (or opponent) considering the information they have. These performances include stating to be telling the truth, claiming others are lying, taking responsibility for actions, or pointing fingers at other's errors. Collective authenticity performances are more elaborate displays of authenticity that derive plausibility for performance based on the cultural connections shared between audiences and performer. These performances include anti-PC^[ Politically incorrect expressions coded in dictionary were selected from a 1992 dictionary of politically correct language, this assumes that most of these terms have for long been agreed upon as not PC [@beard1993].], pointing at origins, allusions to common sense, or claims of territorial knowledge. Table 1, below, summarizes each authenticity performance theorized, the type, their respective displays, and mechanisms.
+## 2.2 Authenticity performances, a framework
 
 ````{=tex}
 
@@ -211,19 +162,13 @@ kbl(table1, booktabs = TRUE, longtable = TRUE, caption = "Authenticity Performan
 
 ````
 
+# 3 Case study: Anti-PC as a performance of authenticity
+
 # 4 Methodology
 
-## 4.1 Case selection
+## 4.1 Brazil and the US
 
-In Brazil, restrictions to freedoms of speech based on racism were criminalized in the constitution of 1988 and affirmative action policies in universities were put in the late-1990s. Although these were widely discussed in society, albeit a long history of direct and indirect political opposition to them, neither constitutional nor affirmative action debates sparked much discussion about PC [see @farias2001; @freitas2013]. In fact, the PC terminology was translated from outside Brazil [@possenti1995] and it did not directly appear in public debates until 2004, when the Secretariat of Human Rights of the President published a manual of PC language which contained 96 popular expressions deemed incorrect for being racist, sexist, or homophobic [@fiorin2008; @morato2017]. A that time, the federal government quickly recalled the publication due to internal opposition and external backlash [@fiorin2008; @morato2017]. Since the mid-2000s humoristic interpretations of politically incorrect language and politically charged calls against a PC country started to appear frequently in the Brazilian media [@morato2017; @wc2014]. Alongside this, several articles in popular periodicals and popular books were written opposing PC language [@wc2014]. By the 2010s, PC started to be referred to as a "controversy" and, nowadays, PC in Brazil is a widely contested phenomenon in society and politics.
-
-Apart from that, Brazil and the US held the world's largest slave populations until slavery was abolished respectively in each country. Similarly, the two countries became large settler states for diverse groups of migrants in the following centuries. These historical processes rendered their current populations heterogenous in terms of demographic composition and cultural heritage. This explain the appearance and influence of PC language in these societies, but the eminence of anti-PC discourses in national politics is somewhat puzzling as electorates are likely to encompass several large groups that PC language safeguards. While Brazil and the US are relatively similar in geographical and population sizes, they are dissimilar in many other ways including levels of economic development, culture and, in some ways, their political systems. Thus, each case is understood as a configuration, formed by the aggregation of parts that make sense in the context of each case [@ragin1987].
-
-## 4.2 Data
-
-Text data on official speeches, campaign rallies, debates, and interviews for elected presidents and runoff candidates were gathered since 1980 for the US and 1985 for Brazil ^[For the US, runoff candidates are the nominated democratic and republican presidential candidates. For Brazil, these are the candidates that went on to the second round of presidential election. When election was decided in the first round, the two leading candidates were selected.]. In the US, the 1980s marked the beginning of the PC debates. In Brazil, democracy came back in 1985, though direct presidential elections were only held in 1989. All the texts for the US were scraped from [The American Presidency Project](https://www.presidency.ucsb.edu) repository (TAPP). Collecting data for Brazil proved more difficult due to availability. For official speeches, @cezar2021 dataset on official speeches for Brazilian presidents from 1985 to 2019 was updated to include the missing speeches from 2019 to 2021 using the [Brazilian Presidential Library](http://www.biblioteca.presidencia.gov.br/sobre-a-biblioteca/biblioteca-da-presidencia-da-republica). Text for debates, interviews, and campaign rallies were scraped from subtitles automatically generated for YouTube videos. The number of videos available for later election cycles, after the 2000s, is considerably larger than earlier ones. Additionally, some election cycles in Brazil were shorter than others as national elections were decided on the first round, therefore, data for those cycles is more limited. For these reasons, and due to the longer time scope, the number of observations in the text datasets for the US is greater than for Brazil^[ For all the data, scripts, and additional information please request access to the authenticity performances repository available on GitHub. For more information on some the functions developed see the poldis [@sposito2021] R package.].
-
-The comparison of data for different settings in which politics gets done provide more complete picture of how discursive politics change, and not, in each of these settings, across time, or by politicians. Table 2, below, summarizes the number of text observations by setting in each case, the earliest date, the latest date, and the sources. For interviews, those occurring in the period between two years before elections and one year after the election (or tenure for elected) were compiled. For debates, data on runoff debates in Brazil and debates after party candidates were nominated in US were gathered^[ Those are debates after party nominations in the US and runoff debates for Brazil. There are a few exceptions to this in Brazil for elections decided in the first round (e.g. 1994) or elections where candidates were unable to participate in runoff debates (e.g. 2018). In these cases, the participations of the two most voted candidates in the first-round debates were gathered. The number of debates for both Brazil and the US in Table 2 reflect the number of politicians coded for each runoff debate in dataset. That is, the text of each debate was separated by politicians.]. Campaign remarks occurring on election years for runner-up candidates were gathered. Therefore, the datasets for campaign and debates have their latest date as the last election year in each case, that is 2018 for Brazil and 2020 for the US.
+## 4.2 Data and Operationalization
 
 ```{r table 2, fig.cap="Table 2 - Text Data for Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
 table2 <- tibble::tibble("Country" = c("US", "US", "US", "US",
@@ -242,13 +187,9 @@ kbl(table2, booktabs = T, caption = "Text Data for Brazil and the US") %>%
   column_spec(1, bold=TRUE)
 ```
 
-## 4.3 Operationalization
+# 5 Analysis
 
-After collection, texts were cleaned by removing punctuations and accents. Authenticity performances, including anti-PC discourses, were identified via a purpose-built dictionary of terms that codes the discursive displays associated with each performance (see Codebook in Appendix). The dictionary of terms was developed listening to samples of randomly selected speeches, campaign remarks, interviews, and debates from the datasets. The dictionary has similar definitions in Portuguese and English in relation to the words and expressions searched. The number of words included in the dictionary for each performance is similar across languages. The dictionary was designed to reduce the possibility of overlaps, even as some authenticity performances might share similar displays. Directionality in the text is important to identify authenticity performances and to distinct when speakers talk about themselves or others, thus, no stop words were removed from texts. This means the dictionary of terms includes combinations of pronouns/determiners and verbs/nouns to avoid false-positive matches. All frequencies of authenticities performances are normalized for the number of words in each text. That is, the number of matches for authenticity performances in each text was divided by the number of words in the text they appear in. All the normalized scores were then multiplied by one thousand to improve visualizations, therefore, represent the rates for every 1000 words. Normalization helps account for discrepancies in the number of observations for the two cases, and for the same case across time, to facilitate comparison.
-
-# 5 Analysis: say it like you mean it
-
-## 5.1 Authenticity Performances in Time in Brazil and the US
+## 5.1 Authenticity Performances in Time
 
 ```{r table 3, fig.cap="Table 3 - Average Authenticity Performances in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
 aut_perf_time <- US %>%
@@ -277,42 +218,14 @@ aut_perf_time_BR <- BR %>%
          anti_pc = (anti_PC/length)*1000,
          territory = (territory/length)*1000) %>%
   select(-c(length, truth, lies, fpoint, anti_PC))
-# Get means
-BR_mean <- apply(aut_perf_time_BR, 2, function(x) mean(as.numeric(x)))
-US_mean <- apply(aut_perf_time, 2, function(x) mean(as.numeric(x)))
-# Table
-table3 <- tibble::tibble("Authenticity Performance" = c("Truth Telling", 
-                                                        "Lie Accusations",
-                                                        "Consistency ",
-                                                        "Finger Pointing", 
-                                                        "Origins",
-                                                        "Common Sense", 
-                                                        "Territorial",
-                                                        "Anti-PC"),
-                         "Average US" = c("0.33", "0.04",
-                                          "0.19", "0.02", 
-                                          "0.34", "0.06",
-                                          "0.10", "0.09"),
-                         "Average Brazil" = c("0.35", "0.03",
-                                              "0.20", "0.06", 
-                                              "0.85", "0.25",
-                                              "0.05", "0.03"))
-kbl(table3, booktabs = T,
-    caption = "Average Normalized Proportion of Authenticity Performances in Brazil and the US (for every 1000 words)") %>%
-  kable_styling(latex_options = "HOLD_position") %>%
-  column_spec(1, bold=TRUE)
 ```
-
-Allusions to origins and claims of truth telling are the two most regularly performed authenticities in both Brazil and the US. Table 3, above, displays the average (normalized) proportions for each authenticity performance by country for every 1000 words. While origins are a collective authenticity performance (i.e. based on the cultural connections shared between audiences and performer), truth-telling is an individual performance (i.e. based on audiences' expectations about a political performer). Yet, as authenticity performances, they promote oneself instead of focusing on others. Unsurprisingly, politicians speak mostly about themselves when doing politics. Indeed, authenticity performance that focus on others, such as lie-accusations and finger-pointing, are performed infrequently, on average, in both cases. Consistency, an inward-looking individual authenticity performance, also appears relatively frequently in both cases. In the case of Brazil, common sense is also performed relatively frequently.
-
-How, though, do the frequencies of authenticity performances change over time? Figure 1, below, illustrates the total frequencies for authenticity performances in Brazil and the US in time. In the figure, the x-axis represents the years and the y-axis represents the normalized  sum of authenticity performances. The black dots represent election years for each case. While appearing to electorates is shown to influence election outcomes [@fordahl2018; @stiers2021; @valgarosson2021], the figure shows no systematic increases in the total frequency scores associated to election years in Brazil or the US over time^[ A linear regression that correlates election years, as factors, to the total of authenticity performances for each case has also been run, see Table 4 in Appendix. The coefficients show that for both cases the relationship between election years and the frequency of authenticity performances is slightly negative (i.e. elections year correlate with a decrease in the total of authenticity performances). This relationship is negative and statistically significant for the case of the US.]. This indicates that politicians might be more generally careful towards when, where, and how authenticity is performed around election years, political discourses become more instrumental and less improvised.
 
 ```{r Figure 1, fig.cap="Authenticity Performances in Time in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
 # Plot in time
 aut_perf_time_long <- aut_perf_time %>%
-  tidyr::pivot_longer(consistency:anti_pc, "Performance")
+  tidyr::pivot_longer(consistency:anti_pc, names_to = "Performance")
 aut_perf_time_long_BR <- aut_perf_time_BR %>%
-  tidyr::pivot_longer(consistency:anti_pc, "Performance")
+  tidyr::pivot_longer(consistency:anti_pc, names_to = "Performance")
 BR_ap_total <- aut_perf_time_long_BR %>% 
   select(-c(Performance)) %>%
   group_by(date) %>% 
@@ -346,43 +259,136 @@ ggplot(ap_total_time, aes(x = as.Date(date, "%Y"),
   theme_clean(base_family = "Times")
 ```
 
-Authenticity has generally been performed with greater frequency in politics in Brazil since the mid-1990s in comparison to the US, which could be related to the differences in the number of parties in the political system. Brazil features extreme party fragmentation and weak partisanship [@baker2020], thus, politicians are less susceptible to broad ideological pressure to conform and represent interests of heterogenous groups within it, in comparison the US with two major parties. We also see a large increase in frequencies of authenticities performed in Brazil between 2011 and 2016, the Rousseff years^[ A linear regression correlating the total of authenticity performances to years, as factors, in Brazil confirms statistically significant increases for the years of 2012 and 2015, non-election years and when Rousseff was president, see table 6 in Appendix.]. This might indicate a relationship between gender and the frequencies at which authenticity is performed in politics. However, there are only two women politicians in the sample (Rousseff and H. Clinton) which makes it challenging to extrapolate how gender and authenticity performances correlate, even if women in politics have a distinct communication style [see @wood1994; @christine2005; @blankenship1995; @franceschet2016]. Additionally, Rousseff is the only non-professional politician elected president of Brazil. Having held several techno-bureaucratic positions, Rousseff ran for office for the first time in 2010 being elected president. Rousseff, arguably, needed to justify herself and her public policies performing authenticities to connect with audiences more frequently than others in th sample.
-
-The types of authenticity performed in politics also change over time. Figure 2, below, illustrates how collective and individual authenticity performances have changed in time for Brazil and the US. In the figure, the x-axis represents the years and the y-axis represents the normalized values of individual and collective authenticity performances. In Brazil, collective authenticity performances were performed considerably more frequently than individual performances from the 1980s until the early-2010s. This trend began to change at that point and, by 2019, we see a reversal of this pattern whereas individual authenticity performances surpass collective performances. Conversely, in the case of the US, individual authenticity performances were performed more frequently throughout the 1980s. From the early-1990s until the early-2010s, both performances appear at very similar rates in the US. This pattern changed in the mid-2010s with collective authenticity performances surpassing individual. In both cases, this indicates that background representations make some authenticity performances more, or less, compelling to audiences at certain junctures. Audiences in Brazil, arguably, became tired of collective authenticity performances that focused on share cultural links, specially salient during the Workers Party governments (2002-2016), with the repeated corruption scandals and the politico-economic crisis of the mid-2010s. In turn, electorates in Brazil became more interested in individual performances, compelling based on expectations about the political performers. In the US, instead, audiences arguably grew tired of balanced individual and collective performances that dominated politics throughout the 2000s, even as parties and politicians in office changed, in favor of performances that focused on shared cultural connections by the mid-2010s. In both cases, these patterns began to change before most recent elections (2016 for the US and 2018 for Brazil) and continue after even as politicians at the top might have changed. This indicates that timing could favor certain candidates who perform certain authenticities and that politicians adapt to perform authenticities that audiences "want to hear".
-
 ```{r Figure 2, fig.cap="Collective versus Individual Authenticity Performances in Time in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
 aut_perf_type <- aut_perf_time %>%
   tidyr::pivot_longer(consistency:anti_pc) %>% 
   mutate(Type = ifelse(grepl("territory|anti_pc|origins|common_sense", name),
-                       "Collective", "Individual")) %>% 
-  group_by(Type, date) %>%
+                       "Collective", "Individual")) %>%
+  group_by(Type, name, date) %>%
   summarise(value = sum(value)) %>% 
   mutate(country = "US")
 aut_perf_type_BR <- aut_perf_time_BR %>%
   tidyr::pivot_longer(consistency:anti_pc) %>% 
   mutate(Type = ifelse(grepl("territory|anti_pc|origins|common_sense", name),
                        "Collective", "Individual")) %>%
-  group_by(Type, date) %>%
+  group_by(Type, date, name) %>%
   summarise(value = sum(value)) %>% 
   mutate(country = "Brazil")
 ap_aut_perf_type <- rbind(aut_perf_type, aut_perf_type_BR)
 ggplot(ap_aut_perf_type, aes(x = as.Date(date, "%Y"),
-                             y = value, color = Type)) +
-  geom_smooth(aes(group = Type)) +
-  scale_x_date(date_breaks = "4 years", date_labels = "%Y") +
-  facet_wrap(facets = "country", nrow = 2, scales = "free") +
+                             y = value)) +
+  geom_smooth(aes(color = name), se = FALSE) +
+  geom_smooth(se = FALSE, color = "black", linetype = "dotted") +
+  facet_wrap(facets = c("country", "Type"), nrow = 2) +
+  scale_x_date(date_breaks = "8 years", date_labels = "%Y") +
+  scale_color_discrete(name = "Performance",
+                      labels = c('Anti-PC', 'Common Sense', 'Consistency',
+                               'Finger Pointing', 'Lie Accusations',
+                               'Origins', 'Territorial','Truth Telling')) +
   labs(x = "Year",
        y = "Normalized Value",
        title = "Collective versus Individual Authenticity\nPerformances in Brazil and the US in Time",
+       subtitle = "Curves in the plot are smoothed using loess method.\nAverages are represented by the dotted lines") +
+  theme_clean(base_family = "Times")
+```
+
+## 5.2 Authenticity Performances across settings
+
+```{r Figure 3, fig.cap="Authenticity Performances by Setting Time in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
+aut_perf_setting <- US %>%
+  select(-c(doc_id, text, settingc, char)) %>%
+  group_by(date, setting) %>%
+  summarise(across(everything(), sum)) %>%
+  mutate(truth_telling = (truth/length)*1000,
+         lie_accusations = (lies/length)*1000,
+         consistency = (consistency/length)*1000,
+         finger_pointing = (fpoint/length)*1000,
+         origins = (origins/length)*1000,
+         common_sense = (common_sense/length)*1000,
+         anti_pc = (anti_PC/length)*1000,
+         territory = (territory/length)*1000) %>%
+  select(-c(length, truth, lies, fpoint, anti_PC))
+aut_perf_set_long <- aut_perf_setting %>%
+  tidyr::pivot_longer(consistency:anti_pc) %>%
+  mutate(Type = ifelse(grepl("territory|anti_pc|origins|common_sense", name),
+                       "Collective", "Individual")) %>%
+  group_by(setting, date, Type) %>%
+  summarise(value = sum(value)) %>% 
+  mutate(country = "US")
+aut_perf_setting_BR <- BR %>%
+  select(-c(doc_id, text, settingc, char)) %>%
+  group_by(date, setting) %>%
+  summarise(across(everything(), sum)) %>%
+  mutate(truth_telling = (truth/length)*1000,
+         lie_accusations = (lies/length)*1000,
+         consistency = (consistency/length)*1000,
+         finger_pointing = (fpoint/length)*1000,
+         origins = (origins/length)*1000,
+         common_sense = (common_sense/length)*1000,
+         anti_pc = (anti_PC/length)*1000,
+         territory = (territory/length)*1000) %>%
+  select(-c(length, truth, lies, fpoint, anti_PC))
+aut_perf_set_long_BR <- aut_perf_setting_BR %>%
+  tidyr::pivot_longer(consistency:anti_pc) %>%
+  mutate(Type = ifelse(grepl("territory|anti_pc|origins|common_sense", name),
+                       "Collective", "Individual")) %>%
+  group_by(setting, date, Type) %>%
+  summarise(value = sum(value)) %>% 
+  mutate(country = "Brazil")
+aut_perf_set_long_ap <- rbind(aut_perf_set_long, aut_perf_set_long_BR) %>% 
+  mutate(Setting = factor(case_when(setting == 'interviews' ~ "Interview",
+                                    setting == 'debates' ~ "Debate",
+                                    setting == 'speeches' ~ "Official Speech",
+                                    setting == 'campaign' ~ "Campaign Rally"),
+                          levels = c("Official Speech", "Campaign Rally",
+                                     "Debate", "Interview")))
+ggplot(aut_perf_set_long_ap, aes(x = as.Date(date, "%Y"),
+                             y = value, color = Setting)) +
+  geom_smooth(aes(group = Setting), se = FALSE) +
+  scale_x_date(date_breaks = "4 years", date_labels = "%Y") +
+  facet_wrap(facets = "country", nrow = 2) +
+  labs(x = "Year",
+       y = "Normalized Value",
+       title = "Authenticity Performances by Setting in Brazil and the US in Time",
        subtitle = "Curves in the plot are smoothed using loess method.") +
   theme_clean(base_family = "Times")
 ```
 
-## 5.2 Authenticity Performances by Politicians in Brazil and the US
+```{r model, fig.cap="Authenticity Performances by Type and Setting in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE, include=TRUE, results="asis"}
 
-Presidents and presidential candidates disproportionately perform authenticities before being elected or after having left office. Figure 3, below, captures authenticity performances by presidents and presidential candidates that fall above the 95th percentile in a certain year. In the figure, the x-axis represents the years and the dots represent a politician that performed an authenticity above the 95th. The 95th percentiles are calculated for each authenticity performance and for the total of authenticity performances^[ Since authenticity performances as lie accusations and figer pointing happen, on average, very infrequently the 95th percentile for these are not included on Figure 3 to improve visualization. As well, some outlier scores were made smaller to fit the visualization. These are Mondale in 1983 (Total = 4.2) and Lula in 1992 (Origins = 5.5 and Total =  7.4).]. Most politicians in Brazil and the US performed one, or more, authenticities above the 95th percentile when they were candidates, before being elected the first time (e.g. Lula), or after having left office (e.g. Clinton). Other politicians do not perform any authenticity at the 95th percentile for any year campaigning or in office (e.g. Reagan and Cardoso). That is, some politicians perform authenticity less than others in general and/or do not focus on one authenticity more than other politicians at any point in time. In the case of the US, Mondale, Clinton, Gore, Obama, and H. Clinton perform the total (all authenticity performances) above the 95th percentile at a certain point, but none of these politicians were in the oval office when they did so. In the case of Brazil, Lula, Collor, Neves, and Rousseff performed the total above the 95th percentile at a certain point, but only Roussef did so while president. Rousseff performed common sense, consistency, and origins above the 95th percentile during her years in office. These performances are consistent with women’s communication styles in politics that includes personal disclosures of details, use of anecdotes, and concrete reasoning [see @wood1994, p. 137-148].
+tsetting_US <- plm(value ~ Setting*Type,
+                             data = filter(aut_perf_set_long_ap,
+                                           country == "US"),
+                             model = "within", index = "date")
+tsetting_BR <- plm(value ~ Setting*Type,
+                             data = filter(aut_perf_set_long_ap,
+                                           country == "Brazil"),
+                             model = "within",
+                             index = "date")
 
-```{r Figure 3, fig.cap="95th Percentile Authenticity Performances by Politicians in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
+stargazer(tsetting_BR, tsetting_US,
+          title = "Authenticity Performances by Type and Setting in Brazil and the US",
+          dep.var.labels = c("Brazil", "US"),
+          covariate.labels = c("Campaign Rally", "Debate", "Interview",
+                               "Individual", "Campign Individual",
+                               "Debate Individual", "Interview Individual"))
+
+# ggplot(aut_perf_set_long_ap, aes(x = as.Date(date, "%Y"),
+#                              y = value, color = Type)) +
+#   geom_smooth(aes(group = Type), se = FALSE) +
+#   scale_x_date(date_breaks = "8 years", date_labels = "%Y") +
+#   facet_wrap(facets = c("country", "Setting"), nrow = 2) +
+#   labs(x = "Year",
+#        y = "Normalized Value",
+#        title = "Authenticity Performances by Setting in Brazil and the US in Time",
+#        subtitle = "Curves in the plot are smoothed using loess method.") +
+#   theme_clean(base_family = "Times")
+```
+
+
+## 5.3 Authenticity Performances by Politicians
+
+```{r Figure 4, fig.cap="95th Percentile Authenticity Performances by Politicians in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
 # First, let's fix some names
 BR$doc_id <- gsub("Dilma", "Rousseff", BR$doc_id)
 BR$doc_id <- gsub("Aecio", "Neves", BR$doc_id)
@@ -391,6 +397,7 @@ BR$doc_id <- gsub("Itamar", "Franco", BR$doc_id)
 US$doc_id <- stringr::str_trim(US$doc_id )
 US$doc_id <- gsub("Albert Gore, Jr.", "Gore", US$doc_id)
 US$doc_id <- gsub("Hillary Clinton", "H. Clinton", US$doc_id )
+US$doc_id <- gsub("Bill Clinton", "Clinton", US$doc_id )
 US$doc_id <- gsub("George W. Bush", "W. Bush", US$doc_id )
 US$doc_id <- stringr::word(US$doc_id , -1)
 # BR
@@ -487,8 +494,8 @@ table_95_ap <- rbind(table_ap_US, table_ap_BR) %>%
 ggplot(table_95_ap, aes(x = as.Date(date, "%Y"),
                         y = value, fill = Performance,
                         label = politician)) +
-  geom_point(aes(color = Performance), size = 2.2) +
-  geom_text(aes(label = politician), size = 2.2, hjust = .3, vjust = -.3) +
+  geom_point(aes(color = Performance), size = 3) +
+  geom_text(aes(label = politician), size = 3, hjust = .3, vjust = -.3) +
   scale_x_date(date_breaks = "4 years", date_labels = "%Y") +
   facet_wrap(facets = "country", nrow = 2, scales = "free") +
   labs(x = "Year",
@@ -497,77 +504,7 @@ ggplot(table_95_ap, aes(x = as.Date(date, "%Y"),
   theme_clean(base_family = "Times")
 ```
 
-Associated and opposing politicians often perform the same authenticities in close years. Anti-PC in Brazil, for example, was performed by diverse politicians above the 95th percentile around the mid-1990s ^[Anti-PC in the US, however, was performed by Mondale in the 1980s and Trump from 2015 onwards. Although Trump and Mondale politicians belonged to different parties and had divergent political stands, both often employed a “telling like it is” communication style. For more on Modale’s “truth” telling style see his [1984](https://www.nytimes.com/1984/07/20/us/transcript-of-mondale-address-accepting-party-nomination.html). Democratic Convention acceptance speech. Some of Mondale’s mentions of truth telling regarding raising taxes, for example, is similar to numerous accounts of Trump’s denouncing PC in terms of wasting peoples’ time. Indeed, Trump is the only politician the sample who appears to consistently perform authenticity with anti-PC]. Furthermore, truth telling, origins, and consistency were performed above the 95th percentile by Lula and Collor from the late-1980s to the late-1990s. In the case of the US, origins was performed above the 95th percentile by Mondale and Bush in the mid-1980s and by Gore and Clinton in the mid-1990s; truth telling was performed above the 95th percentile by politicians as Kerry and McCain around the year 2000; and consistency was performed above the 95th percentile in the 2000s by W. Bush, Clinton, McCain. These similar performances above the 95th percentile for associated and opposing politicians in close years indicate that politicians might respond to, or imitate, each other on specific authenticity performances around certain times.
-
-## 5.3 Authenticity Performances across settings in Brazil and the US
-
-The frequency of authenticity performances varies across political settings. Figure 4, below, illustrates authenticity performances in Brazil and the US across setting over time. The x-axis represents the years and the y-axis represents the normalized authenticity performances for each setting. In the US, authenticity was performed much more frequently in campaign rallies than in all other settings until mid-2000s^[ The relationship between the average frequencies of authenticity performances per year and setting was also investigated employing fixed-effects linear panel models. Fixed-effects models account for time effects while controlling for unobserved associations within the model variables [@allison2009]. In the regression (see Table 6 in Appendix), the correlation between the frequencies of authenticity performances and campaign settings for the US, in comparison to official speeches (reference category), is positive and highly statistically significant. Interviews also appear to correlate positively with authenticity performances in the US, in comparison to official speeches. In the case of Brazil, both campaign and debate settings correlate positively with authenticity performances in relation to official speeches. However, using this approach, we miss how these correlations change in time.]. At that point, the frequency in which authenticity was performed across all settings in the US becomes similar until the early-2010s, when performances in debates start to steadily increase, while performances on interviews steadily decrease, in frequency. In the case of Brazil, the frequency at which authenticity is performed in campaign rallies generally increased from the late 1980s to the mid-2010s. In fact, there is a sharp increase in the frequency in which authenticity is performed in campaign rallies, debates, and official speeches form the late 2000s to the mid-2010s. From the mid-2010s onwards, there is a sharp decrease in the frequency for authenticity performances across all setting in Brazil.
-
-```{r Figure 4, fig.cap="Authenticity Performances by Setting Time in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
-aut_perf_setting <- US %>%
-  select(-c(doc_id, text, settingc, char)) %>%
-  group_by(date, setting) %>%
-  summarise(across(everything(), sum)) %>%
-  mutate(truth_telling = (truth/length)*1000,
-         lie_accusations = (lies/length)*1000,
-         consistency = (consistency/length)*1000,
-         finger_pointing = (fpoint/length)*1000,
-         origins = (origins/length)*1000,
-         common_sense = (common_sense/length)*1000,
-         anti_pc = (anti_PC/length)*1000,
-         territory = (territory/length)*1000) %>%
-  select(-c(length, truth, lies, fpoint, anti_PC))
-aut_perf_set_long <- aut_perf_setting %>%
-  tidyr::pivot_longer(consistency:anti_pc) %>%
-  group_by(setting, date) %>%
-  summarise(value = sum(value)) %>% 
-  mutate(country = "US")
-aut_perf_setting_BR <- BR %>%
-  select(-c(doc_id, text, settingc, char)) %>%
-  group_by(date, setting) %>%
-  summarise(across(everything(), sum)) %>%
-  mutate(truth_telling = (truth/length)*1000,
-         lie_accusations = (lies/length)*1000,
-         consistency = (consistency/length)*1000,
-         finger_pointing = (fpoint/length)*1000,
-         origins = (origins/length)*1000,
-         common_sense = (common_sense/length)*1000,
-         anti_pc = (anti_PC/length)*1000,
-         territory = (territory/length)*1000) %>%
-  select(-c(length, truth, lies, fpoint, anti_PC))
-aut_perf_set_long_BR <- aut_perf_setting_BR %>%
-  tidyr::pivot_longer(consistency:anti_pc) %>%
-  group_by(setting, date) %>%
-  summarise(value = sum(value)) %>% 
-  mutate(country = "Brazil")
-aut_perf_set_long_ap <- rbind(aut_perf_set_long, aut_perf_set_long_BR) %>% 
-  mutate(Setting = factor(case_when(setting == 'interviews' ~ "Interview",
-                                    setting == 'debates' ~ "Debate",
-                                    setting == 'speeches' ~ "Official Speech",
-                                    setting == 'campaign' ~ "Campaign Rally"),
-                          levels = c("Official Speech", "Campaign Rally",
-                                     "Debate", "Interview")))
-ggplot(aut_perf_set_long_ap, aes(x = as.Date(date, "%Y"),
-                             y = value, color = Setting)) +
-  geom_smooth(aes(group = Setting), se = FALSE) +
-  scale_x_date(date_breaks = "4 years", date_labels = "%Y") +
-  facet_wrap(facets = "country", nrow = 2, scales = "free") +
-  labs(x = "Year",
-       y = "Normalized Value",
-       title = "Authenticity Performances by Setting\nin Brazil and the US in Time",
-       subtitle = "Curves in the plot are smoothed using loess method.") +
-  theme_clean(base_family = "Times")
-```
-
-In both Brazil and the US debates have become the setting in which authenticity is performed most frequently, whereas interviews are the setting in which authenticity is performed least frequently, from the mid-2010s onwards. In the case of interviews, the spread of social media gave politicians alternative outlets to interact directly with audiences, bypassing journalists and their filters [see @alexander2011, p. 106] while performing authenticity directly to wide portions of the electorate. Relatedly, in terms of authenticity performances, debates’ format requires candidates to answer quick to sometimes unpredictable questions and, as large-scale media events, become sources of “sticky” sound, text, and video bites charged with imagery, rather than meaning, that circulate to mark and represent political cycles in democracies [@foley2012,; @coleman2000]^[Though why and the extent to which debates might matter for election outcomes is contentious [see @mckinney2013].].
-
 # 6 Conclusion
-
-This article investigated how anti-PC discourses appear and change over time in politics. A short dive into the history of PC, and anti-PC, illustrated how the expansion of PC language generates more abstract and imprecise replacements that can feel unnatural, patronize subjects, and further socioeconomic inequalities via linguistic processes, while contributing to the evolution of PC from a noun used to describe language substitution to an adjective used to describe evasion of truths. A review of the populism and cultural backlash scholarship illustrated how these literatures focus on particular manifestations of anti-PC discourses by specific leaders. Instead, this article argued that anti-PC discourses in politics are performances of authenticity that reduce the perceived link between what politicians are thinking and what they are saying to audiences. Several authenticity performances are theorized. A framework for investigating authenticity performances in politics that focuses on performative displays (what), projections (who, when, and where), and mechanisms (how) is developed. Authenticity performances are dicided into individual and collective. Individual authenticity performances derive plausibility from audiences' expectations about a political performer considering the information they have. These performances include claims of truth telling or consistency and lie accusations or finger pointing. Collective authenticity performances derive plausibility for performance based on the cultural connections shared between audiences and performer. These performances include anti-PC, pointing at origins, allusions to common sense, or claims of territorial knowledge. A dictionary of terms for investigating authenticity performances in discourses is built. Texts for campaign rallies, debates, interviews, and official speeches for presidents and presidential candidates in Brazil and the US since the 1980s were scraped to construct the datasets. This allowed for the identification and comparison of how performances of authenticity change over time, by politicians, and across political settings.
-
-The analysis of the findings reveal that authenticity performances that promote oneself, as origins and truth-telling, occur with greater frequency on average than other performances. As well, the frequencies of authenticity performances are not systematically greater in election years in comparison to non-election years. This indicates that politicians might be more careful towards when, where, and how authenticity is performed around election years. Indeed, most politicians disproportionately perform one or more authenticities when they are candidates, before being elected a first time, or after having left office. Exceptionally, in the case of Brazil, we see a spike in the frequency authenticity is performed in politics from 2011 to 2016, the Rousseff years in office. Rousseff, arguably, performed authenticity more frequently to justify herself and her public policy choices than others. Moreover, the variation in types of authenticity performed over time and across cases indicate that background representations make some types of performances more credible to audiences at certain junctures. For example, many authenticity performances appear in high frequencies for opposing and associated candidates in similar years. In such, politicians adapt to perform authenticities audiences “want to hear”. Finally, in both cases in recent years, debates became the setting in which authenticities are performed most frequently; whereas interviews became the setting in which authenticities are performed least frequently. Debates are large-scale media events that produce “sticky” political bites charged with imagery that circulate more than ever in democracies. Relatedly, social media platforms give politicians diverse outlets to interact directly with audiences, bypassing journalists in interviews.
-
-@alexander2011[p.85] argues that the "challenge for social performance is to make its component parts invisible". For social scientists, the challenge has long been to understand when, why, and how political discourses matter in democracies. Looking at politics as performances emphasizes the performer's role, the script, the stage, and the audience, rather than the content, while placing agency with both audiences and performers. Recent, and misguided, pre-election predictions for the US (2016) and Brazil (2022) demonstrate that we need to revisit our understandings of voter's and politicians behaviors. A misplaced engagement with the logic of why electorates and politicians behave as they do contributes to further political polarization by passing on the blame for "undesirable" political outcomes to a lumped together group of "old, uneducated, or poor" electorates. Authenticity performances, as a framework, offers one less contentious alternative to understand what discourses, as anti-PC, are, how they change over time, and why they might matter for political outcomes.
 
 # References
 
@@ -588,8 +525,8 @@ codebook <- tibble::tibble("Authenticity Performance" = c('Truth Telling', 'lyin
 "are inconsistent, is inconsistent, being inconsistent, are irresponsible, is irresponsible, being irresponsible, their fault, not my fault, not our fault, they left us with, they are responsible, are not responsible, aren’t responsible, is not responsible, isn’t responsible, costed us, false promises, lack accountability, lacking accountability, not kept their word, not kept his word, not kept her word, not kept promises, not kept the, not kept his, not kept her, not kept their, not keep their word, not keep his word, not keep her word, not keep the, didn’t keep the, didn’t keep her, didn’t keep his, hasn’t kept his, hasn’t kept her, not recognize, he made mistakes, she made mistakes, they made mistakes, not our mistake, not my mistake, not take responsibility, not my responsibility, not accountable, him accountable, them accountable, her accountable, blame them, blame him, blame his, blame her, their blame, break promises, broken promises, has betrayed, they betrayed, betraying, will betray, has tricked, has lied, not deliver, didn’t deliver, hasn’t deliver, failed your obligations, failed in your obligations, failed his obligations, failed her obligations, failed in his duty, failed in her duty, failed his duty, failed her duty, failed your duties, stabbed in the back",
 "I was born, I come from, we come from, I grew up, growing up in, my parents, my mom, my mother, my father, my dad, my family, raised me, I was raised, we were raised, we grew up, my background, being surrounded by, being exposed to, my siblings, going to school in, our local church, Sunday mass, Saturday mass, family tradition, tradition in my house, in our house, growing up, back in the day, my grandparents, in my town, in my state, in my region, our community, in my community, our town, our state, my hometown, our hometown, my home state, our home state, back home, our house, my house, our neighbourhood, in my district, I lived in, we lived in, we used to play, I used to play, I was thought",
 "is common sense, are common sense, everyone knows, it is undeniable, stating the obvious, say the obvious, everyone agrees, we all know, common wisdom, the people know, popular knowledge, from experience, it is my experience, sound judgment, practical solution, practical choice, practical answer, pragmatic solution, pragmatic answer, pragmatic choice, realistic answer, let me tell you about, is obvious, are obvious, obvious answer, obvious solution, as we all learned, we have all learned that, do not need to tell you that, the reality is, there is no logic, it does not make sense, it doesn’t make sense, we know it does not work, no one disagrees that, no person disagrees, there is not a person, there is not a human being, there is not a family, there is not an American, there is no single citizen, there is not one single person, there is not one single human being, there is not one single family, there is not one single American, there is not one single citizen, there is not one single person, there is not one human being, there is not one family, there is not one American",
-"politically correct, political correctness, PC, plain speaking, speaking my mind, speak my mind, say what I think, saying what I think, not going to pretend, not pretend, speak what you think, not what you want to hear, not butter up, not beat around the bush, cut to the chase, just being real, saying what everyone thinks, say what everyone is thinking, speaking plainly, coloured people, negro, retarded, nigger, third world, oriental people, crippled people, is crippled, culturally deprived, drug addict, junkie, drunk, fat people, fat person, fat population, handicapped, homosexual faggot, deviant, perverted, illegals, illegal immigrants, illegal alien, Jew, non-white, prostitutes, promiscuous, stupid, tribe, underdeveloped",
-"have been to, have visited, came all the way to, back from, will visit, saw first-hand, see first-hand, we visited, I visited, we visited, travelled to, traveling to, spend a few days in, spent some time in, spent time in, met great people in, we were hosted, I was hosted, our time in, my time in, our visit, spent a lot of time in, were many times in, got to know the whole country, got to know all the states"),
+"politically correct, political correctness, PC, plain speaking, speaking my mind, speak my mind, say what I think, saying what I think, not going to pretend, not pretend, speak what you think, not what you want to hear, not butter up, not beat around the bush, cut to the chase, just being real, saying what everyone thinks, say what everyone is thinking, speaking plainly, colored people, negro, retarded, nigger, third world, oriental people, crippled people, is crippled, culturally deprived, drug addict, junkie, drunk, fat people, fat person, fat population, handicapped, homosexual faggot, deviant, perverted, illegals, illegal immigrants, illegal alien, Jew, non-white, prostitutes, promiscuous, stupid, tribe, underdeveloped",
+"have been to, have visited, came all the way to, back from, will visit, saw first-hand, see first-hand, we visited, I visited, we visited, traveled to, traveling to, spend a few days in, spent some time in, spent time in, met great people in, we were hosted, I was hosted, our time in, my time in, our visit, spent a lot of time in, were many times in, got to know the whole country, got to know all the states"),
 "Lexicon Portuguese" = c("a verdade e, esta e a verdade, digo a verdade, dizemos a verdade, pura verdade, não e mentira, não estou mentindo, e honesto, sou honesto, somos honesto, sendo honesto, a honestidade, ser sincero, e sincero, com sinceridade, e verdade, são verdadeiras, não sou mentiroso, não minto, fundo do meu coração, sou verdadeiro, somos verdadeiros, tenho certeza, certeza absoluta, confia em mim, confie em mim, pode confiar, sou franco, somos francos, fraqueza, falando a verdade, falo a verdade, falamos a verdade, acredite em mim, pode acreditar, podem acreditar, eu tenho certeza, isso e a verdade, somos honestos, com honestidade, toda a sinceridade, com sinceridade, toda sinceridade, sou confiável, somos confiáveis, as coisas são assim, a realidade das coisas, juro por deus, com certeza, digo com precisão, veracidade, premissa, afirmo para vocês, isso e como aconteceu, falar umas verdades",
 "não e verdade, não e verdadeiro, e mentiroso, está mentindo, são mentiroso, e mentira, de mentira, tudo mentira, e desonesto, mentiram, mentiu, um desonesto, esse desonesto, de desonesto, são desonesto, e falso, são falsos, são corruptos, e corrupto, de corrupto, todos corrupto, não são sincero, não e sincero, não são honestos, não e honesto, são trapaceiros, e trapaceiro, eles trapaceiam, trapaceou, e enganar, ser enganado, vão enganar, sendo enganados, e hipócrita, e enganador, e enganação, duas caras, enganado por, não acredite, eles finge, ele finge, e fingimento, ela finge, quebrou a sua confiança , quebra de confiança,  e falso, são falsos, falsidade, e ficção, história para boi dormir, historinha para boi dormir, e calunia, são calunias, difamação, difamar, uma inverdade, são inverdades, e inverdade, isso e invenção, essas são invenções, isso e uma lenda, essas são ledas, tenta iludir, tentando iludir, uma farsa, tramoia, mal intencionado, mas intenções, falta de informação, esta mal-informado, estão mal-informados",
 "nós entregamos, eu entreguei, veja com seus próprios olhos, cumpro minhas palavras, cumprimos nossas palavra, cumpri minha palavra, cumpro minhas promessas, nossas promessa, um compromisso, meu compromisso, tenho um compromisso com, eu sou responsável, eu assumo a responsabilidade, nós somos responsáveis, nós assumimos a responsabilidade, nosso dever, meu dever, dou minha palavra, faço uma promessa, fazer uma promessa, aceitar a responsabilidade, aceito a responsabilidade, aceitamos a responsabilidade, aceitar a culpa, meus erros, que errei, eu errei, eu garanto, eu posso garantir, eu prometo, podemos provar, posso provar, provaremos, eu provei, voto de confiança, encarrego pessoalmente, encarreguei pessoalmente, estou comprometido, meu comprometimento, comprometimento com, o comprometimento, fazer o possível, minha supervisão, minha missão, nossa missão, no meu governo, no nosso governo, durante nosso governo, eu era encarregado, eu era o encarregado, fomos encarregados de",
@@ -615,37 +552,63 @@ kbl(codebook, booktabs = T, longtable = TRUE,
 
 ````
 
-```{r table 4, fig.cap="Table 4 - Authenticity Performances and Election Years in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
+```{r table 5, fig.cap="Table 5 - Authenticity Performances and Election Years in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
 # let just check that there is not a statistically significant correlation between EY and total AP
 check_ey <- lm(value ~ as.factor(ifelse(ey == "EY", 1, 0)) + as.factor(Country), ap_total_time)
-modelsummary::modelsummary(check_ey,
-                           coef_rename = c("(Intercept)" = "Constant",
-                                           'as.factor(ifelse(ey == "EY", 1, 0))1' =  "Election Year",
-                                           "as.factor(Country)US" = "United States"),
-                           stars = TRUE,
-                           title = "Authenticity Performances and Election Years in Brazil and the US")
+stargazer::stargazer(check_ey,
+                     type = "text",
+                     title = "Authenticity Performances and Election Years in Brazil and the US",
+                     covariate.labels = c("Election Year", "United States"))
 # Not statistically significant.. not even a positive relationship for either case.
 # In comparison to Brazil, EY in the US shows to be negative and statistically significant.
 ```
 
-```{r table 5, fig.cap="Table 5 - Authenticity Performances by year in Brazil", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=FALSE, results="asis"}
+```{r table 6, fig.cap="Table 6 - Authenticity Performances by year in Brazil", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=FALSE, results="asis"}
 # # Let's also check if the increases per year in Brazil are statistically significant
 ap_total_time_br <- ap_total_time %>% dplyr::filter(Country == "Brazil")
 check_year_br <- lm(value ~ as.factor(date), ap_total_time_br)
-modelsummary::modelsummary(list("Brazil" = check_year_br),
-                                   stars = TRUE, title = "Authenticity Performances by year in Brazil",
-                                   escape = FALSE)
+stargazer(check_year_br,
+          title = "Authenticity Performances by year in Brazil")
 ```
 
-```{r table 6, fig.cap="Table 6 - Authenticity Performances by Setting in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
+```{r}
+# Get means
+BR_mean <- apply(aut_perf_time_BR, 2, function(x) mean(as.numeric(x)))
+US_mean <- apply(aut_perf_time, 2, function(x) mean(as.numeric(x)))
+# Table
+table7 <- tibble::tibble("Authenticity Performance" = c("Truth Telling", 
+                                                        "Lie Accusations",
+                                                        "Consistency ",
+                                                        "Finger Pointing", 
+                                                        "Origins",
+                                                        "Common Sense", 
+                                                        "Territorial",
+                                                        "Anti-PC"),
+                         "Average US" = c("0.33", "0.04",
+                                          "0.19", "0.02", 
+                                          "0.34", "0.06",
+                                          "0.10", "0.09"),
+                         "Average Brazil" = c("0.35", "0.03",
+                                              "0.20", "0.06", 
+                                              "0.85", "0.25",
+                                              "0.05", "0.03"))
+kbl(table7, booktabs = T,
+    caption = "Average Normalized Proportion of Authenticity Performances in Brazil and the US (for every 1000 words)") %>%
+  kable_styling(latex_options = "HOLD_position") %>%
+  column_spec(1, bold=TRUE)
+```
+
+```{r table 8, fig.cap="Table 7 - Authenticity Performances by Setting in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
 check_setting_US <- plm::plm(value ~ Setting,
-                             data = filter(aut_perf_set_long_ap, country == "US"),
+                             data = filter(aut_perf_set_long_ap,
+                                           country == "US"),
                              model = "within", index = c("date"))
 check_setting_BR <- plm::plm(value ~ Setting,
                              data = filter(aut_perf_set_long_ap,
                                            country == "Brazil"),
                              model = "within",
                              index = c("date"))
-modelsummary::modelsummary(list("Brazil" = check_setting_BR, "US" = check_setting_US),
+modelsummary::modelsummary(list("Brazil" = check_setting_BR,
+                                "US" = check_setting_US),
                            stars = TRUE, title = "Authenticity Performances by Setting in Brazil and the US")
 ```
