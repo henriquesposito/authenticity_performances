@@ -1,53 +1,32 @@
 ---
-title: 'Radiating Truthiness: Authenticity performances in politics in Brazil and
-  the United States'
-author: |
-  | Henrique Sposito
-  |
-  | Graduate Institute of International and Development Studies
-  | Geneva, Switzerland
-  | henrique.sposito@graduateinstitute.ch
-date: "18 July 2023"
+title: 'Radiating Truthiness: Authenticity performances in politics in Brazil and the United States'
 output:
-  word_document: default
+  pdf_document: default
   latex_engine: xelatex
   fig_caption: yes
   html_document:
     df_print: paged
-  pdf_document: default
 fontsize: 12pt
 mainfont: Times New Roman
 header-includes:
-- \usepackage{floatrow}
-- \floatsetup[figure]{capposition=top}
-- \usepackage{float}
-- \floatplacement{figure}{H}
-- \usepackage[T1]{fontenc}
-- \usepackage[utf8]{inputenc}
-- |
-  ```{=latex}
-  ```
-- |
-  ```{=latex}
-  ```
-  \providecommand{\keywords}[1]{\textbf{Keywords:} #1}
-  \providecommand{\wordcount}[1]{\text{Word Count:} #1}
-always_allow_html: yes
+  - \usepackage{floatrow}
+  - \floatsetup[figure]{capposition=top}
+  - \usepackage{float}
+  - \floatplacement{figure}{H}
+  - \usepackage[T1]{fontenc}
+  - \usepackage[utf8]{inputenc}
+  - |
+    ```{=latex}
+    \providecommand{\keywords}[1]{\textbf{Keywords:} #1}
+    ```
+  - |
+    ```{=latex}
+    \providecommand{\wordcount}[1]{\textbf{Word Count:} #1}
+    ```
+always_allow_html: TRUE
 bibliography: references.bib
 csl: chicago.csl
-abstract: Political authenticity, as the perceived degree to which politicians appear
-  to remain true to themselves, is connected to higher levels of political trust from
-  electorates and can influence political outcomes. Yet, authenticity is frequently
-  overlooked as a determinant factor for electoral behavior for being deemed vague,
-  and, when considered, discussions of how authenticity appears and changes in politics
-  usually remain at the theoretical level and are rarely comparative. This article
-  develops an innovative framework to identify and compare how authenticity is performed
-  in political discourses over time, across settings, and by politicians. To investigate
-  performances of authenticity in political discourses, 24,170 political texts from
-  campaign rallies, debates, interviews, and official speeches for presidents and
-  presidential candidates since the 1980s were scraped for Brazil and the United States,
-  where authenticity in politics has drawn increased attention. The findings indicate
-  that authenticity is not performed more frequently in election years.
+abstract: Political authenticity, as the perceived degree to which politicians appear to remain true to themselves, is connected to higher levels of political trust from electorates and can influence political outcomes. Yet, authenticity is frequently overlooked as a determinant factor for electoral behavior for being deemed vague, and, when considered, discussions of how authenticity appears and changes in politics usually remain at the theoretical level and are rarely comparative. This article develops an innovative framework to identify and compare how authenticity is performed in political discourses over time, across settings, and by politicians. To investigate performances of authenticity in political discourses, 24,170 political texts from campaign rallies, debates, interviews, and official speeches for presidents and presidential candidates since the 1980s were scraped for Brazil and the United States, where authenticity in politics has drawn increased attention. The findings indicate that authenticity is not performed more frequently in election years.
 ---
 
 ```{=latex}
@@ -55,7 +34,7 @@ abstract: Political authenticity, as the perceived degree to which politicians a
 ```
 
 ```{=latex}
-\wordcount{10000 (includes text, tables, figures, notes, and references)}
+\wordcount{8966 (includes text, tables, figures, and notes)}
 ```
 
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
@@ -196,9 +175,7 @@ Authenticity performances can be divided in two types: individual and collective
 Collective authenticity performances are more elaborate displays of authenticity that derive plausibility for performance based on the cultural connections shared between audiences and performers. These performances are essential to legitimize a candidate’s “belonging” and knowledge about the “real” issues people in their country face. Collective authenticity can be performed with allusions to the politician’s origins, for example, or politicians can perform collective authenticity by alluding to common sense, which implies they think like the general population. Politicians can also present their knowledge of the territory to demonstrate how they understand the nation and the regional differences. Finally, politicians can perform anti-PC  as a collective form of authenticity performances that represents how “they say what they think”^[Politically incorrect expressions coded in dictionary and displayed in table 1, below, were selected from a 1992 dictionary of politically correct language. This assumes that most of the terms coded have minimally been agreed upon as not PC [@beard1993].]. Table 1, below, summarizes each authenticity performance theorized, the type, their respective displays, and mechanisms.
 
 ````{=tex}
-
 \begin{landscape}
-
 ```{r Table 1, fig.cap="Authenticity Performances, Displays, and Mechanisms", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
 
 table1 <- tibble::tibble("Authenticity Performance" = c("Truth Telling", "Lie Accusations", "Consistency ", "Finger Pointing", "Origins", "Common Sense", "Territory", "Anti-PC"),
@@ -601,7 +578,6 @@ kbl(codebook, booktabs = T, longtable = TRUE,
   column_spec(3, width = "8cm")
 ```
 \end{landscape}
-
 ````
 
 ````{=tex}
