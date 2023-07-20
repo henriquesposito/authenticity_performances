@@ -581,7 +581,7 @@ kbl(codebook, booktabs = T, longtable = TRUE,
 ````
 
 ````{=tex}
-```{r table 5, fig.cap="Table 5 - Authenticity Performances and Election Years in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
+```{r table 4, fig.cap="Table 5 - Authenticity Performances and Election Years in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
 check_ey <- lm(value ~ as.factor(ifelse(ey == "EY", 1, 0)) + as.factor(Country), ap_total_time)
 stargazer::stargazer(check_ey,
                      title = "Authenticity Performances and Election Years in Brazil and the US",
@@ -592,7 +592,7 @@ stargazer::stargazer(check_ey,
 The linear regression above that correlates election years, as factors, to the total of authenticity performances for each case. The coefficients show that for both cases the relationship between election years and the frequency of authenticity performances is negative (i.e. elections year correlate with a decrease in the total of authenticity performances). This relationship is statistically significant for the US.
 
 ````{=tex}
-```{r table 6, fig.cap="Table 6 - Authenticity Performances by year in Brazil", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=FALSE, results="asis"}
+```{r table 5, fig.cap="Table 5 - Authenticity Performances by year in Brazil", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
 ap_total_time_br <- ap_total_time %>% dplyr::filter(Country == "Brazil")
 check_year_br <- lm(value ~ date, ap_total_time_br)
 stargazer(check_year_br,
@@ -603,7 +603,7 @@ stargazer(check_year_br,
 The linear regression, above, correlates the total of authenticity performances to years, as factors, in Brazil and confirms statistically significant increases for the years of 2012 and 2015, non-election years and when Rousseff was president.
 
 ````{=tex}
-```{r table 7, fig.cap="Table 7 - Average Normalized Proportion of Authenticity Performances in Brazil and the US (for every 1000 words)", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
+```{r table 6, fig.cap="Table 6 - Average Normalized Proportion of Authenticity Performances in Brazil and the US (for every 1000 words)", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
 BR_mean <- apply(aut_perf_time_BR, 2, function(x) mean(as.numeric(x)))
 US_mean <- apply(aut_perf_time, 2, function(x) mean(as.numeric(x)))
 table7 <- tibble::tibble("Authenticity Performance" = c("Truth Telling", 
@@ -630,7 +630,7 @@ kbl(table7, booktabs = T,
 ````
 
 ````{=tex}
-```{r table 8, fig.cap="Table 8 - Authenticity Performances by Setting in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
+```{r table 7, fig.cap="Table 7 - Authenticity Performances by Setting in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
 tsetting_US <- plm(value ~ Setting,
                    data = filter(aut_perf_set_long_ap,
                                  country == "US"),
