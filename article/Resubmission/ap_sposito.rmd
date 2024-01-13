@@ -26,7 +26,7 @@ header-includes:
 always_allow_html: TRUE
 bibliography: references.bib
 csl: chicago.csl
-abstract: Political authenticity, as the perceived degree to which politicians appear to remain true to themselves, is connected to higher levels of political trust from electorates and can influence political outcomes. Despite this, authenticity is frequently overlooked as a determinant factor for electoral behavior due to its perceived vagueness. When authenticity is considered, discussions of how authenticity appears and changes in politics typically remain at the theoretical level and are rarely comparative. This article develops an innovative framework to identify and compare how authenticity is performed in political discourses over time, across settings, and by politicians. To investigate performances of authenticity in political discourses, 21496 political texts from campaign remarks, debates, interviews, and official speeches for presidents and presidential candidates since 1988 were scraped for Brazil and the United States, where authenticity in politics has drawn increased attention. The findings indicate that authenticity performances are not more prevalent during election years. Authenticity is generally performed more frequently and more diverse ways in Brazil than in the US.
+abstract: Political authenticity, as the perceived degree to which politicians appear to remain true to themselves, is connected to higher levels of political trust from electorates and can influence political outcomes. Despite this, authenticity is frequently overlooked as a determinant factor for electoral behavior due to its alleged vagueness. When considered, discussions of how authenticity appears and changes in politics typically remain at the theoretical level and are rarely comparative. This article develops an innovative framework to identify and compare how authenticity is performed in political discourses over time, across settings, and by politicians. To demonstrate the usefulness of the framework, we investigate authenticity performances in 21496 political texts for electoral debates, interviews, campaigns, and official speeches for presidents and presidential candidates in Brazil and the United States (US) since 1988, where significant attention has been paid lately to the role of authenticity in politics. The findings indicate that while authenticity is generally performed with greater frequency in Brazil than in the US, authenticity performances are not more prevalent during election years.
 ---
 
 ```{=latex}
@@ -34,7 +34,7 @@ abstract: Political authenticity, as the perceived degree to which politicians a
 ```
 
 ```{=latex}
-\wordcount{9000 (includes text, tables, figures, and notes)}
+\wordcount{... (includes text, tables, figures, and notes)}
 ```
 
 ```{r setup, include=FALSE, warning=FALSE, message=FALSE}
@@ -254,7 +254,7 @@ kbl(table2, booktabs = T, caption = "Text Data for Brazil and the US") %>%
 
 # 4 Analysis
 
-## 4.1 Authenticity Performances over time
+## 4.1 Authenticity Performances and Time
 
 ```{r Figure 1, fig.cap="Authenticity Performances Over Time in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
 aut_perf_time <- US %>%
@@ -361,7 +361,7 @@ ggplot(ap_aut_perf_type, aes(x = as.Date(year, "%Y"), y = value)) +
 #dev.off()
 ```
 
-## 4.2 Authenticity Performances across settings
+## 4.2 Authenticity Performances and Settings
 
 ```{r Figure 3, fig.cap="Authenticity Performances by Setting Over Time in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
 aut_perf_setting <- US %>%
@@ -465,7 +465,7 @@ ggplot(aut_perf_setting_table, aes(y = setting,
 ```
 
 
-## 4.3 Authenticity Performances by Politicians
+## 4.3 Authenticity Performances and Politicians' Roles
 
 ```{r figure 5, fig.cap="Authenticity Performances and Politicians' Role in Brazil and the US - Fixed-Effects by year", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
 US_mod <- US %>%
@@ -630,8 +630,6 @@ stargazer::stargazer(check_ey,
 ```
 ````
 
-The linear regression above that correlates election years, as factors, to the total of authenticity performances for each case. The coefficients show that for both cases the relationship between election years and the frequency of authenticity performances is negative (i.e. elections year correlate with a decrease in the total of authenticity performances). This relationship is statistically significant for the US.
-
 \newpage
 
 ````{=tex}
@@ -648,8 +646,6 @@ stargazer(check_year_br,
           title = "Authenticity Performances by year in Brazil - Linear Model")
 ```
 ````
-
-The linear regression, above, correlates the total of authenticity performances to election cycles in Brazil and confirms statistically significant increases for the cycle when Rousseff was president.
 
 \newpage
 
@@ -699,8 +695,6 @@ stargazer(tsetting_BR, tsetting_US,
 ```
 ````
 
-The relationship between the average frequencies of authenticity performances category and setting is investigated employing fixed-effects models, above.The correlation between the frequencies of authenticity performances and campaign settings for the US, in comparison to official speeches (reference category), is positive and highly statistically significant. Interviews also appear to correlate positively with authenticity performances in the US, in comparison to official speeches. In the case of Brazil, both campaign and debate settings correlate positively with authenticity performances in relation to official speeches.
-
 \newpage
 
 ````{=tex}
@@ -714,8 +708,6 @@ stargazer(US_model_total, BR_model_total, US_model_div, BR_model_div,
 ```
 \end{landscape}
 ````
-
-The same models were also run controling for settings and add interactions between status and the category of authenticity performances. However, there were not many statistically significant relationships and the significance or the direction of the relationships displayed in the model above remained similar.
 
 <!-- ````{=tex} -->
 <!-- \begin{landscape} -->

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.11.21)  11 JAN 2024 12:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.11.21)  13 JAN 2024 19:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -664,8 +664,6 @@ Package pdftex.def Info: ap_sposito_files/figure-latex/figure 5-1.pdf  used on i
 
 {/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}] [15] [16] [17] [18
 
-] [19
-
 ] (./ap_sposito.aux)
  ***********
 LaTeX2e <2023-11-01>
@@ -675,21 +673,21 @@ L3 programming layer <2023-11-09>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `ap_sposito.out' has not changed.
-(rerunfilecheck)             Checksum: C2EDB7040EA5156EABB1BA58E754FDF7;2725.
+(rerunfilecheck)             Checksum: 206225FF8D6E71A8AE13BBF1E0A41C9C;2748.
  ) 
 Here is how much of TeX's memory you used:
- 14030 strings out of 476227
- 224138 string characters out of 5795092
+ 14029 strings out of 476227
+ 224137 string characters out of 5795092
  1967555 words of memory out of 5000000
  35672 multiletter control sequences out of 15000+600000
  639316 words of font info for 91 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  66i,11n,67p,2777b,771s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx7.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb>
-Output written on ap_sposito.pdf (19 pages, 328410 bytes).
+Output written on ap_sposito.pdf (18 pages, 326557 bytes).
 PDF statistics:
- 300 PDF objects out of 1000 (max. 8388607)
- 240 compressed objects within 3 object streams
- 64 named destinations out of 1000 (max. 500000)
+ 295 PDF objects out of 1000 (max. 8388607)
+ 236 compressed objects within 3 object streams
+ 63 named destinations out of 1000 (max. 500000)
  146 words of extra memory for PDF output out of 10000 (max. 10000000)
 
