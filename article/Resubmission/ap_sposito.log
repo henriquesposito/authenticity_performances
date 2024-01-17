@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.11.21)  13 JAN 2024 19:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.11.21)  16 JAN 2024 21:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -618,51 +618,54 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 124.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{/Users/henriquesposito/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}] [2
+{/Users/henriquesposito/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}] [2] [3]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <12> on input line 311.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 311.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 311.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 316.
+[4] [5] [6] [7
 
-]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 209.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 209.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 209.
-<ap_sposito_files/figure-latex/Figure 1-1.pdf, id=83, 469.755pt x 325.215pt>
+] [8
+
+] [9] [10] [11] [12] [13]
+<ap_sposito_files/figure-latex/Figure 1-1.pdf, id=160, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 1-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 1-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 1-1.pdf  used on input line 238.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 1-1.pdf  used on input line 869.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[3
-
-]
-<ap_sposito_files/figure-latex/Figure 2-1.pdf, id=92, 469.755pt x 325.215pt>
+[14 <./ap_sposito_files/figure-latex/Figure 1-1.pdf>]
+<ap_sposito_files/figure-latex/Figure 2-1.pdf, id=177, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 2-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 2-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 2-1.pdf  used on input line 244.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 2-1.pdf  used on input line 915.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[4 <./ap_sposito_files/figure-latex/Figure 1-1.pdf>]
-<ap_sposito_files/figure-latex/Figure 3-1.pdf, id=108, 469.755pt x 325.215pt>
+[15] [16 <./ap_sposito_files/figure-latex/Figure 2-1.pdf>]
+<ap_sposito_files/figure-latex/Figure 3-1.pdf, id=196, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 3-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 3-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 3-1.pdf  used on input line 255.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 3-1.pdf  used on input line 979.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[5 <./ap_sposito_files/figure-latex/Figure 2-1.pdf>]
-<ap_sposito_files/figure-latex/Figure 4-1.pdf, id=120, 469.755pt x 325.215pt>
+[17]
+<ap_sposito_files/figure-latex/Figure 4-1.pdf, id=202, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/Figure 4-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/Figure 4-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 4-1.pdf  used on input line 262.
+Package pdftex.def Info: ap_sposito_files/figure-latex/Figure 4-1.pdf  used on input line 1002.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[6 <./ap_sposito_files/figure-latex/Figure 3-1.pdf>]
-<ap_sposito_files/figure-latex/figure 5-1.pdf, id=133, 469.755pt x 325.215pt>
+[18 <./ap_sposito_files/figure-latex/Figure 3-1.pdf>] [19 <./ap_sposito_files/figure-latex/Figure 4-1.pdf>]
+<ap_sposito_files/figure-latex/figure 5-1.pdf, id=229, 469.755pt x 325.215pt>
 File: ap_sposito_files/figure-latex/figure 5-1.pdf Graphic file (type pdf)
 <use ap_sposito_files/figure-latex/figure 5-1.pdf>
-Package pdftex.def Info: ap_sposito_files/figure-latex/figure 5-1.pdf  used on input line 273.
+Package pdftex.def Info: ap_sposito_files/figure-latex/figure 5-1.pdf  used on input line 1040.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[7 <./ap_sposito_files/figure-latex/Figure 4-1.pdf>] [8 <./ap_sposito_files/figure-latex/figure 5-1.pdf>] [9
+[20 <./ap_sposito_files/figure-latex/figure 5-1.pdf>] [21] [22] [23] [24] [25] [26] [27
 
-] [10] [11] [12] [13] [14
+] [28] [29] [30] [31
 
-{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}] [15] [16] [17] [18
+{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}] [32] [33] [34] [35
 
 ] (./ap_sposito.aux)
  ***********
@@ -673,21 +676,21 @@ L3 programming layer <2023-11-09>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `ap_sposito.out' has not changed.
-(rerunfilecheck)             Checksum: 206225FF8D6E71A8AE13BBF1E0A41C9C;2748.
+(rerunfilecheck)             Checksum: EF91C4A50603DD35D59E07F878DB10CD;2720.
  ) 
 Here is how much of TeX's memory you used:
- 14029 strings out of 476227
- 224137 string characters out of 5795092
+ 14137 strings out of 476227
+ 225527 string characters out of 5795092
  1967555 words of memory out of 5000000
- 35672 multiletter control sequences out of 15000+600000
- 639316 words of font info for 91 fonts, out of 8000000 for 9000
+ 35673 multiletter control sequences out of 15000+600000
+ 642308 words of font info for 92 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 66i,11n,67p,2777b,771s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 66i,11n,67p,2714b,770s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx7.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/henriquesposito/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb>
-Output written on ap_sposito.pdf (18 pages, 326557 bytes).
+Output written on ap_sposito.pdf (35 pages, 412029 bytes).
 PDF statistics:
- 295 PDF objects out of 1000 (max. 8388607)
- 236 compressed objects within 3 object streams
- 63 named destinations out of 1000 (max. 500000)
+ 497 PDF objects out of 1000 (max. 8388607)
+ 418 compressed objects within 5 object streams
+ 169 named destinations out of 1000 (max. 500000)
  146 words of extra memory for PDF output out of 10000 (max. 10000000)
 
