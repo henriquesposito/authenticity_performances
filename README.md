@@ -1,8 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# authenticity_performances
+# Radiating Truthiness: Authenticity performances in politics in Brazil and the United States
 
-The goal of authenticity_performances repo is to include data, cleaning,
-and analysis, for a transparent research process of authenticity
-performances in political discourses Brazil and the US.
+This repository makes publicly available all the replication materials
+for the article “Radiating Truthiness: Authenticity performances in
+politics in Brazil and the United States”.
