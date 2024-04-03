@@ -1,0 +1,959 @@
+---
+title: 'Radiating Truthiness: Authenticity performances in politics in Brazil and the United States'
+author: Henrique Sposito
+output:
+ pdf_document: default
+ latex_engine: xelatex
+ fig_caption: yes
+ html_document:
+ df_print: paged
+fontsize: 12pt
+mainfont: Times New Roman
+header-includes:
+  - \usepackage{floatrow}
+  - \floatsetup[figure]{capposition=top}
+  - \usepackage{float}
+  - \floatplacement{figure}{H}
+  - \usepackage[T1]{fontenc}
+  - \usepackage[utf8]{inputenc}
+  - \usepackage{subcaption}
+always_allow_html: TRUE
+bibliography: references.bib
+csl: chicago.csl
+abstract: Political authenticity is connected to higher levels of political trust from electorates and can influence political outcomes but is often overlooked for being deemed vague as a concept. When considered, discussions of how authenticity appears and changes in politics typically remain at the theoretical level and are rarely comparative. This article develops a framework to identify and compare how authenticity is performed in political discourses over time, across settings, and by politicians. To demonstrate the usefulness of the framework, this article investigates authenticity performances in 21,496 political texts of electoral debates, interviews, campaigns, and official speeches for presidents and presidential candidates in Brazil and the United States (US) since 1988. The findings indicate that authenticity is generally performed with greater frequency by presidents and presidential candidates in Brazil than in the US, though authenticity performances are not more prevalent during election years in either country.
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(include = FALSE)
+library(dplyr)
+library(tidyr)
+library(scales)
+library(kableExtra)
+library(tibble)
+library(readxl)
+library(ggplot2)
+library(ggrepel)
+library(readr)
+library(stringr)
+library(stringi)
+library(ggthemes)
+library(tm)
+library(tidytext)
+library(corrplot)
+library(Hmisc)
+library(ggpubr)
+library(plm)
+library(modelsummary)
+library(stargazer)
+library(geomtextpath)
+library(RColorBrewer)
+library(abdiv)
+Sys.setlocale("LC_ALL", "C")
+options(stringsAsFactors = FALSE, scipen = 999)
+```
+
+```{r data, message=FALSE, warning=FALSE, include=FALSE}
+# # Since some of the text cleaning takes hours to run (i.e. removing punctuation),
+# # we start with the data that has been merged and cleaned simple cleaning.
+# # For more information on how the data was merged and the cleaning was done,
+# # please see the analysis_descriptive script in the under the analysis folder.
+# BR <- readRDS("BR.Rds") # Brazil data
+# US <- readRDS("US.Rds") # US data
+# # Let's create a length column based on number of words and characters for later
+# BR$length <- str_count(BR$text, "\\w+")
+# US$length <- str_count(US$text, "\\w+")
+# BR$char <- nchar(BR$text)
+# US$char <- nchar(US$text)
+# # Let's also create a date (year) column for later on
+# BR$year <- stringr::str_extract(BR$doc_id, "[0-9]{4}")
+# US$year <- stringr::str_extract(US$doc_id, "[0-9]{4}")
+# # Let's fix some names
+# BR$doc_id <- gsub("Dilma", "Rousseff", BR$doc_id)
+# BR$doc_id <- gsub("Aecio", "Neves", BR$doc_id)
+# BR$doc_id <- gsub("FHC", "Cardoso", BR$doc_id)
+# BR$doc_id <- gsub("Itamar", "Franco", BR$doc_id)
+# US$doc_id <- stringr::str_trim(US$doc_id )
+# US$doc_id <- gsub("Albert Gore, Jr.", "Gore", US$doc_id)
+# US$doc_id <- gsub("Hillary Clinton", "H.Clinton", US$doc_id )
+# US$doc_id <- gsub("Bill Clinton", "Clinton", US$doc_id )
+# US$doc_id <- gsub("George W. Bush", "W.Bush", US$doc_id )
+# US$doc_id <- stringr::word(US$doc_id, -1)
+# # Let's get a speaker variable
+# BR$speaker <- stringr::str_remove_all(BR$doc_id, "_[0-9]{4}")
+# US$speaker <- stringr::str_remove_all(US$doc_id, "_[0-9]{4}")
+# # Let' create a setting variable for when data is merged
+# US$settingc <- paste0(US$setting, "_US")
+# BR$settingc <- paste0(BR$setting, "_BR")
+# # For the US and Brazil, let's subset the data for the years (e.g. 1988) and
+# # politicians of interest...
+# # Remove other speakers outside of the 2 years gap with the exception of Lula (for Brazil)...
+# # # Brazil
+# # Lula: 1988 to 2012 and from 2020 onwards
+# # Color: 1988 to 1994
+# # Franco: 1990 to 1996
+# # Cardoso: 1992 to 2004
+# # Serra: 2000 to 2004 & 2008 to 2012
+# # Alckmin: 2004 to 2008
+# # Neves 2012 to 2016
+# # Rousseff: 2008 to 2018
+# # Temer 2014 to 2020
+# # Haddad: 2016 to 2020
+# # Bolsonaro: from 2016 onwards
+# # # US
+# # Bush 1988 to 1995
+# # Dukakis 1988 to 1990
+# # Clinton 1990 to 2002
+# # Dole 1994 to 1998
+# # W.Bush 1998 to 2010
+# # Gore 1998 to 2002
+# # Kerry 2002 to 2006
+# # Obama 2006 to 2018
+# # McCain 2006 to 2010
+# # Romney 2010 to 2014
+# # H.Clinton 2014 to 2018
+# # Trump 2014 to 2021
+# # Biden from 2018
+# BR <- BR %>% filter(as.numeric(year) > 1987, speaker != "Sarney",
+#  speaker == "Lula" & year < 2013 |
+#  speaker == "Lula" & year > 2019 |
+#  speaker == "Collor" & year < 1995 |
+#  speaker == "Franco" & year > 1989 & year < 1997 |
+#  speaker == "Cardoso" & year > 1991 & year < 2005 |
+#  speaker == "Serra" & year > 1999 & year < 2005 |
+#  speaker == "Serra" & year > 2007 & year < 2013 |
+#  speaker == "Alckmin" & year > 2003 & year < 2009 |
+#  speaker == "Neves" & year > 2011 & year < 2017 |
+#  speaker == "Rousseff" & year > 2007 & year < 2019 |
+#  speaker == "Temer" & year > 2013 & year < 2021 |
+#  speaker == "Haddad" & year > 2015 & year < 2021 |
+#  speaker == "Bolsonaro" & year > 2015)
+# US <- US %>% filter(as.numeric(year) > 1987, speaker != "Reagan",
+#  speaker == "Bush" & year < 1995 |
+#  speaker == "Dukakis" & year < 1991 |
+#  speaker == "Clinton" & year > 1989 & year < 2002 |
+#  speaker == "Dole" & year > 1993 & year < 1999 |
+#  speaker == "W.Bush" & year > 1997 & year < 2011 |
+#  speaker == "Gore" & year > 1997 & year < 2003 |
+#  speaker == "Kerry" & year > 2001 & year < 2007 |
+#  speaker == "Obama" & year > 2005 & year < 2019 |
+#  speaker == "McCain" & year > 2005 & year < 2011 |
+#  speaker == "Romney" & year > 2009 & year < 2015 |
+#  speaker == "H.Clinton" & year > 2013 & year < 2019 |
+#  speaker == "Trump" & year > 2013 |
+#  speaker == "Biden" & year > 2017)
+# # Dictionary of terms for authenticity performances for US
+# truth_telling <- stringr::str_squish("am telling the truth|are telling the truth|is telling the truth|the truth is|this is the truth|not lying|not lies|no lies|not telling you lies|is honest|am honest|is being honest|are being honest|are honest|honesty|is sincere|are sincere|am sincere|is being sincere|are being sincere|is true|are true|not a liar|bottom of my heart|I swear|I reassure|we reassure|I assure|we assure|be assured|is truthful|are truthful|am truthful|is being truthful|are being truthful|I know that|is evident|are evident|I am sure|trust me|am frank|are frank|is frank|being frank|is upfront|are upfront|am upfront|being upfront|will come clean|am coming clean|are coming clean|is straightforward|are straightforward|being straightforward|believe me|I am certain|no bullshit|not bullshitting")
+# lie_accusations <- stringr::str_squish("not truth|not the truth|not true|aren't true|isn't true|being untruthful|is lying|are lying|is a liar|are liars|is dishonest|are dishonest|being dishonest|is fake|are fake|being fake|is corrupt|are corrupt|full of lies|not sincere|not being sincere|isn't sincere|aren't sincere|not honest|not being honest|is cheating|is a cheater|are cheaters|are cheating|are tricking|is tricking|be deceived|is deceiving|are deceiving|are a hypocrite|is a hypocrite|are being a hypocrite|is being a hypocrite|is crooked|are crooked|is misleading|are misleading|has double-standards|are sneaky|is sneaky| has two faces|two-faced|has double faces|double-faced|you are wrong|not correct|fooled by|do not believe|is misrepresenting|they misrepresent|is misrepresent|are misrepresent|pretends that|pretends to|is pretending|are pretending|keep pretending|breach your trust|breach of trust|is false|are false|being false|is misinforming|are misinforming|being misinformed|pretended|cut the crap|full of crap")
+# consistency <- stringr::str_squish("we delivered|I delivered|check and see|I keep my word|we keep our word|I kept my word|we kept our word|I keep my promise|I kept my promise|we keep our promise|as promised|we kept our promise|am responsible|I take responsibility|we take responsibility|we assume responsibility|we are accountable|we are responsible|our duty|my duty|give my word|giving my word|own up my|owning up my|accept responsibility|accept the blame|recognize my mistakes|admit I was wrong|I made mistakes|I guarantee|we guarantee|I can guarantee|we can guarantee|I promise|we promise|we can prove|I can prove|we proved|I proved|am reliable|rely on me|rely on us|be reassured|you can hold me accountable|you can hold us accountable|see with your own eyes|vote of confidence|our mission|my mission|my commitment|our commitment|during our government|during my government|while I was in charge")
+# finger_pointing <- stringr::str_squish("are inconsistent|is inconsistent|being inconsistent|are irresponsible|is irresponsible|being irresponsible|their fault|not my fault|not our fault|they left us with|they are responsible|are not responsible|aren't responsible|is not responsible|isn't responsible|costed us|false promises|lack accountability|lacking accountability|not kept their word|not kept his word|not kept her word|not kept promises|not kept the|not kept his|not kept her|not kept their|not keep their word|not keep his word|not keep her word|not keep the|didn't keep the|didn't keep her|didn't keep his|hasn't kept his|hasn't kept her|not recognize|he made mistakes|she made mistakes|they made mistakes|not our mistake|not my mistake|not take responsibility|not my responsibility|not accountable|him accountable|them accountable|her accountable|blame them|blame him|blame his|blame her|their blame|break promises|broken promises|has betrayed|they betrayed|betraying|will betray|has tricked|has lied|not deliver|didn't deliver|hasn't deliver|failed your obligations|failed in your obligations|failed his obligations|failed her obligations|failed in his dut|failed in her dut|failed his dut|failed her dut|failed your dut|stabbed in the back")
+# origins <- stringr::str_squish("I was born|I come from|we come from|I grew up|growing up in|my parents|my mom|my mother|my father|my dad|my family|raised me|I was raised|we were raised|we grew up|my background|being surrounded by|being exposed to|my siblings|going to school in|our local church|Sunday mass|Saturday mass|family tradition|tradition in my house|in our house|growing up|back in the day|my grandparents|in my town|in my state|in my region|our community|in my community|our town|our state|my hometown|our hometown|my home state|our home state|back home|our house|my house|our neighbourhood|in my district|I lived in|we lived in|we used to play|I used to play|I was thought")
+# common_sense <- stringr::str_squish("is common sense|are common sense|everyone knows|it is undeniable|stating the obvious|say the obvious|everyone agrees|we all know|common wisdom|the people know|popular knowledge|from experience|it is my experience|sound judgment|practical solution|practical choice|practical answer|pragmatic solution|pragmatic answer|pragmatic choice|realistic answer|let me tell you about|is obvious|are obvious|obvious answer|obvious solution|as we all learned|we have all learned that|do not need to tell you that|the reality is|there is no logic|it does not make sense|it doesn't make sense|we know it does not work|no one disagrees that|no person disagrees|there is not a person|there is not a human being|there is not a family|there is not an American|there is no single citizen|there is not one single person|there is not one single human being|there is not one single family|there is not one single American|there is not one single citizen|there is not one single person|there is not one human being|there is not one family|there is not one American")
+# anti_pc <- stringr::str_squish("politically correct|political correctness|PC|plain speaking|speaking my mind|speak my mind|say what I think|saying what I think|not going to pretend|not pretend|speak what you think|not what you want to hear|not butter up|not beat around the bush|cut to the chase|just being real|saying what everyone thinks|say what everyone is thinking|speaking plainly|colored people|negro|retarded|nigger|third world|oriental people|crippled people|is crippled|culturally deprived|drug addict|junkie|drunk|fat people|fat person|fat population|handicapped|homosexual|faggot|deviant|perverted|illegals|illegal immigrants|illegal alien|^jew$|^jews$|non-white|prostitutes|promiscuous|stupid|tribe|underdeveloped")
+# territory <- stringr::str_squish("have been to|have visited|came all the way to|back from|will visit|saw first-hand|see first-hand|we visited|I visited|we visited|travelled to|traveling to|spend a few days in|spent some time in|spent time in|met great people in|we were hosted|I was hosted|our time in|my time in|our visit|spent a lot of time in|were many times in|got to know the whole country|got to know all the states")
+# # Get each performance as frequencies per row, the (?i) makes it case insensitive
+# US$truth <- stringr::str_count(US$text, paste0("(?i)", truth_telling))
+# US$lies <- stringr::str_count(US$text, paste0("(?i)", lie_accusations))
+# US$consistency <- stringr::str_count(US$text, paste0("(?i)", consistency))
+# US$fpoint <- stringr::str_count(US$text, paste0("(?i)", finger_pointing))
+# US$origins <- stringr::str_count(US$text, paste0("(?i)", origins))
+# US$common_sense <- stringr::str_count(US$text, paste0("(?i)", common_sense))
+# US$anti_PC <- stringr::str_count(US$text, paste0("(?i)", anti_pc))
+# US$territory <- stringr::str_count(US$text, paste0("(?i)", territory))
+# # Same dictionary but in Portuguese
+# truth_telling <- ("a verdade e|esta e a verdade|digo a verdade|dizemos a verdade|pura verdade|não e mentira|não estou mentindo|e honesto|sou honesto|somos honesto|sendo honesto|a honestidade|ser sincero|e sincero|com sinceridade|e verdade|são verdadeiras|não sou mentiroso|não minto|fundo do meu coração|sou verdadeiro|somos verdadeiros|tenho certeza|certeza absoluta|confia em mim|confie em mim|pode confiar|sou franco|somos francos|fraqueza|falando a verdade|falo a verdade|falamos a verdade|acredite em mim|pode acreditar|podem acreditar|eu tenho certeza|isso e a verdade|somos honestos|com honestidade|toda a sinceridade|com sinceridade|toda sinceridade|sou confiável|somos confiáveis|as coisas são assim|a realidade das coisas|juro por deus|com certeza|digo com precisão|veracidade|premissa|afirmo para vocês|isso e como aconteceu|falar umas verdades")
+# truth_telling <- stringr::str_squish(truth_telling) # removes unseen white spaces
+# lie_accusations <- ("não e verdade|não e verdadeiro|e mentiroso|está mentindo|são mentiroso|e mentira|de mentira|tudo mentira|e desonesto|mentiram|mentiu|um desonesto|esse desonesto|de desonesto|são desonesto|e falso|são falsos|são corruptos|e corrupto|de corrupto|todos corrupto|não são sincero|não e sincero|não são honestos|não e honesto|são trapaceiros|e trapaceiro|eles trapaceiam|trapaceou|e enganar|ser enganado|vão enganar|sendo enganados|e hipócrita|e enganador|e enganação|duas caras|enganado por|não acredite|eles finge|ele finge|e fingimento|ela finge|quebrou a sua confiança |quebra de confiança| e falso|são falsos|falsidade|e ficção|história para boi dormir|historinha para boi dormir|e calunia|são calunias|difamação|difamar|uma inverdade|são inverdades|e inverdade|isso e invenção|essas são invenções|isso e uma lenda|essas são ledas|tenta iludir|tentando iludir|uma farsa|tramoia|mal intencionado|mas intenções|falta de informação|esta mal-informado|estão mal-informados")
+# lie_accusations <- stringr::str_squish(lie_accusations)
+# consistency <- ("nós entregamos|eu entreguei|veja com seus próprios olhos|cumpro minhas palavras|cumprimos nossas palavra|cumpri minha palavra|cumpro minhas promessas|nossas promessa|um compromisso|meu compromisso|tenho um compromisso com|eu sou responsável|eu assumo a responsabilidade|nós somos responsáveis|nós assumimos a responsabilidade|nosso dever|meu dever|dou minha palavra|faço uma promessa|fazer uma promessa|aceitar a responsabilidade|aceito a responsabilidade|aceitamos a responsabilidade|aceitar a culpa|meus erros|que errei|eu errei|eu garanto|eu posso garantir|eu prometo|podemos provar|posso provar|provaremos|eu provei|voto de confiança|encarrego pessoalmente|encarreguei pessoalmente|estou comprometido|meu comprometimento|comprometimento com|o comprometimento|fazer o possível|minha supervisão|minha missão|nossa missão|no meu governo|no nosso governo|durante nosso governo|eu era encarregado|eu era o encarregado|fomos encarregados de")
+# consistency <- stringr::str_squish(consistency)
+# finger_pointing <- ("e inconsistente|são inconsistente|e irresponsável|são irresponsáveis|culpa deles|a culpa não e minha|não e minha culpa|eles nós deixaram|são responsáveis|e responsável|nós custou|falsas promessas|falta de prestação de contas|falharam|falhou|não cumpriu|não cumpriram|não reconheceu|não reconheceram|errou|erraram|não se responsabiliza|não me responsabilizo|culpa e sua|sua culpa|quebrar promessas|promessas quebradas|quebra de promessas|fala uma coisa e faz outra|fala uma coisa aqui e faz outra|falsas promessas|são trapaceiros|cometeu erros|cometeram erros|não reconhece|não reconheceu|assumiu a responsabilidade|promete uma coisa|promete o mundo|traiu a confiança|traiu a sua confiança|quebra de confiança|quebraram sua confiança|e falcatrua|foi falcatrua|cheio de falcatrua|houve fraude|houveram fraudes|fraudulento|uma negociata|facada nas costas|faltou com respeito|não faz o que promete|não fez o que promete|promessas em vão|palavras em vão|falta de comprometimento|falta de compromisso|houveram desvio|houve desvio|a culpa e do|cheio de promessas|a conta não fecha|não terminaram")
+# finger_pointing <- stringr::str_squish(finger_pointing)
+# origins <- ("Eu nasci|Eu vim de|eu venho de|viemos de|cresci|nós crescemos|meus pais|minha mãe|minha mãe|minha família|fui criado|fomos criados|minhas origens|meus irmãos|meu irmão|minha irmã|tradição familiar|tradição em casa|crescendo|antigamente|meu avô|minha avó|meus avós|na minha cidade|no meu estado|na minha região|nossa comunidade|na minha comunidade|nossa cidade|nosso estado|cidade natal|estado de origem|minha casa|nossa casa|lá em casa|nosso bairro|no meu bairro|eu morava|vivíamos|na minha terra|de onde eu venho|missa de domingo|missa toda semana|brincava|eram outros tempos|fui educado|morávamos|eu morei|nós moramos|de onde venho|eram tempos diferentes")
+# origins <- stringr::str_squish(origins)
+# common_sense <- ("senso comum|bom senso|todos sabem|afirmando o óbvio|todos concordam|todos sabemos|sabemos todos|todos nós sabemos|sabedoria popular|por experiência|e minha experiência|sou prático|tem que ser prático|devemos ser prático|sendo prático|sou pragmático|tem que ser pragmático|devemos ser pragmático|sendo pragmático|sou realista|sendo realista|sejamos realista|realisticamente falando|e óbvio|como todos nós aprendemos|como sabemos|não preciso te dizer|o povo sabe|agente aprendeu|nós aprendemos|nós sabemos|não tem logica|como aprendemos|não faz sentido|não fazem sentido|estamos cansados de saber|sabemos que não funciona|ninguém discorda que|não tem uma pessoa|não existe uma pessoa|não há uma pessoa|não existe um ser humano|não tem um ser humano|não há um ser humano|não tem uma família|não existe uma família|não há uma família|não tem um brasileiro|não há um Brasileiro|não existe um brasileiro|não tem uma brasileira|não há uma Brasileira|não existe uma brasileira")
+# common_sense <- stringr::str_squish(common_sense)
+# anti_pc<- ("politicamente correto|falar francamente|falando francamente|falar o que penso|falo o que penso|falando o que penso|dizer o que penso|papas na língua|não vou fingir|não estou aqui para agradar|falar o que você pensa|o que você quer ouvir|não adulterar|não rodeio|não dou rodeio|direto ao ponto|dizer o que todos pensam|dizendo o que penso|dizendo o que todos pensam|dizer o que todos estão pensando|não vou amaciar|não dá para amaciar|gordos|retardado|retardada|veado|população preta|os pretos|as pretas|terceiro mundo|viciado em drogas|bêbado|drogado|sem cultura|pervertidos|promíscuo|imbecil|estupido|aleijado|defeituoso|incapacitado|inválido|mongoloide|deficiente mental|deficiência mental|o incapacitado|a incapacitada|travesti|homossexualismo")
+# anti_pc <- stringr::str_squish(anti_pc)
+# territory <- ("estive em|visitei|voltou de|voltei de|voltando de|voltamos de|estive em|estivemos em|visitará|visitarei|vi em primeira mão|ver em primeira mão|visitamos|viajei para|passei alguns dias em|passei algum tempo em|passei um tempo|conheci ótimas pessoas|conhecemos ótimas pessoas em|fomos hospedados|minha passagem|nossa passagem|nossa visita|fui muitas vezes para|estive muitas vezes em|passei muito tempo em|meu tempo em|estive por todo o Brasil|de norte a sul do pais|conheço todo o pais|conheci todo o pais|conheci todo o Brasil|conheço todo o Brasil")
+# territory <- stringr::str_squish(territory)
+# # Get each performance as frequencies per row, the (?i) makes it case insensitive
+# BR$truth <- stringr::str_count(BR$text, paste0("(?i)", truth_telling))
+# BR$lies <- stringr::str_count(BR$text, paste0("(?i)", lie_accusations))
+# BR$consistency <- stringr::str_count(BR$text, paste0("(?i)", consistency))
+# BR$fpoint <- stringr::str_count(BR$text, paste0("(?i)", finger_pointing))
+# BR$origins <- stringr::str_count(BR$text, paste0("(?i)", origins))
+# BR$common_sense <- stringr::str_count(BR$text, paste0("(?i)", common_sense))
+# BR$anti_PC <- stringr::str_count(BR$text, paste0("(?i)", anti_pc))
+# BR$territory <- stringr::str_count(BR$text, paste0("(?i)", territory))
+# rm(list=ls()[! ls() %in% c("BR", "US")])
+# # The above was saved as data to speed up the markdown knitting time.
+# # It was left here for reproducibility.
+BR <- readRDS("BR_coded.rds")
+US <- readRDS("US_coded.rds")
+```
+
+\newpage
+
+# 1 Introduction
+
+# 2 Theory
+
+## 2.1 Performing authenticity in politics
+
+## 2.2 Authenticity performances, a framework
+
+````{=tex}
+\begin{landscape}
+```{r Table 1, fig.cap="Authenticity Performances, Mechanisms, and Displays", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
+
+table1 <- tibble::tibble("Authenticity Performance" = c("Truth Telling", "Lie Accusations", "Consistency ", "Finger Pointing", "Origins", "Common Sense", "Territory", "anti-PC"),
+Displays = c("Mentions truthfulness, sincerity, and/or honesty when describing oneself by stating, for example, that 'the truth is' or that they are 'not lying'",
+"Mentions dishonesty, untruthfulness, and/or insincerity when used to describe others by stating, for example, that someone 'is/are lairs' or that something is 'not the truth'",
+"Mentions career consistency, responsibility, and/or accountability for individual  by stating, for example, that they 'take responsibility' or 'keep their word'",
+"Mentions lack of accountability, inconsistency and/or blame others for mistakes by stating, for example, that opponent 'is inconsistent' and that their wrong choices 'costed us'",
+"Alludes to birthplace, origins, and roots to describe background, values, and/or tell their story by saying, for example, this how politician 'was raised' or how this is part of their 'family tradition'",
+"Alludes to common sense, reason, and/or logic to describe choices or preferences  by saying, for example,  how they are 'stating the obvious' or that 'everybody knows'",
+"Alludes to sub-portions of the territory known and/or visited  by saying, for example, how they have 'come all the way from' or 'have been to' a certain place",
+"Alludes to saying what they really think, talking without filters and/or employs anti-politically incorrect language by saying, for example, how they are just 'saying what everyone things' or are 'not politically correct'"),
+Mechanism = c("Politician appears to be telling the truth regarding their beliefs or facts", 
+"Politician appears more sincere vis-a-vis others", 
+"Politician appears consistent regarding pledges", 
+"Politician appears not accountable for previous undesirable outcomes", 
+"Politician seems culturally connected to the nation", 
+"Politician seems to make choices consistent with what others in society would do",
+"Politician seems territorially connected to sub-regions, regions, or nation",
+"Politician seems to be saying what they think without thinking about the consequences"),
+Category = c("Self", "Self", "Self", "Self", "Belong", "Belong", "Belong", "Belong"))
+
+kbl(table1, booktabs = TRUE, longtable = TRUE, caption = "Authenticity Performances, Categories, Mechanisms, and Displays") %>% kable_styling(latex_options = c("striped", "repeat_header"), font_size = 10, full_width = TRUE) %>% column_spec(1, width = "3.5 cm", bold=TRUE) %>% column_spec(2, width="10 cm") %>% column_spec(3, width = "5 cm") %>% column_spec(4, width = "3 cm")
+```
+\end{landscape}
+````
+
+# 3 Methodology
+
+## 3.1 Case selection: Brazil and the US
+
+## 3.2 Data and Operationalization
+
+```{r table 2, echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
+# For more info on observations, please refer to "total_obs.R" file in the data folder.
+table2 <- tibble::tibble("Country" = c("", "US", "", "",
+                                       "", "Brazil", "", ""),
+  "Politicians" = c("Bush, Dukakis, Clinton, Dole,",
+                    "W. Bush, Gore, Kerry, McCain,",
+                    "Obama, Romney, H. Clinton, Trump,",
+                    "and Biden",
+                    "",
+                    "Collor, Lula, Franco, Cardoso,",
+                    "Serra, Alckmin, Rousseff, Neves,",
+                    "Temer, Haddad, and Bolsonaro"),
+  "Setting" = c("Speeches", "Campaign", "Debates", "Interviews",
+                "Speeches", "Campaign", "Debates","Interviews"),
+  "Observations" = c(12866, 1545, 24, 829, 5782, 175, 258, 17))
+kbl(table2, booktabs = T, caption = "Text Data for Brazil and the US") %>%
+ kable_styling(latex_options = "HOLD_position", bootstrap_options = "striped") %>%
+ column_spec(1, bold=TRUE)
+```
+
+## 3.3. Limitations
+
+# 4 Analysis: How authenticity is performed in Brazil and the United States?
+
+## 4.1 Authenticity Performances and Time
+
+```{r Figure 1, fig.cap="Authenticity Performances Over Time in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
+aut_perf_time <- US %>%
+ select(-c(doc_id, setting, settingc, text, char, speaker)) %>%
+ group_by(year) %>%
+ summarise(across(everything(), sum)) %>%
+ mutate(truth_telling = (truth/length)*1000,
+ lie_accusations = (lies/length)*1000,
+ consistency = (consistency/length)*1000,
+ finger_pointing = (fpoint/length)*1000,
+ origins = (origins/length)*1000,
+ common_sense = (common_sense/length)*1000,
+ anti_pc = (anti_PC/length)*1000,
+ territory = (territory/length)*1000) %>%
+ select(-c(length, truth, lies, fpoint, anti_PC))
+aut_perf_time_BR <- BR %>%
+ select(-c(doc_id, setting, text, settingc, char, speaker)) %>%
+ group_by(year) %>%
+ summarise(across(everything(), sum)) %>%
+ mutate(truth_telling = (truth/length)*1000,
+ lie_accusations = (lies/length)*1000,
+ consistency = (consistency/length)*1000,
+ finger_pointing = (fpoint/length)*1000,
+ origins = (origins/length)*1000,
+ common_sense = (common_sense/length)*1000,
+ anti_pc = (anti_PC/length)*1000,
+ territory = (territory/length)*1000) %>%
+ select(-c(length, truth, lies, fpoint, anti_PC))
+# Plot over time
+aut_perf_time_long <- aut_perf_time %>%
+ tidyr::pivot_longer(consistency:anti_pc, names_to = "Performance")
+aut_perf_time_long_BR <- aut_perf_time_BR %>%
+ tidyr::pivot_longer(consistency:anti_pc, names_to = "Performance")
+BR_ap_total <- aut_perf_time_long_BR %>% 
+ select(-c(Performance)) %>%
+ group_by(year) %>% 
+ summarise(across(everything(), sum)) %>% 
+ mutate(Country = "Brazil")
+US_ap_total <- aut_perf_time_long %>% 
+ select(-c(Performance)) %>%
+ group_by(year) %>% 
+ summarise(across(everything(), sum)) %>% 
+ mutate(Country = "US")
+ap_total_time <- dplyr::full_join(US_ap_total, BR_ap_total)
+# Create labels for election years only
+ap_total_time$ey <- ifelse(ap_total_time$Country == "US" &
+  grepl("1988|1992|1996|2000|2004|2008|2012|2016|2020",
+   ap_total_time$year),
+  ap_total_time$year, "")
+ap_total_time$ey <- ifelse(ap_total_time$Country == "Brazil" &
+  grepl("1989|1994|1998|2002|2006|2010|2014|2018",
+   ap_total_time$year),
+  ap_total_time$year, ap_total_time$ey)
+ap_total_time$ey <- ifelse(ap_total_time$ey != "", "EY", "")
+#png("figure1.png", units="in", width=9, height=7, res=1000)
+ggplot(ap_total_time, aes(x = as.Date(year, "%Y"),
+  y = value, fill = Country)) +
+ geom_line(aes(group = Country, color = Country)) +
+ geom_point(data = filter(ap_total_time, ey != ""), size = 3.5, 
+ aes(color = Country)) +
+ scale_x_date(date_breaks = "4 years", date_labels = "%Y") +
+ labs(x = "Year",
+ y = "Normalized frequency (per 1000 words)",
+ caption = "Dots mark election years in respective country.") +
+ theme_clean(base_family = "Times", base_size = 12) +
+ scale_color_manual(values = c("#F0E442", "#0072B2")) +
+ theme(legend.position = "bottom", plot.background = element_blank())
+#dev.off()
+```
+
+```{r Figure 2, fig.cap="Authenticity Performances by Category Over Time in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
+aut_perf_type <- aut_perf_time %>%
+ tidyr::pivot_longer(consistency:anti_pc) %>%
+ mutate(category = ifelse(grepl("territory|anti_pc|origins|common_sense", name),
+  "Belong", "Self")) %>%
+ group_by(category, name, year) %>%
+ summarise(value = sum(value)) %>%
+ mutate(country = "United States")
+aut_perf_type_BR <- aut_perf_time_BR %>%
+ tidyr::pivot_longer(consistency:anti_pc) %>%
+ mutate(category = ifelse(grepl("territory|anti_pc|origins|common_sense", name),
+  "Belong", "Self")) %>%
+ group_by(category, year, name) %>%
+ summarise(value = sum(value)) %>%
+ mutate(country = "Brazil")
+ap_aut_perf_type <- rbind(aut_perf_type, aut_perf_type_BR) %>%
+ mutate(ct = paste0(country, " - ", category))
+#png("figure2.png", units="in", width=9, height=7, res=1000)
+ggplot(ap_aut_perf_type, aes(x = as.Date(year, "%Y"), y = value)) + 
+ geom_smooth(aes(color = name), alpha = 0.5, se = FALSE, linewidth = 0.7) +
+ facet_wrap(facets = c("country", "category"),
+            labeller = labeller(.multi_line = FALSE)) +
+ scale_x_date(date_breaks = "4 years", date_labels = "%Y") +
+ scale_color_brewer(palette = "Set2",
+  labels = c("Anti-PC", "Common sense", "Consistency", "Finger pointing",
+   "Lie accusations", "Origins", "Territory", "Truth telling")) +
+ labs(x = "Year",
+      y = "Normalized frequency (per 1000 words)",
+      color = "",
+ caption = "Averages lines are smoothed line using loess method") +
+ theme_clean(base_family = "Times") +
+ theme(legend.position = "bottom",
+ plot.background = element_blank())
+#dev.off()
+```
+
+## 4.2 Authenticity Performances and Settings
+
+```{r Figure 3, fig.cap="Authenticity Performances by Setting Over Time in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
+aut_perf_setting <- US %>%
+ select(-c(doc_id, text, settingc, char, speaker)) %>%
+ group_by(year, setting) %>%
+ summarise(across(everything(), sum)) %>%
+ mutate(truth_telling = (truth/length)*1000,
+ lie_accusations = (lies/length)*1000,
+ consistency = (consistency/length)*1000,
+ finger_pointing = (fpoint/length)*1000,
+ origins = (origins/length)*1000,
+ common_sense = (common_sense/length)*1000,
+ anti_pc = (anti_PC/length)*1000,
+ territory = (territory/length)*1000) %>%
+ select(-c(length, truth, lies, fpoint, anti_PC))
+aut_perf_set_long <- aut_perf_setting %>%
+ tidyr::pivot_longer(consistency:anti_pc) %>%
+ mutate(category = ifelse(grepl("territory|anti_pc|origins|common_sense", name),
+  "Belong", "Self")) %>%
+ group_by(setting, year, category) %>%
+ summarise(value = sum(value)) %>% 
+ mutate(country = "United States")
+aut_perf_setting_BR <- BR %>%
+ select(-c(doc_id, text, settingc, char, speaker)) %>%
+ group_by(year, setting) %>%
+ summarise(across(everything(), sum)) %>%
+ mutate(truth_telling = (truth/length)*1000,
+ lie_accusations = (lies/length)*1000,
+ consistency = (consistency/length)*1000,
+ finger_pointing = (fpoint/length)*1000,
+ origins = (origins/length)*1000,
+ common_sense = (common_sense/length)*1000,
+ anti_pc = (anti_PC/length)*1000,
+ territory = (territory/length)*1000) %>%
+ select(-c(length, truth, lies, fpoint, anti_PC))
+aut_perf_set_long_BR <- aut_perf_setting_BR %>%
+ tidyr::pivot_longer(consistency:anti_pc) %>%
+ mutate(category = ifelse(grepl("territory|anti_pc|origins|common_sense", name),
+  "Belong", "Self")) %>%
+ group_by(setting, year, category) %>%
+ summarise(value = sum(value)) %>% 
+ mutate(country = "Brazil")
+aut_perf_set_long_ap <- rbind(aut_perf_set_long, aut_perf_set_long_BR) %>% 
+ mutate(Setting = factor(case_when(setting == 'interviews' ~ "Interviews",
+   setting == 'debates' ~ "Debates",
+   setting == 'speeches' ~ "Official Speeches",
+   setting == 'campaign' ~ "Campaign Remarks"),
+  levels = c("Official Speeches", "Campaign Remarks",
+   "Debates", "Interviews")))
+#png("figure3.png", units="in", width=9, height=7, res=1000)
+ggplot(aut_perf_set_long_ap, aes(x = as.Date(year, "%Y"),
+   y = value)) +
+ geom_smooth(aes(color = Setting), se = FALSE, linewidth = 0.75) +
+ scale_x_date(date_breaks = "4 years", date_labels = "%Y") +
+ facet_wrap(facets = c("country"), nrow = 2) +
+ scale_color_brewer(palette = "Set2", direction = 1) +
+ labs(x = "Year",
+ y = "Normalized frequency (per 1000 words)",
+ caption = "Curves in the plot are smoothed using loess method.",
+ color = "") +
+ theme_clean(base_family = "Times") +
+ theme(legend.position = "bottom",
+ axis.text.x = element_text(angle = 90),
+ plot.background = element_blank())
+#dev.off()
+```
+
+```{r Figure 4, fig.cap="Authenticity Performances by Category across Settings in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
+aut_perf_setting_BR_table <- aut_perf_setting_BR %>% 
+ tidyr::pivot_longer(consistency:anti_pc) %>%
+ mutate(country = "Brazil",
+ category = ifelse(grepl("territory|anti_pc|origins|common_sense", name),
+  "Belong", "Self")) %>% 
+ group_by(setting, category, country) %>%
+ summarise(value = mean(value))
+aut_perf_setting_US_table <- aut_perf_setting %>% 
+ tidyr::pivot_longer(consistency:anti_pc) %>%
+ mutate(country = "US",
+ category = ifelse(grepl("territory|anti_pc|origins|common_sense", name),
+  "Belong", "Self")) %>% 
+ group_by(setting, category, country) %>%
+ summarise(value = mean(value))
+aut_perf_setting_table <- rbind(aut_perf_setting_BR_table, 
+   aut_perf_setting_US_table)
+#png("figure4.png", units="in", width=9, height=7, res=1000)
+ggplot(aut_perf_setting_table, aes(y = setting,
+   x = value)) +
+ geom_col(aes(fill = category), position = "dodge") +
+ facet_wrap("country", nrow = 2) +
+ scale_fill_discrete(labels = c("Belong", "Self")) +
+ scale_y_discrete(labels = c("Campaign Remarks", "Debates",
+  "Interviews", "Official Speeches")) +
+ scale_fill_brewer(palette = "Dark2", direction = 1) +
+ labs(y = "",
+ x = "Mean normalized frequency (per 1000 words)",
+ fill = "") +
+ theme_clean(base_family = "Times") +
+ theme(legend.position = "bottom",
+ plot.background = element_blank())
+#dev.off()
+```
+
+## 4.3 Authenticity Performances and Politicians' Roles
+
+```{r figure 5, fig.cap="Fixed-Effects Models for Authenticity Performances by Politicians' Roles", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
+US_mod <- US %>%
+ select(-c(doc_id, text, settingc, char)) %>% 
+ group_by(year, speaker, setting) %>%
+ summarise(across(everything(), sum)) %>%
+ mutate(truth_telling = (truth/length)*1000,
+ lie_accusations = (lies/length)*1000,
+ consistency = (consistency/length)*1000,
+ finger_pointing = (fpoint/length)*1000,
+ origins = (origins/length)*1000,
+ common_sense = (common_sense/length)*1000,
+ anti_pc = (anti_PC/length)*1000,
+ territory = (territory/length)*1000,
+ total = truth_telling + lie_accusations + consistency + 
+ finger_pointing + origins + common_sense + anti_pc + territory,
+ diversity = abdiv::dominance(c(truth_telling, lie_accusations, consistency,
+ finger_pointing, origins, common_sense, anti_pc, territory)),
+ status = factor(case_when(speaker == "Bush" & year > 1988 & year < 1993 |
+  speaker == "Clinton" & year > 1992 & year < 2001 |
+  speaker == "W.Bush" & year > 2000 & year < 2009 |
+  speaker == "Obama" & year > 2008 & year < 2017 |
+  speaker == "Trump" & year > 2016 & year < 2021 |
+  speaker == "Biden" & year > 2020 ~
+  "In Office",
+  speaker == "Bush" & year > 1992 |
+  speaker == "Clinton" & year > 2000 |
+  speaker == "W.Bush" & year > 2008 |
+  speaker == "Obama" & year > 2016 |
+  speaker == "Trump" & year > 2020 ~
+  "After office",
+ .default = "Candidates"),
+  levels = c("Candidates",
+   "In Office",
+   "After office")),
+ party = factor(case_when(speaker == "Bush" | speaker == "Dole" | 
+   speaker == "W.Bush" | speaker == "McCain" | 
+   speaker == "Romney" | 
+   speaker == "Trump" ~ "Republican",
+  .default = "Democratic"),
+  levels = c("Republican", "Democratic"))) %>%
+ select(-c(length, truth, lies, fpoint, anti_PC, truth_telling, lie_accusations,
+ consistency, finger_pointing, origins, common_sense, anti_pc, territory)) %>%
+ dplyr::distinct()
+BR_mod <- BR %>%
+ select(-c(doc_id, text, settingc, char)) %>% 
+ group_by(year, speaker, setting) %>%
+ summarise(across(everything(), sum)) %>%
+ mutate(truth_telling = (truth/length)*1000,
+ lie_accusations = (lies/length)*1000,
+ consistency = (consistency/length)*1000,
+ finger_pointing = (fpoint/length)*1000,
+ origins = (origins/length)*1000,
+ common_sense = (common_sense/length)*1000,
+ anti_pc = (anti_PC/length)*1000,
+ territory = (territory/length)*1000,
+ total = truth_telling + lie_accusations + consistency + 
+ finger_pointing + origins + common_sense + anti_pc + territory,
+ diversity = abdiv::dominance(c(truth_telling, lie_accusations, consistency,
+ finger_pointing, origins, common_sense, anti_pc, territory)),
+ status = factor(case_when(speaker == "Lula" & year > 2002 & year < 2011 |
+  speaker == "Collor" & year > 1989 & year < 1993 |
+  speaker == "Franco" & year > 1992 & year < 1995 |
+  speaker == "Cardoso" & year > 1994 & year < 2003 |
+  speaker == "Rousseff" & year > 2010 & year < 2017 |
+  speaker == "Temer" & year > 2016 & year < 2019 |
+  speaker == "Bolsonaro" & year > 2018 ~
+  "In Office",
+  speaker == "Lula" & year > 2010 |
+  speaker == "Collor" & year > 1992 |
+  speaker == "Franco" & year > 1994 |
+  speaker == "Cardoso" & year > 2002 |
+  speaker == "Rousseff" & year > 2016 |
+  speaker == "Temer" & year > 2018 ~ 
+  "After office",
+ .default = "Candidates"),
+  levels = c("Candidates",
+   "In Office",
+   "After office")),
+ party = factor(case_when(speaker == "Cardoso" | speaker == "Alckmin" | 
+   speaker == "Serra" | speaker == "Neves" ~ "PSDB",
+   speaker == "Bolsonaro" | speaker == "Collor" | 
+   speaker == "Franco" | speaker == "Temer" ~ "Other",.default = "PT"),
+  levels = c("PT", "PSDB", "Other"))) %>%
+ select(-c(length, truth, lies, fpoint, anti_PC, truth_telling, lie_accusations,
+ consistency, finger_pointing, origins, common_sense, anti_pc, territory)) %>%
+ dplyr::distinct()
+US_model_total <- plm(total ~ status + party,
+  data = US_mod, model = "within", index = c("year"))
+BR_model_total <- plm(total ~ status + party,
+  data = BR_mod, model = "within", index = c("year"))
+US_model_div <- plm(diversity ~ status + party,
+  data = US_mod, model = "within", index = c("year"))
+BR_model_div <- plm(diversity ~ status + party,
+  data = BR_mod, model = "within", index = c("year"))
+#png("figure5.png", units="in", width=9, height=7, res=1000)
+jtools::plot_summs(US_model_total, BR_model_total,
+  US_model_div, BR_model_div,
+  model.names = c("US Total","BR Total",
+   "US Diversity", "BR Diversity"),
+  legend.title = "Models") +
+ labs(caption = "Fixed-Effects models indexed by year",
+ y = "") +
+ scale_y_discrete(labels = c("Other Parties", "PSDB", "Democrat", "After office", "In Office")) +
+ theme_clean(base_family = "Times") +
+ theme(legend.position = "bottom",
+ plot.background = element_blank())
+#dev.off()
+```
+
+# 5 Conclusion
+
+# References
+
+<div id="refs"></div>
+
+# Online Appendix
+
+\newpage
+
+````{=tex}
+```{r table ec, fig.cap="Text data by election and politicians cycle in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
+# For more info on observations, please refer to "total_obs.R" file in the data folder.
+readRDS("US_t_table.Rds") %>% 
+  rename('Election Cycle' = election_cycle, Politicians = politicians,
+         Setting = setting, Observations = obs) %>% 
+  kable(format = "latex", booktabs = TRUE,
+  caption = "Text data by election and politicians cycle in the US") %>%
+  kable_styling(latex_options = c("striped", "Hold_position"), font_size=10)
+readRDS("BR_t_table.Rds") %>% 
+  rename('Election Cycle' = election_cycle, Politicians = politicians,
+         Setting = setting, Observations = obs) %>% 
+  kable(format = "latex", booktabs = TRUE,
+  caption = "Text data by election and politicians cycle in Brazil") %>%
+  kable_styling(latex_options = c("striped", "Hold_position"), font_size=10)
+```
+````
+
+````{=tex}
+\begin{landscape}
+```{r codebook, fig.cap="Authenticity Performances Codebook", echo=FALSE, message=FALSE, warning=FALSE, include=TRUE}
+codebook <- tibble::tibble("Authenticity Performance" = c('Truth Telling', 'Lie accusations', 'Consistency' , 'Finger Pointing', 'Origins', 'Common Sense', 'anti-PC', 'Territory'),
+"Lexicon English" = c("am telling the truth, are telling the truth, is telling the truth, the truth is, this is the truth, not lying, not lies, no lies, not telling you lies, is honest, am honest, is being honest, are being honest, are honest, honesty, is sincere, are sincere, am sincere, is being sincere, are being sincere, is true, are true, not a liar, bottom of my heart, I swear, I reassure, we reassure, I assure, we assure, be assured, is truthful, are truthful, am truthful, is being truthful, are being truthful, I know that, is evident, are evident, I am sure, trust me, am frank, are frank, is frank, being frank, is upfront, are upfront, am upfront, being upfront, will come clean, am coming clean, are coming clean, is straightforward, are straightforward, being straightforward, believe me, I am certain, no bullshit, not bullshitting",
+"not truth, not the truth, not true, aren't true, isn't true, being untruthful, is lying, are lying, is a liar, are liars, is dishonest, are dishonest, being dishonest, is fake, are fake, being fake, is corrupt, are corrupt, full of lies, not sincere, not being sincere, isn't sincere, aren't sincere, not honest, not being honest, is cheating, is a cheater, are cheaters, are cheating, are tricking, is tricking, be deceived, is deceiving, are deceiving, are a hypocrite, is a hypocrite, are being a hypocrite, is being a hypocrite, is crooked, are crooked, is misleading, are misleading, has double-standards, are sneaky, is sneaky, has two faces, two-faced, has double faces, double-faced, you are wrong, not correct, fooled by, do not believe, is misrepresenting, they misrepresent, is misrepresent, are misrepresent, pretends that, pretends to, is pretending, are pretending, keep pretending, breach your trust, breach of trust, is false, are false, being false, is misinforming, are misinforming, being misinformed, pretended, cut the crap, full of crap",
+"we delivered, I delivered, check and see, I keep my word, we keep our word, I kept my word, we kept our word, I keep my promise, I kept my promise, we keep our promise, as promised, we kept our promise, am responsible, I take responsibility, we take responsibility, we assume responsibility, we are accountable, we are responsible, our duty, my duty, give my word, giving my word, own up my, owning up my, accept responsibility, accept the blame, recognize my mistakes, admit I was wrong, I made mistakes, I guarantee, we guarantee, I can guarantee, we can guarantee, I promise, we promise, we can prove, I can prove, we proved, I proved, am reliable, rely on me, rely on us, be reassured, you can hold me accountable, you can hold us accountable, see with your own eyes, vote of confidence, our mission, my mission, my commitment, our commitment, during our government, during my government, while I was in charge",
+"are inconsistent, is inconsistent, being inconsistent, are irresponsible, is irresponsible, being irresponsible, their fault, not my fault, not our fault, they left us with, they are responsible, are not responsible, aren't responsible, is not responsible, isn't responsible, costed us, false promises, lack accountability, lacking accountability, not kept their word, not kept his word, not kept her word, not kept promises, not kept the, not kept his, not kept her, not kept their, not keep their word, not keep his word, not keep her word, not keep the, didn't keep the, didn't keep her, didn't keep his, hasn't kept his, hasn't kept her, not recognize, he made mistakes, she made mistakes, they made mistakes, not our mistake, not my mistake, not take responsibility, not my responsibility, not accountable, him accountable, them accountable, her accountable, blame them, blame him, blame his, blame her, their blame, break promises, broken promises, has betrayed, they betrayed, betraying, will betray, has tricked, has lied, not deliver, didn't deliver, hasn't deliver, failed your obligations, failed in your obligations, failed his obligations, failed her obligations, failed in his duty, failed in her duty, failed his duty, failed her duty, failed your duties, stabbed in the back",
+"I was born, I come from, we come from, I grew up, growing up in, my parents, my mom, my mother, my father, my dad, my family, raised me, I was raised, we were raised, we grew up, my background, being surrounded by, being exposed to, my siblings, going to school in, our local church, Sunday mass, Saturday mass, family tradition, tradition in my house, in our house, growing up, back in the day, my grandparents, in my town, in my state, in my region, our community, in my community, our town, our state, my hometown, our hometown, my home state, our home state, back home, our house, my house, our neighbourhood, in my district, I lived in, we lived in, we used to play, I used to play, I was thought",
+"is common sense, are common sense, everyone knows, it is undeniable, stating the obvious, say the obvious, everyone agrees, we all know, common wisdom, the people know, popular knowledge, from experience, it is my experience, sound judgment, practical solution, practical choice, practical answer, pragmatic solution, pragmatic answer, pragmatic choice, realistic answer, let me tell you about, is obvious, are obvious, obvious answer, obvious solution, as we all learned, we have all learned that, do not need to tell you that, the reality is, there is no logic, it does not make sense, it doesn't make sense, we know it does not work, no one disagrees that, no person disagrees, there is not a person, there is not a human being, there is not a family, there is not an American, there is no single citizen, there is not one single person, there is not one single human being, there is not one single family, there is not one single American, there is not one single citizen, there is not one single person, there is not one human being, there is not one family, there is not one American",
+"politically correct, political correctness, PC, plain speaking, speaking my mind, speak my mind, say what I think, saying what I think, not going to pretend, not pretend, speak what you think, not what you want to hear, not butter up, not beat around the bush, cut to the chase, just being real, saying what everyone thinks, say what everyone is thinking, speaking plainly, colored people, negro, retarded, nigger, third world, oriental people, crippled people, is crippled, culturally deprived, drug addict, junkie, drunk, fat people, fat person, fat population, handicapped, homosexual faggot, deviant, perverted, illegals, illegal immigrants, illegal alien, Jew, non-white, prostitutes, promiscuous, stupid, tribe, underdeveloped",
+"have been to, have visited, came all the way to, back from, will visit, saw first-hand, see first-hand, we visited, I visited, we visited, traveled to, traveling to, spend a few days in, spent some time in, spent time in, met great people in, we were hosted, I was hosted, our time in, my time in, our visit, spent a lot of time in, were many times in, got to know the whole country, got to know all the states"),
+"Lexicon Portuguese" = c("a verdade e, esta e a verdade, digo a verdade, dizemos a verdade, pura verdade, nao e mentira, nao estou mentindo, e honesto, sou honesto, somos honesto, sendo honesto, a honestidade, ser sincero, e sincero, com sinceridade, e verdade, sao verdadeiras, nao sou mentiroso, nao minto, fundo do meu coracao, sou verdadeiro, somos verdadeiros, tenho certeza, certeza absoluta, confia em mim, confie em mim, pode confiar, sou franco, somos francos, fraqueza, falando a verdade, falo a verdade, falamos a verdade, acredite em mim, pode acreditar, podem acreditar, eu tenho certeza, isso e a verdade, somos honestos, com honestidade, toda a sinceridade, com sinceridade, toda sinceridade, sou confiavel, somos confiaveis, as coisas sao assim, a realidade das coisas, juro por deus, com certeza, digo com precisao, veracidade, premissa, afirmo para voces, isso e como aconteceu, falar umas verdades",
+"nao e verdade, nao e verdadeiro, e mentiroso, esta mentindo, sao mentiroso, e mentira, de mentira, tudo mentira, e desonesto, mentiram, mentiu, um desonesto, esse desonesto, de desonesto, sao desonesto, e falso, sao falsos, sao corruptos, e corrupto, de corrupto, todos corrupto, nao sao sincero, nao e sincero, nao sao honestos, nao e honesto, sao trapaceiros, e trapaceiro, eles trapaceiam, trapaceou, e enganar, ser enganado, vao enganar, sendo enganados, e hipocrita, e enganador, e enganacao, duas caras, enganado por, nao acredite, eles finge, ele finge, e fingimento, ela finge, quebrou a sua confianca , quebra de confianca, e falso, sao falsos, falsidade, e ficcao, historia para boi dormir, historinha para boi dormir, e calunia, sao calunias, difamacao, difamar, uma inverdade, sao inverdades, e inverdade, isso e invencao, essas sao invencoes, isso e uma lenda, essas sao ledas, tenta iludir, tentando iludir, uma farsa, tramoia, mal intencionado, mas intencoes, falta de informacao, esta mal-informado, estao mal-informados",
+"nos entregamos, eu entreguei, veja com seus proprios olhos, cumpro minhas palavras, cumprimos nossas palavra, cumpri minha palavra, cumpro minhas promessas, nossas promessa, um compromisso, meu compromisso, tenho um compromisso com, eu sou responsavel, eu assumo a responsabilidade, nos somos responsaveis, nos assumimos a responsabilidade, nosso dever, meu dever, dou minha palavra, faco uma promessa, fazer uma promessa, aceitar a responsabilidade, aceito a responsabilidade, aceitamos a responsabilidade, aceitar a culpa, meus erros, que errei, eu errei, eu garanto, eu posso garantir, eu prometo, podemos provar, posso provar, provaremos, eu provei, voto de confianca, encarrego pessoalmente, encarreguei pessoalmente, estou comprometido, meu comprometimento, comprometimento com, o comprometimento, fazer o possivel, minha supervisao, minha missao, nossa missao, no meu governo, no nosso governo, durante nosso governo, eu era encarregado, eu era o encarregado, fomos encarregados de",
+"e inconsistente, sao inconsistente, e irresponsavel, sao irresponsaveis, culpa deles, a culpa nao e minha, nao e minha culpa, eles nos deixaram, sao responsaveis, e responsavel, nos custou, falsas promessas, falta de prestacao de contas, falharam, falhou, nao cumpriu, nao cumpriram, nao reconheceu, nao reconheceram, errou, erraram, nao se responsabiliza, nao me responsabilizo, culpa e sua, sua culpa, quebrar promessas, promessas quebradas, quebra de promessas, fala uma coisa e faz outra, fala uma coisa aqui e faz outra, falsas promessas, sao trapaceiros, cometeu erros, cometeram erros, nao reconhece, nao reconheceu, assumiu a responsabilidade, promete uma coisa, promete o mundo, traiu a confianca, traiu a sua confianca, quebra de confianca, quebraram sua confianca, e falcatrua, foi falcatrua, cheio de falcatrua, houve fraude, houveram fraudes, fraudulento, uma negociata, facada nas costas, faltou com respeito, nao faz o que promete, nao fez o que promete, promessas em vao, palavras em vao, falta de comprometimento, falta de compromisso, houveram desvio, houve desvio, a culpa e do, cheio de promessas, a conta nao fecha, nao terminaram",
+"Eu nasci, Eu vim de, eu venho de, viemos de, cresci, nos crescemos, meus pais, minha mae, minha mae, minha familia, fui criado, fomos criados, minhas origens, meus irmaos, meu irmao, minha irma, tradicao familiar, tradicao em casa, crescendo, antigamente, meu avo, minha avo, meus avos, na minha cidade, no meu estado, na minha regiao, nossa comunidade, na minha comunidade, nossa cidade, nosso estado, cidade natal, estado de origem, minha casa, nossa casa, la em casa, nosso bairro, no meu bairro, eu morava, viviamos, na minha terra, de onde eu venho, missa de domingo, missa toda semana, brincava, eram outros tempos, fui educado, moravamos, eu morei, nos moramos, de onde venho, eram tempos diferentes",
+"senso comum, bom senso, todos sabem, afirmando o obvio, todos concordam, todos sabemos, sabemos todos, todos nos sabemos, sabedoria popular, por experiencia, e minha experiencia, sou pratico, tem que ser pratico, devemos ser pratico, sendo pratico, sou pragmatico, tem que ser pragmatico, devemos ser pragmatico, sendo pragmatico, sou realista, sendo realista, sejamos realista, realisticamente falando, e obvio, como todos nos aprendemos, como sabemos, nao preciso te dizer, o povo sabe, agente aprendeu, nos aprendemos, nos sabemos, nao tem logica, como aprendemos, nao faz sentido, nao fazem sentido, estamos cansados de saber, sabemos que nao funciona, ninguem discorda que, nao tem uma pessoa, nao existe uma pessoa, nao ha uma pessoa, nao existe um ser humano, nao tem um ser humano, nao ha um ser humano, nao tem uma familia, nao existe uma familia, nao ha uma familia, nao tem um brasileiro, nao ha um Brasileiro, nao existe um brasileiro, nao tem uma brasileira, nao ha uma Brasileira, nao existe uma brasileira",
+"politicamente correto, falar francamente, falando francamente, falar o que penso, falo o que penso, falando o que penso, dizer o que penso, papas na lingua, nao vou fingir, nao estou aqui para agradar, falar o que voce pensa, o que voce quer ouvir, nao adulterar, nao rodeio, nao dou rodeio, direto ao ponto, dizer o que todos pensam, dizendo o que penso, dizendo o que todos pensam, dizer o que todos estao pensando, nao vou amaciar, nao da para amaciar, gordos, retardado, retardada, veado, populacao preta, os pretos, as pretas, terceiro mundo, viciado em drogas, bebado, drogado, sem cultura, pervertidos, promiscuo, imbecil, estupido, aleijado, defeituoso, incapacitado, invalido, mongoloide, deficiente mental, deficiencia mental, o incapacitado, a incapacitada, travesti, homossexualismo",
+"estive em, visitei, voltou de, voltei de, voltando de, voltamos de, estive em, estivemos em, visitara, visitarei, vi em primeira mao, ver em primeira mao, visitamos, viajei para, passei alguns dias em, passei algum tempo em, passei um tempo, conheci otimas pessoas, conhecemos otimas pessoas em, fomos hospedados, minha passagem, nossa passagem, nossa visita, fui muitas vezes para, estive muitas vezes em, passei muito tempo em, meu tempo em, estive por todo o Brasil, de norte a sul do pais, conheco todo o pais, conheci todo o pais, conheci todo o Brasil, conheco todo o Brasil"))
+codebook$`Lexicon Portuguese` <- as.character(codebook$`Lexicon Portuguese`)
+codebook$`Lexicon Portuguese` <- stringi::stri_trans_general(codebook$`Lexicon Portuguese`, id = 'latin-ascii')
+kbl(codebook, booktabs = T, longtable = TRUE,
+ caption = "Authenticity Performances Codebook") %>%
+ kable_styling(latex_options = c("hold_position", "repeat_header"),
+ font_size = 8, full_width = TRUE) %>%
+ column_spec(1, width="2cm", bold=TRUE) %>%
+ column_spec(2, width="6cm") %>%
+ column_spec(3, width = "8cm")
+```
+\end{landscape}
+````
+
+\newpage
+
+````{=tex}
+```{r table 5, fig.cap="Authenticity Performances and Election Years in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
+check_ey <- lm(value ~ as.factor(ifelse(ey == "EY", 1, 0)) + as.factor(Country), ap_total_time)
+stargazer::stargazer(check_ey,
+  title = "Authenticity Performances and Election Years in Brazil and the US",
+  covariate.labels = c("Election Year", "United States"))
+```
+````
+
+\newpage
+
+````{=tex}
+```{r table 6, fig.cap="Authenticity Performances by Year in Brazil", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
+ap_total_time_br <- ap_total_time %>% 
+ dplyr::filter(Country == "Brazil") %>%
+ mutate(cycle = case_when(year < 1995 ~ "Collor/Franco (1989-1994)",
+  year > 1994 & year < 2003 ~ "Cardoso (1995-2002)",
+  year > 2002 & year < 2011 ~ "Lula (2003-2010)",
+  year > 2010 & year < 2019 ~ "Rousseff/Temer (2011-2018)",
+  year > 2018 ~ "Bolsonaro (2019 to 2022)"))
+check_year_br <- lm(value ~ cycle, ap_total_time_br)
+stargazer(check_year_br,
+ title = "Authenticity Performances by year in Brazil - Linear Model")
+```
+````
+
+\newpage
+
+````{=tex}
+```{r table 7, fig.cap="Average Normalized Proportion of Authenticity Performances in Brazil and the US (per 1000 words)", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
+BR_mean <- apply(aut_perf_time_BR, 2, function(x) mean(as.numeric(x)))
+US_mean <- apply(aut_perf_time, 2, function(x) mean(as.numeric(x)))
+table7 <- tibble::tibble("Authenticity Performance" = c("Truth Telling", 
+    "Lie Accusations",
+    "Consistency ",
+    "Finger Pointing", 
+    "Origins",
+    "Common Sense", 
+    "Territorial",
+    "Anti-PC"),
+  "Average US" = c("0.33", "0.04",
+   "0.19", "0.02", 
+   "0.34", "0.06",
+   "0.10", "0.09"),
+  "Average Brazil" = c("0.35", "0.03",
+   "0.20", "0.06", 
+   "0.85", "0.25",
+   "0.05", "0.03"))
+kbl(table7, booktabs = T,
+ caption = "Average Normalized Proportion of Authenticity Performances in Brazil and the US (per 1000 words)") %>%
+ kable_styling(latex_options = "HOLD_position") %>%
+ column_spec(1, bold=TRUE)
+```
+````
+
+\newpage
+
+````{=tex}
+```{r table 8, fig.cap="Authenticity Performances by Setting in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
+tsetting_US <- plm(value ~ Setting*category,
+  data = filter(aut_perf_set_long_ap,
+   country == "United States"),
+  model = "within", index = "year")
+tsetting_BR <- plm(value ~ Setting*category,
+  data = filter(aut_perf_set_long_ap,
+   country == "Brazil"),
+  model = "within", index = "year")
+stargazer(tsetting_BR, tsetting_US,
+ title = "Authenticity Performances by Category and Setting in Brazil and the US - Fixed-Effects by Year",
+ column.labels = c("Brazil", "US"),
+ dep.var.labels = "Total Frequency")
+```
+````
+
+\newpage
+
+````{=tex}
+\begin{landscape}
+```{r table 9, fig.cap="Authenticity Performances by Politicians' Role in Brazil and the US - Fixed-Effects by year", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
+stargazer(US_model_total, BR_model_total, US_model_div, BR_model_div,
+ title = "Authenticity Performances by Setting, Category, Status, 
+ and Party in Brazil and the US - Fixed-Effects by Year",
+ column.labels = c("US", "Brazil", "US", "Brazil"),
+ dep.var.labels = c("Total Normalized Frequency", "Diversity Score"))
+```
+\end{landscape}
+````
+
+````{=tex}
+\begin{landscape}
+```{r table 10, fig.cap="Authenticity Performances by Politician's Role in Brazil and the US - Fixed-Effects by year controling for setting and category", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE, results="asis"}
+US_mod <- US %>%
+select(-c(doc_id, text, settingc, char)) %>%
+group_by(year, speaker, setting) %>%
+summarise(across(everything(), sum)) %>%
+mutate(truth_telling = (truth/length)*1000,
+lie_accusations = (lies/length)*1000,
+consistency = (consistency/length)*1000,
+finger_pointing = (fpoint/length)*1000,
+origins = (origins/length)*1000,
+common_sense = (common_sense/length)*1000,
+anti_pc = (anti_PC/length)*1000,
+territory = (territory/length)*1000,
+diversity = abdiv::dominance(c(truth_telling, lie_accusations, consistency,
+finger_pointing, origins, common_sense, anti_pc, territory)),
+status = factor(case_when(speaker == "Bush" & year > 1988 & year < 1993 |
+  speaker == "Clinton" & year > 1992 & year < 2001 |
+  speaker == "W.Bush" & year > 2000 & year < 2009 |
+  speaker == "Obama" & year > 2008 & year < 2017 |
+  speaker == "Trump" & year > 2016 & year < 2021 |
+  speaker == "Biden" & year > 2020 ~
+  "In office",
+ speaker == "Bush" & year > 1992 |
+  speaker == "Clinton" & year > 2000 |
+  speaker == "W.Bush" & year > 2008 |
+  speaker == "Obama" & year > 2016 |
+  speaker == "Trump" & year > 2020 ~
+  "After office",
+.default = "Candidate"),
+ levels = c("Candidate", "In office", "After office")),
+party = factor(case_when(speaker == "Bush" | speaker == "Dole" |
+  speaker == "W.Bush" | speaker == "McCain" |
+  speaker == "Romney" |
+  speaker == "Trump" ~ "Republican",
+ .default = "Democratic"),
+ levels = c("Republican", "Democratic")),
+setting = factor(setting, levels = c("campaign", "speeches", "debates", "interviews"))) %>%
+select(-c(length, truth, lies, fpoint, anti_PC)) %>%
+pivot_longer(consistency:anti_pc) %>%
+mutate(category = ifelse(grepl("territory|anti_pc|origins|common_sense", name),
+ "Belong", "Self")) %>%
+group_by(year, speaker, setting, diversity, status, party, category) %>%
+summarise(total = sum(value)) %>%
+dplyr::distinct()
+BR_mod <- BR %>%
+select(-c(doc_id, text, settingc, char)) %>%
+group_by(year, speaker, setting) %>%
+summarise(across(everything(), sum)) %>%
+mutate(truth_telling = (truth/length)*1000,
+lie_accusations = (lies/length)*1000,
+consistency = (consistency/length)*1000,
+finger_pointing = (fpoint/length)*1000,
+origins = (origins/length)*1000,
+common_sense = (common_sense/length)*1000,
+anti_pc = (anti_PC/length)*1000,
+territory = (territory/length)*1000,
+diversity = abdiv::dominance(c(truth_telling, lie_accusations, consistency,
+finger_pointing, origins, common_sense, anti_pc, territory)),
+status = factor(case_when(speaker == "Lula" & year > 2002 & year < 2011 |
+  speaker == "Lula" & year > 2020 |
+  speaker == "Collor" & year > 1989 & year < 1993 |
+  speaker == "Franco" & year > 1992 & year < 1995 |
+  speaker == "Cardoso" & year > 1994 & year < 2003 |
+  speaker == "Rousseff" & year > 2010 & year < 2017 |
+  speaker == "Temer" & year > 2016 & year < 2019 |
+  speaker == "Bolsonaro" & year > 2018 ~
+  "In office",
+ speaker == "Lula" & year > 2010 & year < 2020 |
+  speaker == "Collor" & year > 1992 |
+  speaker == "Franco" & year > 1994 |
+  speaker == "Cardoso" & year > 2002 |
+  speaker == "Rousseff" & year > 2016 |
+  speaker == "Temer" & year > 2018 ~
+  "After office",
+.default = "Candidate"),
+ levels = c("Candidate", "In office", "After office")),
+party = factor(case_when(speaker == "Cardoso" | speaker == "Alckmin" |
+  speaker == "Serra" | speaker == "Neves" ~ "PSDB",
+  speaker == "Bolsonaro" | speaker == "Collor" |
+  speaker == "Franco" | speaker == "Temer" ~ "Other",.default = "PT"),
+ levels = c("PT", "PSDB", "PMDB", "Other")),
+setting = factor(setting, levels = c("campaign", "speeches", "debates", "interviews"))) %>%
+select(-c(length, truth, lies, fpoint, anti_PC)) %>%
+pivot_longer(consistency:anti_pc) %>%
+mutate(category = ifelse(grepl("territory|anti_pc|origins|common_sense", name),
+ "Belong", "Self")) %>%
+group_by(year, speaker, setting, diversity, status, party, category) %>%
+summarise(total = sum(value)) %>%
+dplyr::distinct()
+US_model_total <- plm(total ~ status*category + setting + party,
+ data = US_mod, model = "within", index = c("year"))
+BR_model_total <- plm(total ~ status*category + setting + party,
+ data = BR_mod, model = "within", index = c("year"))
+US_model_div <- plm(diversity ~ status*category + setting + party,
+ data = US_mod, model = "within", index = c("year"))
+BR_model_div <- plm(diversity ~ status*category + setting + party,
+ data = BR_mod, model = "within", index = c("year"))
+stargazer(US_model_total, BR_model_total, US_model_div, BR_model_div,
+title = "Authenticity Performances by Status, Setting, and Category,
+in Brazil and the US - Fixed-Effects by Year",
+column.labels = c("US", "Brazil", "US", "Brazil"),
+dep.var.labels = c("Total Normalized Frequency", "Diversity Score"),
+font.size = "small", no.space = TRUE)
+```
+\end{landscape}
+````
+
+*Works cited:*
+
+- @fordahl2018
+- @luebke2021
+- @seifert2012
+- @alexander2006
+- @alexander2010
+- @rosenblum2020
+- @conway2017
+- @conway2009
+- @beard1993
+- @schumpeter1976
+- @silva-muller2023
+- @allison2009
+- @rhoades1993
+- @kohl2021
+- @tavares1998
+- @french2022
+- @feres2021
+- @carlo2018
+- @marx1998
+- @silva2020
+- @balderas2010
+- @ragin1987
+- @morgenstern2013
+- @pereira2008
+- @mainwaring1991
+- @mainwaring1999
+- @baker2020
+- @markoff1999
+- @couto2021
+- @seifert2012
+- @blumler1999
+- @voltmer2004
+- @denton1988
+- @gibson1992
+- @renno2020
+- @boggild2020
+- @berezin2017
+- @hart2022
+- @leuprecht2016
+- @barros2022
+- @luebke2022
+- @stiers2021
+- @valgarosson2021
+- @jones2016
+- @varga2013
+- @morgenstern2013
+- @pereira2008
+- @kohl2021
+- @marx1998
+- @weinberg2023
+- @welp2017
+- @denton1988
+- @schafer2022
+- @foley2012
+- @coleman2000
+- @alexander2011
+- @boggild2018
+- @nai2021
+- @pires2011
+- @mendoncca2013
+- @pires2011
+- @mendoncca2013
+- @santos2021
+- @schneider2010
+- @wood1994
+- @christine2005
+- @blankenship1995
+- @franceschet2016
+- @fridkin2011
+- @nai2022
+- @haynes1998
+- @carraro2012
+- @stiers2021
+- @di2023
+- @mayhew2008
+- @haynes1998
+- @moffitt2014
+- @brubaker2020
+- @mudde2004
+- @mudde2007
+- @di2023
+- @haynes1998
+- @schlesinger2008
+- @wang2018
+- @bull1993
+- @ricci1970
+- @neto1997
+- @grofman2004
+- @samuels2010
+- @mainwaring1997
+- @riker1982
+- @garzia2022
+- @siavelis2008
+- @nai2021
+- @schmidt2001
+- @schmidt2002
+- @leruth2019
+- @blumenau2022
+- @greenstein1992
+- @hibbing2011
+- @catellani2015
+- @cwalina2016
+- @seifert2012
+- @mcallister2007
+- @taylor1992
+- @varga2013
+- @goffman1956
+- @dijk1997
+- @cwalina2016
+- @goren2018
+- @wood1994
+- @christine2005
+- @blankenship1995
+- @franceschet2016
