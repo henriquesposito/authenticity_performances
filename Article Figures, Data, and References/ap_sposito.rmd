@@ -315,7 +315,7 @@ ap_total_time$ey <- ifelse(ap_total_time$Country == "Brazil" &
    ap_total_time$year),
   ap_total_time$year, ap_total_time$ey)
 ap_total_time$ey <- ifelse(ap_total_time$ey != "", "EY", "")
-png("figure1.png", units="in", width=11, height=11, res=2000)
+#png("figure1.png", units="in", width=11, height=11, res=2000)
 ggplot(ap_total_time, aes(x = as.Date(year, "%Y"), y = value, fill = Country)) +
  geom_line(aes(group = Country, color = Country), size = 0.9) +
  # geom_textline(aes(label=Country, color = Country), size=5,
@@ -329,7 +329,7 @@ ggplot(ap_total_time, aes(x = as.Date(year, "%Y"), y = value, fill = Country)) +
  theme_clean(base_family = "Times", base_size = 12) +
  scale_color_manual(values = c("#F0E442", "#0072B2")) +
  theme(legend.position = "bottom", plot.background = element_blank())
-dev.off()
+#dev.off()
 ```
 
 ```{r Figure 2, fig.cap="Authenticity Performances by Category Over Time in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
@@ -349,7 +349,7 @@ aut_perf_type_BR <- aut_perf_time_BR %>%
  mutate(country = "Brazil")
 ap_aut_perf_type <- rbind(aut_perf_type, aut_perf_type_BR) %>%
  mutate(ct = paste0(country, " - ", category))
-png("figure2.png", units="in", width=11, height=11, res=2000)
+#png("figure2.png", units="in", width=11, height=11, res=2000)
 ggplot(ap_aut_perf_type, aes(x = as.Date(year, "%Y"), y = value)) + 
  geom_smooth(aes(color = name), alpha = 0.5, se = FALSE, linewidth = 0.8) +
  facet_wrap(facets = c("country", "category"),
@@ -365,7 +365,7 @@ ggplot(ap_aut_perf_type, aes(x = as.Date(year, "%Y"), y = value)) +
  theme_clean(base_family = "Times") +
  theme(legend.position = "bottom",
  plot.background = element_blank())
-dev.off()
+#dev.off()
 ```
 
 ## 4.2 Authenticity Performances and Settings
@@ -418,7 +418,7 @@ aut_perf_set_long_ap <- rbind(aut_perf_set_long, aut_perf_set_long_BR) %>%
    setting == 'campaign' ~ "Campaign Remarks"),
   levels = c("Official Speeches", "Campaign Remarks",
    "Debates", "Interviews")))
-png("figure3.png", units="in", width=11, height=11, res=2000)
+#png("figure3.png", units="in", width=11, height=11, res=2000)
 ggplot(aut_perf_set_long_ap, aes(x = as.Date(year, "%Y"),
    y = value)) +
  geom_smooth(aes(color = Setting), se = FALSE, linewidth = 0.8) +
@@ -433,7 +433,7 @@ ggplot(aut_perf_set_long_ap, aes(x = as.Date(year, "%Y"),
  theme(legend.position = "bottom",
  axis.text.x = element_text(angle = 90),
  plot.background = element_blank())
-dev.off()
+#dev.off()
 ```
 
 ```{r Figure 4, fig.cap="Authenticity Performances by Category across Settings in Brazil and the US", echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, include=TRUE}
@@ -453,7 +453,7 @@ aut_perf_setting_US_table <- aut_perf_setting %>%
  summarise(value = mean(value))
 aut_perf_setting_table <- rbind(aut_perf_setting_BR_table, 
    aut_perf_setting_US_table)
-png("figure4.png", units="in", width=11, height=11, res=2000)
+#png("figure4.png", units="in", width=11, height=11, res=2000)
 ggplot(aut_perf_setting_table, aes(y = setting,
    x = value)) +
  geom_col(aes(fill = category), position = "dodge") +
@@ -468,7 +468,7 @@ ggplot(aut_perf_setting_table, aes(y = setting,
  theme_clean(base_family = "Times") +
  theme(legend.position = "bottom",
  plot.background = element_blank())
-dev.off()
+#dev.off()
 ```
 
 ## 4.3 Authenticity Performances and Politicians' Roles
@@ -567,7 +567,7 @@ US_model_div <- plm(diversity ~ status + party,
   data = US_mod, model = "within", index = c("year"))
 BR_model_div <- plm(diversity ~ status + party,
   data = BR_mod, model = "within", index = c("year"))
-png("figure5.png", units="in", width=11, height=11, res=2000)
+#png("figure5.png", units="in", width=11, height=11, res=2000)
 jtools::plot_summs(US_model_total, BR_model_total,
   US_model_div, BR_model_div,
   model.names = c("US Total","BR Total",
@@ -579,7 +579,7 @@ jtools::plot_summs(US_model_total, BR_model_total,
  theme_clean(base_family = "Times") +
  theme(legend.position = "bottom",
  plot.background = element_blank())
-dev.off()
+#dev.off()
 ```
 
 # 5 Conclusion
