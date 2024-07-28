@@ -4,8 +4,8 @@
 # Radiating Truthiness: Authenticity performances in politics in Brazil and the United States
 
 This repository makes publicly available all the replication materials
-for the article “Radiating Truthiness: Authenticity performances in
-politics in Brazil and the United States”. The article is forthcoming in
+for the article [“Radiating Truthiness: Authenticity performances in
+politics in Brazil and the United States”](https://journals.sagepub.com/doi/10.1177/00323217241261229). The article has been published open source in
 Political Studies, please check it out!
 
 [Henrique](http://henriquesposito.com/) is a PhD Candidate in
@@ -16,10 +16,4 @@ If you are using this any of the replication materials including the
 data, codes, models, or figures, please cite:
 
 Sposito, Henrique. “Radiating Truthiness: Authenticity performances in
-politics in Brazil and the United States”. *Political Studies* (2024)
-
-### Addditional Materials
-
-For additional information on the data collection, cleaning, and other
-replication materials please request access to the Authenticity
-Performances Private repository on GitHub.
+politics in Brazil and the United States”. *Political Studies* (2024): 1-25.
